@@ -1,0 +1,57 @@
+<!-- results.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Results Page{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-4 mb-3">Results</h2>
+        {% if results %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            Detected Image
+                        </div>
+                        <div class="card-body">
+                            {% load static %}
+                            <img src="{% static latest_file %}" alt="Detected Image" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            Result Details
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for result in results %}
+                                    <li class="list-group-item">{{ result }}</li>
+                                {% endfor %}
+                            </ul>
+                            <a href="{% url 'upload_file' %}" class="btn btn-primary mt-3">Upload Another File</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                No results found.
+            </div>
+            <a href="{% url 'upload_file' %}" class="btn btn-primary mt-3">Upload Another File</a>
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}

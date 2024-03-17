@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Smart Driving Systems{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="#">Smart Driving Systems <i class="fa-solid fa-car"></i></a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"><i class="fas fa-home"></i> Home Page</a>
+                </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+            </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Content -->
+    <div class="content">{% block content %} {% endblock %}</div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-light fixed-bottom">
+      <div class="container text-center">
+        <span class="text-muted">
+          © {% now "Y" %} Smart Driving Systems - Coded by
+          <a
+            href="https://www.linkedin.com/in/ferhatakalan"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-decoration-none"
+            >Ferhat Akalan</a
+          >
+          <a
+            href="https://github.com/FerhatAkalan"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-decoration-none"
+            ><i class="fab fa-github me-1"></i> GitHub</a
+          >
+          &
+          <a
+            href="https://www.linkedin.com/in/betulmumcu"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-decoration-none"
+            >Betül Mumcu</a
+          >
+          <a
+            href="https://github.com/betuullm"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-decoration-none"
+            ><i class="fab fa-github me-1"></i> GitHub</a
+          >
+        </span>
+      </div>
+    </footer>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from detectionapp.views import upload_file
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('', upload_file, name='upload_file'),
+    path('upload/', upload_file, name='upload_file'),
+    path('results/', upload_file, name='results'),
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
