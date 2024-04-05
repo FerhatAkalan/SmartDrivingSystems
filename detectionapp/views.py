@@ -4,12 +4,12 @@ import os
 from ultralytics import YOLO
 
 # Sonuçların kaydedileceği dizin
-results_dir = 'C:/Users/Ferhat/smartdrivingsystems/runs/detect'
+results_dir = 'C:/Users/Lenovo/smartdrivingsystems/runs/detect'
 os.makedirs(results_dir, exist_ok=True)
 
 def detect_dangerous_behavior(file_path, results_dir):
     # YOLO modelini yükle
-    model = YOLO('C:/Users/Ferhat/Downloads/best.pt')
+    model = YOLO('C:/Users/Lenovo/Desktop/D/yolomodel/best.pt')
 
     # Resim veya videoyu analiz et ve sonuçları kaydet
     results = model.predict(file_path, save=True, conf=0.5, save_dir=results_dir)
