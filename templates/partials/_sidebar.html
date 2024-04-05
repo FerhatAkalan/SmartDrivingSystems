@@ -1,0 +1,31 @@
+{% if user.is_authenticated %}
+<div class="container-fluid">
+  <div class="row">
+      <div class="position-sticky top-0 start-0 bottom-1 bg-white">
+        <div class="sidebar" style="cursor: pointer;">
+          <div class="card card-sidebar">
+            <ul class="list-group" >
+              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Home</a></li>
+              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Driving Analysis</a></li>
+              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Reports</a></li>
+              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark">
+                <a href="/">Real-time driving analysis (coming soon)</a>
+              </li>
+              {% if user.is_staff %}
+              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Admin</a></li>
+              {% endif %}
+              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Help</a></li>
+              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Settings</a></li>
+              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<style>
+  .list-group-item.nav-item-sidebar.list-group-item-action.text-dark a {
+    text-decoration: none;
+  }
+</style>
+{% endif %}
