@@ -1,8 +1,12 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.conf import settings
 
 # Create your views here.
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect("upload_file")
+
     if request.method =="POST":
         username=request.POST["username"]
         password=request.POST["password"]
@@ -21,4 +25,5 @@ def user_register(request):
     return render(request,"account/register.html")
 
 def user_logout(request):
-    return redirect('')
+    logout(request)
+    return redirect('upload_file')
