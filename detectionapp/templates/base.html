@@ -44,7 +44,7 @@
               </li>
               {% if user.is_authenticated %} 
               <li class="nav-item">
-                <a class="nav-link" href="#">Hoşgeldin,{{user.username}}</a>
+                <a class="nav-link" href="#"> Hoşgeldin,{{user.username}}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'user_logout'%}"><i class="fas fa-sign-in-alt"></i> Logout</a>
@@ -54,7 +54,7 @@
                 <a class="nav-link" href="{% url 'user_login'%}"><i class="fas fa-sign-in-alt"></i> Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'user_register'%}"><i class="fas fa-sign-in-alt"></i>Register</a>
+                <a class="nav-link" href="{% url 'user_register'%}"><i class="fas fa-sign-in-alt"></i> Register</a>
               </li>
               {% endif %}
             </ul>
