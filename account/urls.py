@@ -1,0 +1,11 @@
+from django.contrib import admin
+from django.urls import include, path
+from detectionapp.views import upload_file
+from . import views
+
+
+urlpatterns = [
+    path('login', views.user_login,name="user_login"),
+    path('register', views.user_register,name="user_register"),
+    path('logout', views.user_logout,name="user_logout"),
+]

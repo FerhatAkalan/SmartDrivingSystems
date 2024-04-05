@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from detectionapp.views import upload_file
 from django.conf import settings
 from django.conf.urls.static import static
@@ -24,4 +24,5 @@ urlpatterns = [
     path('', upload_file, name='upload_file'),
     path('upload/', upload_file, name='upload_file'),
     path('results/', upload_file, name='results'),
+    path('account/', include("account.urls")),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
