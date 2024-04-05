@@ -26,120 +26,25 @@
     <!-- Header -->
     <header>
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container">
-          <a class="navbar-brand d-flex align-items-center" href="/">
-            <img src="{% static 'img/logo.png' %}" alt="Logo" width="65" />
-            <span class="ml-2" style="font-family: 'AbrilFatface-Regular'"
-              >Smart Driving Systems</span
-            >
-          </a>
-          <em class="navbar-text ms-auto">Detecting faulty driver behavior.</em>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="/"
-                  ><i class="fas fa-home"></i> Home</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fas fa-address-card"></i> About</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fas fa-address-book"></i> Contact</a
-                >
-              </li>
-              {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" href="#"> Welcome,{{user.username}}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'user_logout'%}"
-                  ><i class="fas fa-sign-in-alt"></i> Logout</a
-                >
-              </li>
-              {% else %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'user_login'%}"
-                  ><i class="fas fa-sign-in-alt"></i> Login</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'user_register'%}"
-                  ><i class="fas fa-sign-in-alt"></i> Register</a
-                >
-              </li>
-              {% endif %}
-            </ul>
-          </div>
-        </div>
-      </nav>
+      {% include 'partials/_navbar.html' %}
+      <!-- Navbar -->
     </header>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-3">
-          {% include 'partials/_sidebar.html' %}
-        </div>
+        <div class="col-md-3">{% include 'partials/_sidebar.html' %}</div>
         <!-- Content -->
-        <div class="{% if user.is_authenticated %}col-md-9{% else %}col-md-12{% endif %}">
+        <div
+          class="{% if user.is_authenticated %}col-md-9{% else %}col-md-12{% endif %}"
+        >
           <div class="content">{% block content %}{% endblock %}</div>
         </div>
       </div>
     </div>
-    
     <!-- Content -->
 
     <!-- Footer -->
-    <footer class="footer py-3 bg-light">
-      <div class="container text-center">
-        <span class="text-muted">
-          © {% now "Y" %} Smart Driving Systems - Coded by
-          <a
-            href="https://www.linkedin.com/in/ferhatakalan"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-decoration-none"
-            >Ferhat Akalan</a
-          >
-          <a
-            href="https://github.com/FerhatAkalan"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-decoration-none"
-            ><i class="fab fa-github me-1"></i> GitHub</a
-          >
-          &
-          <a
-            href="https://www.linkedin.com/in/betulmumcu"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-decoration-none"
-            >Betül Mumcu</a
-          >
-          <a
-            href="https://github.com/betuullm"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-decoration-none"
-            ><i class="fab fa-github me-1"></i> GitHub</a
-          >
-        </span>
-      </div>
-    </footer>
+    {% include 'partials/_footer.html' %}
+    <!-- Footer -->
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
