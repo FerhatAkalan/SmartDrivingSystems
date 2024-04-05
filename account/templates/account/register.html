@@ -11,6 +11,7 @@
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
       />
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
       <!-- Header -->
@@ -43,6 +44,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'user_login'%}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'user_logout'%}"><i class="fas fa-sign-in-alt"></i> Logout</a>
                 </li>
@@ -73,8 +75,8 @@
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" name="email" id="email" class="form-control" required value="{% if email %}{{email}}{% endif %}">
-                          </div>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="text" name="password" id="password" class="form-control" required>
