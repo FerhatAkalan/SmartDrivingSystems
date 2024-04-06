@@ -1,31 +1,107 @@
 {% if user.is_authenticated %}
 <div class="container-fluid">
   <div class="row">
-      <div class="position-sticky top-0 start-0 bottom-1 bg-white">
-        <div class="sidebar" style="cursor: pointer;">
-          <div class="card card-sidebar">
-            <ul class="list-group" >
-              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Home</a></li>
-              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Driving Analysis</a></li>
-              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Reports</a></li>
-              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark">
-                <a href="/">Real-time driving analysis (coming soon)</a>
-              </li>
-              {% if user.is_staff %}
-              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Admin</a></li>
-              {% endif %}
-              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Help</a></li>
-              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Settings</a></li>
-              <li class="list-group-item nav-item-sidebar list-group-item-action text-dark"><a href="/">Logout</a></li>
-            </ul>
-          </div>
-        </div>
+    <div class="position-sticky top-0 start-0 bottom-1 bg-white">
+      <div class="sidebar" style="cursor: pointer">
+        <ul class="list-group">
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a class="sidebar-link" href="{% url 'home' %}"
+              ><i class="fas fa-home"></i> Home</a
+            >
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="{% url 'upload_file' %}"><i class="fas fa-car"></i> Driving Analysis</a>
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"
+              ><i class="fa-solid fa-square-poll-vertical"></i> Results</a
+            >
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"><i class="fas fa-id-card"></i> Driver Reports</a>
+          </li>
+          {% if user.is_staff %}
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/">Admin</a>
+          </li>
+          {% endif %}
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"><i class="fa-solid fa-users"></i> All Users</a>
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"><i class="fa-solid fa-file"></i> All Reports</a>
+          </li>
+
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"
+              ><i class="fa-solid fa-chart-simple"></i> All Statistics</a
+            >
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"><i class="fa-solid fa-id-badge"></i> Driver Profiles</a>
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"><i class="fa-solid fa-car-side"></i> Add Driver</a>
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"><i class="fa-solid fa-user-plus"></i> Add User</a>
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"><i class="fa-solid fa-circle-info"></i> Help</a>
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"><i class="fa-solid fa-gear"></i> Settings</a>
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="{% url 'user_logout' %}"
+              ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
+            >
+          </li>
+          <li
+            class="list-group-item nav-item-sidebar list-group-item-action text-dark"
+          >
+            <a href="/"
+              ><i class="fa-solid fa-clock"></i> Real-time driving analysis
+              (coming soon)</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
 <style>
   .list-group-item.nav-item-sidebar.list-group-item-action.text-dark a {
     text-decoration: none;
+    color: gray; /* Gri renk */
   }
 </style>
 {% endif %}

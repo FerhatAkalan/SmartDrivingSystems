@@ -15,8 +15,10 @@
       referrerpolicy="no-referrer"
     />
     <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
     />
     <style>
       /* Custom Styles */
@@ -29,26 +31,32 @@
       {% include 'partials/_navbar.html' %}
       <!-- Navbar -->
     </header>
+    <!-- Header -->
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-3">{% include 'partials/_sidebar.html' %}</div>
-        <!-- Content -->
+        <div class="col-md-2">{% include 'partials/_sidebar.html' %}</div>
         <div
           class="{% if user.is_authenticated %}col-md-9{% else %}col-md-12{% endif %}"
         >
+          <!-- Content -->
           <div class="content">{% block content %}{% endblock %}</div>
+          <!-- Content -->
         </div>
       </div>
     </div>
-    <!-- Content -->
 
     <!-- Footer -->
     {% include 'partials/_footer.html' %}
     <!-- Footer -->
 
     <!-- Bootstrap JS and dependencies -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS and dependencies -->
   </body>
 </html>

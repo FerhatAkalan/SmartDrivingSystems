@@ -14,7 +14,7 @@ def user_login(request):
 
         if user is not None:
             login(request,user)
-            return redirect('upload_file')
+            return redirect('home')
         else:
             return render(request,"account/login.html",{"error":"username ya da password yanlıs"})
     else:
@@ -60,4 +60,4 @@ def user_register(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('upload_file')
+    return redirect('home')
