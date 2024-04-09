@@ -4,6 +4,10 @@ from .forms import UploadFileForm
 import os
 from ultralytics import YOLO
 from django.contrib.auth.decorators import login_required
+import os
+import ffmpeg       
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
 
 def home(request):
     return render(request, 'detectionapp/home.html')
@@ -40,21 +44,33 @@ def get_latest_prediction(results_dir):
                 if latest_file is None or os.path.getmtime(file_path) > os.path.getmtime(latest_file):
                     latest_file = file_path
     
+    # Eğer en son dosya bir AVI dosyasıysa, onu MP4 formatına dönüştür
+    mp4_file = latest_file.replace('.avi', '.mp4')  # MP4 dosya yolunu oluştur
+    try:
+        ffmpeg.input(latest_file).output(mp4_file).run()  # AVI dosyasını MP4'e dönüştür
+        latest_file = mp4_file  # En son dosyayı MP4 dosyası olarak güncelle
+        print("AVI dosyası MP4'e dönüştürüldü:", mp4_file)
+    except ffmpeg.Error as e:
+           print("Dönüştürme sırasında bir hata oluştu:", e.stderr)
+    
+    
     # results_dir başındaki "detectionapp/static" kısmını kaldır
     if latest_file is not None:
         latest_file = latest_file.replace("detectionapp/static/", "")
-    
+
     print("abc: " + latest_file)
  
     return latest_file
 
 
 class_labels = {
-    0: "Drinking",
-    1: "Texting",
-    # Add more class labels as needed
+    0: 'drinking', 
+    1: 'reaching behind', 
+    2: 'safe driving', 
+    3: 'talking on the phone', 
+    4: 'talking to passenger', 
+    5: 'texting'
 }
-
 @login_required
 def upload_file(request):
     if request.method == 'POST':
@@ -128,5 +144,4 @@ def upload_file(request):
             return render(request, 'detectionapp/result.html', {'results': results, 'latest_file': latest_file, 'data': data})
     else:
         form = UploadFileForm()
-    
-    return render(request, 'detectionapp/upload.html', {'form': form})
+        return render(request, 'detectionapp/upload.html', {'form': form})
