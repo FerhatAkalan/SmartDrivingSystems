@@ -45,13 +45,14 @@ def get_latest_prediction(results_dir):
                     latest_file = file_path
     
     # Eğer en son dosya bir AVI dosyasıysa, onu MP4 formatına dönüştür
-    mp4_file = latest_file.replace('.avi', '.mp4')  # MP4 dosya yolunu oluştur
-    try:
-        ffmpeg.input(latest_file).output(mp4_file).run()  # AVI dosyasını MP4'e dönüştür
-        latest_file = mp4_file  # En son dosyayı MP4 dosyası olarak güncelle
-        print("AVI dosyası MP4'e dönüştürüldü:", mp4_file)
-    except ffmpeg.Error as e:
-           print("Dönüştürme sırasında bir hata oluştu:", e.stderr)
+    if file.endswith('.avi'):
+        mp4_file = latest_file.replace('.avi', '.mp4')  # MP4 dosya yolunu oluştur
+        try:
+            ffmpeg.input(latest_file).output(mp4_file).run()  # AVI dosyasını MP4'e dönüştür
+            latest_file = mp4_file  # En son dosyayı MP4 dosyası olarak güncelle
+            print("AVI dosyası MP4'e dönüştürüldü:", mp4_file)
+        except ffmpeg.Error as e:
+            print("Dönüştürme sırasında bir hata oluştu:", e.stderr)
     
     
     # results_dir başındaki "detectionapp/static" kısmını kaldır
@@ -141,7 +142,7 @@ def upload_file(request):
                     })
 
             # Sonucu template'e gönder
-            return render(request, 'detectionapp/result.html', {'results': results, 'latest_file': latest_file, 'data': data})
+            return render(request, 'detectionapp/results.html', {'results': results, 'latest_file': latest_file, 'data': data})
     else:
         form = UploadFileForm()
         return render(request, 'detectionapp/upload.html', {'form': form})

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from detectionapp.views import upload_file, home, about,contact
+from detectionapp.views import upload_file, home, about, contact
 from django.conf import settings
 from django.conf.urls.static import static
 
