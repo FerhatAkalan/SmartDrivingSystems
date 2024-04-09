@@ -1,5 +1,3 @@
-<!-- results.html -->
-
 {% extends 'layout.html' %}
 
 {% block title %}Results Page{% endblock %}
@@ -21,11 +19,18 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            Detected Image
+                            Detected Media
                         </div>
                         <div class="card-body">
                             {% load static %}
-                            <img src="{% static latest_file %}" alt="Detected Image" class="img-fluid">
+                            {% if latest_file|slice:'-4:' == '.jpg' %}
+                                <img src="{% static latest_file %}" alt="Detected Image" class="img-fluid">
+                            {% elif latest_file|slice:'-4:' == '.avi' %}
+                                <video width="100%" height="auto" controls>
+                                    <source src="{% static latest_file %}" type="video/avi">
+                                    Your browser does not support the video tag.
+                                </video>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -35,11 +40,26 @@
                             Result Details
                         </div>
                         <div class="card-body">
-                            <ul class="list-group">
-                                {% for result in results %}
-                                    <li class="list-group-item">{{ result }}</li>
-                                {% endfor %}
-                            </ul>
+                            {% for item in data %}
+                                <div class="card-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <strong>Detected Boxes:</strong><br>
+                                            Class: {{ item.label }}<br>
+                                            Confidence: {{ item.confidence }}<br>
+                                            Sol Üst Köşe (x_min, y_min): ({{ item.x_min }}, {{ item.y_min }})<br>
+                                            Sağ Alt Köşe (x_max, y_max): ({{ item.x_max }}, {{ item.y_max }})<br>
+                                            Merkez Koordinatlar (x_center, y_center): ({{ item.x_center }}, {{ item.y_center }})<br>
+                                            Genişlik: {{ item.width }}<br>
+                                            Yükseklik: {{ item.height }}<br>
+                                            Masks: {{ item.masks }}<br>
+                                            Keypoints: {{ item.keypoints }}<br>
+                                            Probabilities: {{ item.probs }}<br>
+                                        </li>
+                                    </ul>
+                                </div>
+                            {% endfor %}
+
                             <a href="{% url 'upload_file' %}" class="btn btn-primary mt-3">Upload Another File</a>
                         </div>
                     </div>
