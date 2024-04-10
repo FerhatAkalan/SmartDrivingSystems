@@ -29,7 +29,7 @@ def detect_dangerous_behavior(file_path, results_dir):
     # YOLO modelini yükle"
     model = YOLO(os.path.join('detectionapp/static/detectionapp/model/best.pt'))
     # Resim veya videoyu analiz et ve sonuçları kaydet
-    results = model.predict(file_path, save=True, conf=0.5, save_dir=results_dir)
+    results = model.predict(file_path, save=True, conf=0.5, save_dir=results_dir,vid_stride=10) #Frame stride for video inputs -> vid_stride
     print("Results:", results)
     # Sonuçları işleyip döndür
     return results
