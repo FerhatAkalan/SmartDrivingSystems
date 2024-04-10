@@ -123,7 +123,6 @@ def upload_file(request):
                     confidence = 0.0
                     x_min = y_min = x_max = y_max = x_center = y_center = width = height = 0.0
                     masks = keypoints = probs = None
-
                     # Append the formatted details to the list
                     data.append({
                         'label': label,
@@ -143,6 +142,9 @@ def upload_file(request):
 
             # Sonucu template'e gönder
             return render(request, 'detectionapp/results.html', {'results': results, 'latest_file': latest_file, 'data': data})
+        else:
+            form = UploadFileForm()
+            return render(request, 'detectionapp/upload.html', {'form': form})
     else:
         form = UploadFileForm()
-        return render(request, 'detectionapp/upload.html', {'form': form})
+        return render(request, 'detectionapp/upload.html', {'form': form})        

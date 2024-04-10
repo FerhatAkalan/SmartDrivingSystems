@@ -1,4 +1,3 @@
-<!-- upload.html -->
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -16,23 +15,60 @@
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">File Upload</h5>
+                    <h5 class="card-title">Driver Dangerous Behavior Detection System</h5>
                 </div>
                 <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
+                    <p class="mb-3">Please upload in-car video. Once the file is processed you will be redirected to the results page.</p>
+                    <form method="post" enctype="multipart/form-data" id="uploadForm" class="needs-validation" novalidate>
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="fileInput">Select File:</label>
-                            <input type="file" class="form-control-file" id="fileInput" name="file">
+                        <div class="mb-3">
+                            <label for="fileInput" class="form-label">Select File (Supported formats: JPG, MP4)</label>
+                            <input type="file" class="form-control" id="fileInput" name="file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
+                            <div class="invalid-feedback" id="fileTypeError" style="display:none;">Sadece JPG veya MP4 dosyaları yüklenebilir.</div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Upload</button>
+                        <div class="text-center mb-3">
+                            <div class="spinner-border text-primary" role="status" id="spinner" style="display:none;">
+                                <span class="visually-hidden">Yükleniyor...</span>
+                            </div>
+                            <div id="loading" style="display:none;">Loading...</div>
+                        </div>
+                        <div class="text-center" id="uploadButtonContainer">
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-file-arrow-up"></i> Upload</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+<script>
+    // Dosya türünü kontrol et
+    function checkFileType(input) {
+        var file = input.files[0];
+        var fileType = file.type;
+        var allowedTypes = ['image/jpeg', 'video/mp4'];
+        if (!allowedTypes.includes(fileType)) {
+            $('#fileTypeError').show();
+            input.value = ''; // Dosyayı temizle
+        } else {
+            $('#fileTypeError').hide();
+        }
+    }
+    // Dosya yükleme işlemi sırasında spinner'ı ve loading metnini göster
+    $('form').submit(function(){
+        // Dosya seçilmediyse formu gönderme
+        if ($('#fileInput').get(0).files.length === 0) {
+            $('#fileInput').addClass('is-invalid');
+            return false;
+        } else {
+            $('#spinner').show();
+            $('#loading').show();
+            $('#uploadButtonContainer').hide(); // Yükle butonunu gizle
+            return true;
+        }
+    });
+</script>
 </body>
 </html>
 {% endblock %}
