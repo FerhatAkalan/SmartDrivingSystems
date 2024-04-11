@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from detectionapp.views import upload_file, home, about, contact 
+from detectionapp.views import upload_file, home, about, contact, results
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,7 +25,7 @@ urlpatterns = [
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('upload/', upload_file, name='upload_file'),
-    path('results/', upload_file, name='results'),
+    path('results/', results, name='results'),
     path('account/', include("account.urls")),
     path('report/', include("report.urls")),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
