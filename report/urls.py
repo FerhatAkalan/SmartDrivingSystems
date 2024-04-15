@@ -6,4 +6,5 @@ from . import views
 
 urlpatterns = [
     path('add-driver/', views.add_driver,name="add_driver"),
+    path('drivers/', views.driver_list, name='driver_list'),
 ]
