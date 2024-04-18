@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from ultralytics import settings as ultralytics_settings
 
-from report.models import Driver, Reports, Trips
+from report.models import Driver, ReportDetails, Reports, Trips
 from .forms import UploadFileForm
 import os
 import ffmpeg
@@ -73,9 +73,34 @@ def results(request, uploaded_file, trip):
         report_path=latest_file  # İşlenen dosyanın yolunu report_path alanına kaydedin
     )
     data = process_results(results)
-    # Sonucu template'e gönder
-    return render(request, 'detectionapp/results.html', {'results': results, 'latest_file': latest_file, 'data': data})
 
+# Save the processed data to the database
+    for entry in data:
+        report_detail = ReportDetails(
+            report=Reports.objects.get(trip=trip),  # Link to the corresponding report
+            safe_driving=entry['confidence'],
+            top_left_x=entry['x_min'],
+            top_left_y=entry['y_min'],
+            bottom_right_x=entry['x_max'],
+            bottom_right_y=entry['y_max'],
+            center_x=entry['x_center'],
+            center_y=entry['y_center'],
+            width=entry['width'],
+            height=entry['height'],
+            masks=entry['masks'],
+            keypoints=entry['keypoints'],
+            probabilities=entry['probs']
+        )
+        report_detail.save()
+
+    # Pass the processed data and other context to the template
+    context = {
+        'results': results,
+        'latest_file': latest_file,
+        'data': data,
+        'trip': trip
+    }
+    return render(request, 'detectionapp/results.html', context)
 def detect_dangerous_behavior(file_path):
     # YOLO modelini yükle
     model = YOLO(os.path.join('detectionapp/static/detectionapp/model/best.pt'))

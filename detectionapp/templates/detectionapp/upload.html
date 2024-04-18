@@ -59,33 +59,46 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
-<script>
-    // Dosya türünü kontrol et
-    function checkFileType(input) {
-        var file = input.files[0];
-        var fileType = file.type;
-        var allowedTypes = ['image/jpeg', 'video/mp4'];
-        if (!allowedTypes.includes(fileType)) {
-            $('#fileTypeError').show();
-            input.value = ''; // Dosyayı temizle
-        } else {
-            $('#fileTypeError').hide();
-        }
-    }
-    // Dosya yükleme işlemi sırasında spinner'ı ve loading metnini göster
-    $('form').submit(function(){
-        // Dosya seçilmediyse formu gönderme
-        if ($('#fileInput').get(0).files.length === 0) {
-            $('#fileInput').addClass('is-invalid');
-            return false;
-        } else {
-            $('#spinner').show();
-            $('#loading').show();
-            $('#uploadButtonContainer').hide(); // Yükle butonunu gizle
-            return true;
-        }
-    });
-</script>
+<div class="container mt-5">
+    <h2>Detection Results</h2>
+    <p>Here are the results from your video analysis:</p>
+
+    <!-- Display results -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Frame Info</th>
+                <th>Label</th>
+                <th>Confidence</th>
+                <th>Bounding Box (x_min, y_min, x_max, y_max)</th>
+                <th>Center (x_center, y_center)</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>Masks</th>
+                <th>Keypoints</th>
+                <th>Probabilities</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in data %}
+            <tr>
+                <td>{{ entry.frame_info }}</td>
+                <td>{{ entry.label }}</td>
+                <td>{{ entry.confidence }}</td>
+                <td>({{ entry.x_min }}, {{ entry.y_min }}, {{ entry.x_max }}, {{ entry.y_max }})</td>
+                <td>({{ entry.x_center }}, {{ entry.y_center }})</td>
+                <td>{{ entry.width }}</td>
+                <td>{{ entry.height }}</td>
+                <td>{{ entry.masks }}</td>
+                <td>{{ entry.keypoints }}</td>
+                <td>{{ entry.probs }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p><strong>Latest Prediction File:</strong> {{ latest_file }}</p>
+</div>
 </body>
 </html>
 {% endblock %}
