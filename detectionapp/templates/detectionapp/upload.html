@@ -32,6 +32,23 @@
                             </div>
                             <div id="loading" style="display:none;">Loading...</div>
                         </div>
+                        <div class="mb-3">
+                            <label for="driver" class="form-label">Select Driver</label>
+                            <!-- Kullanıcının sürücü seçimi yapabilmesi için bir dropdown alanı -->
+                            <select class="form-control" id="driver" name="driver" required>
+                                {% for driver in form.driver.field.queryset %}
+                                    <option value="{{ driver.id }}">{{ driver.driver_name }} {{ driver.driver_surname }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="start_time" class="form-label">Start Time</label>
+                            <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="end_time" class="form-label">End Time</label>
+                            <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
+                        </div>
                         <div class="text-center" id="uploadButtonContainer">
                             <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-file-arrow-up"></i> Upload</button>
                         </div>

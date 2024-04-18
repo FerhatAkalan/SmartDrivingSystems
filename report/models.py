@@ -9,9 +9,12 @@ class Driver(models.Model):
 
 class Trips(models.Model):
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
     video_path = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return f"Trip for {self.driver} from {self.start_time} to {self.end_time}"
 
 class Reports(models.Model):
     trip = models.ForeignKey(Trips, on_delete=models.CASCADE)
