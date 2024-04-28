@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaded File Preview</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Uploaded File Preview</h5>
+                </div>
+                <div class="card-body">
+                    {% if uploaded_file %}
+                        <!-- Dosya önizlemesi -->
+                        {% if uploaded_file.file_type == 'video' %}
+                            <video controls class="img-thumbnail">
+                                <source src="{{ uploaded_file.file.url }}" type="video/mp4">
+                            </video>
+                        {% else %}
+                            <img src="{{ uploaded_file.file.url }}" class="img-thumbnail">
+                        {% endif %}
+                        <!-- Detect butonu -->
+                        <button type="button" class="btn btn-success btn-lg mt-3" id="detectButton"><i class="fa-solid fa-binoculars"></i> Detect</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+<script>
+    // Detect butonuna tıklandığında
+    $('#detectButton').click(function() {
+        // AJAX isteği ile form verilerini al ve results view fonksiyonuna iletilmesi sağla
+        var uploadedFileId = "{{ uploaded_file.id }}"; // Yüklenen dosyanın ID'si
+        var tripId = "{{ trip.id }}"; // Trip ID'si
+        $.ajax({
+            type: "POST",
+            url: "{% url 'results' %}",
+            data: {
+                'uploaded_file_id': uploadedFileId,
+                'trip_id': tripId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                // Sonuçlar alındığında, result fonksiyonunu tetikle
+                window.location.href = response.redirect;  // Sonuçlar sayfasına yönlendir
+            },
+            error: function(xhr, errmsg, err) {
+                // Hata durumunda kullanıcıya bilgi ver
+                console.log(xhr.status + ": " + xhr.responseText);  // Hata mesajını konsola yazdır
+                alert("Error occurred while processing the file. Please try again.");  // Kullanıcıya hata mesajını göster
+            }
+        });
+    });
+</script>
+</body>
+</html>
+{% endblock %}

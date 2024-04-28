@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Driver(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     driver_name = models.CharField(max_length=100)
     driver_surname = models.CharField(max_length=100)
     driver_licence = models.CharField(max_length=50)
@@ -17,9 +18,12 @@ class Trips(models.Model):
         return f"Trip for {self.driver} from {self.start_time} to {self.end_time}"
 
 class Reports(models.Model):
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
     trip = models.ForeignKey(Trips, on_delete=models.CASCADE)
     report_text = models.TextField()
     report_path = models.CharField(max_length=255)
+    created_at = models.DateTimeField(default=timezone.now)
 
 class ReportDetails(models.Model):
     report = models.ForeignKey(Reports, on_delete=models.CASCADE)

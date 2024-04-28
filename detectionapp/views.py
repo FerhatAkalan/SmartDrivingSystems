@@ -38,13 +38,15 @@ def contact(request):
 @login_required
 def upload_file(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
+        form = UploadFileForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             # Dosyayı kaydet
             uploaded_file = form.save()
-                   # Trips modeline yeni bir örnek oluştur ve video_path alanını kaydet
+            driver = form.cleaned_data.get('driver')
+
+            # Trips modeline yeni bir örnek oluştur ve video_path alanını kaydet
             trip = Trips.objects.create(
-                driver=request.user.driver,  # Kullanıcının sürücü profilini alır
+                driver=driver,  # Kullanıcının sürücü profilini alır
                 start_time=form.cleaned_data['start_time'],  # Formdan alınan başlangıç zamanı
                 end_time=form.cleaned_data['end_time'],  # Formdan alınan bitiş zamanı
                 video_path=uploaded_file.file.path  # Yüklenen dosyanın yolunu video_path alanına kaydedin
@@ -52,7 +54,7 @@ def upload_file(request):
             # Dosya yüklendikten sonra diğer işlemleri yapmak için result fonksiyonunu çağır
             return results(request, uploaded_file, trip)
     else:
-        form = UploadFileForm()
+        form = UploadFileForm(user=request.user)
      # Şablonun `drivers` değişkenine sürücü listesini ekleyin
     drivers = Driver.objects.all()
     return render(request, 'detectionapp/upload.html', {'form': form})
@@ -68,6 +70,7 @@ def results(request, uploaded_file, trip):
      
     # İşlenmiş dosyanın yolunu Reports modelinde kaydedin
     report = Reports.objects.create(
+        driver=trip.driver,
         trip=trip,  # Trip nesnesi bağlantısı
         report_text="Detection results for dangerous behavior",  # İsteğe bağlı bir rapor metni
         report_path=latest_file  # İşlenen dosyanın yolunu report_path alanına kaydedin
@@ -101,6 +104,7 @@ def results(request, uploaded_file, trip):
         'trip': trip
     }
     return render(request, 'detectionapp/results.html', context)
+
 def detect_dangerous_behavior(file_path):
     # YOLO modelini yükle
     model = YOLO(os.path.join('detectionapp/static/detectionapp/model/best.pt'))

@@ -5,19 +5,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Driver</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 <main class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h1 class="text-center my-5">Add Driver</h1>
+            <div class="mb-3">
+                <label for="user" class="form-label">User</label>
+                <input type="text" class="form-control" id="user" name="user" value="{{ request.user }}" disabled>
+            </div>
+            
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <input type="hidden" name="user" value="{{ request.user.id }}">
+                <div class="mb-3">
+                    <label for="driver_name" class="form-label">Driver Name</label>
+                    <input type="text" class="form-control" id="driver_name" name="driver_name">
+                </div>
+                <div class="mb-3">
+                    <label for="driver_surname" class="form-label">Driver Surname</label>
+                    <input type="text" class="form-control" id="driver_surname" name="driver_surname">
+                </div>
+                <div class="mb-3">
+                    <label for="driver_licence" class="form-label">Driver Licence</label>
+                    <input type="text" class="form-control" id="driver_licence" name="driver_licence">
+                </div>
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>

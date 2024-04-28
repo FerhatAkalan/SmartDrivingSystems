@@ -22,24 +22,21 @@
                     <form method="post" enctype="multipart/form-data" id="uploadForm" class="needs-validation" novalidate>
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="fileInput" class="form-label">Select File (Supported formats: JPG, MP4)</label>
-                            <input type="file" class="form-control" id="fileInput" name="file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
-                            <div class="invalid-feedback" id="fileTypeError" style="display:none;">Sadece JPG veya MP4 dosyaları yüklenebilir.</div>
-                        </div>
-                        <div class="text-center mb-3">
-                            <div class="spinner-border text-primary" role="status" id="spinner" style="display:none;">
-                                <span class="visually-hidden">Yükleniyor...</span>
-                            </div>
-                            <div id="loading" style="display:none;">Loading...</div>
-                        </div>
-                        <div class="mb-3">
                             <label for="driver" class="form-label">Select Driver</label>
-                            <!-- Kullanıcının sürücü seçimi yapabilmesi için bir dropdown alanı -->
                             <select class="form-control" id="driver" name="driver" required>
+                                <option value="" selected disabled>Select a driver</option> <!-- Varsayılan seçenek -->
                                 {% for driver in form.driver.field.queryset %}
                                     <option value="{{ driver.id }}">{{ driver.driver_name }} {{ driver.driver_surname }}</option>
                                 {% endfor %}
                             </select>
+                            <div class="invalid-feedback">
+                                Please select a driver.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fileInput" class="form-label">Select File (Supported formats: JPG, MP4)</label>
+                            <input type="file" class="form-control" id="fileInput" name="file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
+                            <div class="invalid-feedback" id="fileTypeError" style="display:none;">Sadece JPG veya MP4 dosyaları yüklenebilir.</div>
                         </div>
                         <div class="mb-3">
                             <label for="start_time" class="form-label">Start Time</label>
@@ -52,6 +49,12 @@
                         <div class="text-center" id="uploadButtonContainer">
                             <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-file-arrow-up"></i> Upload</button>
                         </div>
+                        <div class="text-center mb-3">
+                            <div class="spinner-border text-primary" role="status" id="spinner" style="display:none;">
+                                <span class="visually-hidden">Yükleniyor...</span>
+                            </div>
+                            <div id="loading" style="display:none;">Loading...</div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -59,46 +62,33 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
-<div class="container mt-5">
-    <h2>Detection Results</h2>
-    <p>Here are the results from your video analysis:</p>
-
-    <!-- Display results -->
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Frame Info</th>
-                <th>Label</th>
-                <th>Confidence</th>
-                <th>Bounding Box (x_min, y_min, x_max, y_max)</th>
-                <th>Center (x_center, y_center)</th>
-                <th>Width</th>
-                <th>Height</th>
-                <th>Masks</th>
-                <th>Keypoints</th>
-                <th>Probabilities</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entry in data %}
-            <tr>
-                <td>{{ entry.frame_info }}</td>
-                <td>{{ entry.label }}</td>
-                <td>{{ entry.confidence }}</td>
-                <td>({{ entry.x_min }}, {{ entry.y_min }}, {{ entry.x_max }}, {{ entry.y_max }})</td>
-                <td>({{ entry.x_center }}, {{ entry.y_center }})</td>
-                <td>{{ entry.width }}</td>
-                <td>{{ entry.height }}</td>
-                <td>{{ entry.masks }}</td>
-                <td>{{ entry.keypoints }}</td>
-                <td>{{ entry.probs }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <p><strong>Latest Prediction File:</strong> {{ latest_file }}</p>
-</div>
+<script>
+    // Dosya türünü kontrol et
+    function checkFileType(input) {
+        var file = input.files[0];
+        var fileType = file.type;
+        var allowedTypes = ['image/jpeg', 'video/mp4'];
+        if (!allowedTypes.includes(fileType)) {
+            $('#fileTypeError').show();
+            input.value = ''; // Dosyayı temizle
+        } else {
+            $('#fileTypeError').hide();
+        }
+    }
+    // Dosya yükleme işlemi sırasında spinner'ı ve loading metnini göster
+    $('form').submit(function(){
+        // Dosya seçilmediyse formu gönderme
+        if ($('#fileInput').get(0).files.length === 0) {
+            $('#fileInput').addClass('is-invalid');
+            return false;
+        } else {
+            $('#spinner').show();
+            $('#loading').show();
+            $('#uploadButtonContainer').hide(); // Yükle butonunu gizle
+            return true;
+        }
+    });
+</script>
 </body>
 </html>
 {% endblock %}
