@@ -1,22 +1,18 @@
 from django.shortcuts import render
 from ultralytics import settings as ultralytics_settings
-
 from report.models import Driver, ReportDetails, Reports, Trips
 from .forms import UploadFileForm
 import os
 import ffmpeg
 from ultralytics import YOLO
 from django.contrib.auth.decorators import login_required
-
+from .models import UploadedFile
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-
 # Ultralytics ayarlarını güncelle
 ultralytics_settings.update({'runs_dir': os.path.join('detectionapp/static/detectionapp/runs')})
-
 # Sonuçların kaydedileceği dizin
 results_dir = os.path.join('detectionapp/static/detectionapp/runs/detect')
 os.makedirs(results_dir, exist_ok=True)
-
 class_labels = {
     0: 'drinking', 
     1: 'reaching behind', 
@@ -25,13 +21,10 @@ class_labels = {
     4: 'talking to passenger', 
     5: 'texting'
 }
-
 def home(request):
     return render(request, 'detectionapp/home.html')
-
 def about(request):
     return render(request, 'detectionapp/about.html')
-
 def contact(request):
     return render(request, 'detectionapp/contact.html')
 
@@ -43,67 +36,73 @@ def upload_file(request):
             # Dosyayı kaydet
             uploaded_file = form.save()
             driver = form.cleaned_data.get('driver')
-
             # Trips modeline yeni bir örnek oluştur ve video_path alanını kaydet
             trip = Trips.objects.create(
                 driver=driver,  # Kullanıcının sürücü profilini alır
                 start_time=form.cleaned_data['start_time'],  # Formdan alınan başlangıç zamanı
                 end_time=form.cleaned_data['end_time'],  # Formdan alınan bitiş zamanı
-                video_path=uploaded_file.file.path  # Yüklenen dosyanın yolunu video_path alanına kaydedin
+                file_path=uploaded_file.file.path  # Yüklenen dosyanın yolunu video_path alanına kaydedin
             )
-            # Dosya yüklendikten sonra diğer işlemleri yapmak için result fonksiyonunu çağır
-            return results(request, uploaded_file, trip)
+            return render(request, 'detectionapp/uploaded_file.html', {'uploaded_file': uploaded_file, 'trip': trip})
     else:
         form = UploadFileForm(user=request.user)
-     # Şablonun `drivers` değişkenine sürücü listesini ekleyin
-    drivers = Driver.objects.all()
+        drivers = Driver.objects.all()
     return render(request, 'detectionapp/upload.html', {'form': form})
 
 @login_required
-def results(request, uploaded_file, trip):
-    # Modelden dönen sonuçları al
-    file_path = uploaded_file.file.path
-    results = detect_dangerous_behavior(file_path)
-    # Sonucun en son oluşturulan dosyasını al
-    latest_file = get_latest_prediction()
-    # Çıkarım sonuçlarını işleyerek bir grafik oluştur
-     
-    # İşlenmiş dosyanın yolunu Reports modelinde kaydedin
-    report = Reports.objects.create(
-        driver=trip.driver,
-        trip=trip,  # Trip nesnesi bağlantısı
-        report_text="Detection results for dangerous behavior",  # İsteğe bağlı bir rapor metni
-        report_path=latest_file  # İşlenen dosyanın yolunu report_path alanına kaydedin
-    )
-    data = process_results(results)
+def results(request):
+    if request.method == 'POST':
+        file_id = request.POST.get('file_id')
+        trip_id = request.POST.get('trip_id')
+        uploaded_file = UploadedFile.objects.get(id=file_id)
+        trip = Trips.objects.get(id=trip_id)
+        # Tehlikeli davranışları tespit et ve sonuçları işle
+        file_path = uploaded_file.file.path
+        results = detect_dangerous_behavior(file_path)
+        # Sonucun en son oluşturulan dosyasını al
+        latest_file = get_latest_prediction()
+        # Çıkarım sonuçlarını işleyerek bir grafik oluştur
 
-# Save the processed data to the database
-    for entry in data:
-        report_detail = ReportDetails(
-            report=Reports.objects.get(trip=trip),  # Link to the corresponding report
-            safe_driving=entry['confidence'],
-            top_left_x=entry['x_min'],
-            top_left_y=entry['y_min'],
-            bottom_right_x=entry['x_max'],
-            bottom_right_y=entry['y_max'],
-            center_x=entry['x_center'],
-            center_y=entry['y_center'],
-            width=entry['width'],
-            height=entry['height'],
-            masks=entry['masks'],
-            keypoints=entry['keypoints'],
-            probabilities=entry['probs']
+        # İşlenmiş dosyanın yolunu Reports modelinde kaydedin
+        report = Reports.objects.create(
+            driver=trip.driver,
+            trip=trip,  # Trip nesnesi bağlantısı
+            report_text="Detection results for dangerous behavior",  # İsteğe bağlı bir rapor metni
+            report_path=latest_file  # İşlenen dosyanın yolunu report_path alanına kaydedin
         )
-        report_detail.save()
+        data = process_results(results)
 
-    # Pass the processed data and other context to the template
-    context = {
-        'results': results,
-        'latest_file': latest_file,
-        'data': data,
-        'trip': trip
-    }
-    return render(request, 'detectionapp/results.html', context)
+        # Save the processed data to the database
+        for entry in data:
+            report_detail = ReportDetails(
+                report=Reports.objects.get(trip=trip),  # Link to the corresponding report
+                label=entry['label'],
+                confidence=entry['confidence'],
+                top_left_x=entry['x_min'],
+                top_left_y=entry['y_min'],
+                bottom_right_x=entry['x_max'],
+                bottom_right_y=entry['y_max'],
+                center_x=entry['x_center'],
+                center_y=entry['y_center'],
+                width=entry['width'],
+                height=entry['height'],
+                masks=entry['masks'],
+                keypoints=entry['keypoints'],
+                probabilities=entry['probs']
+            )
+            report_detail.save()
+
+        # Pass the processed data and other context to the template
+        context = {
+            'results': results,
+            'latest_file': latest_file,
+            'data': data,
+            'trip': trip
+        }
+        return render(request, 'detectionapp/results.html', context)
+    else:
+        # Handle GET request (if needed)
+        pass
 
 def detect_dangerous_behavior(file_path):
     # YOLO modelini yükle
@@ -137,7 +136,7 @@ def get_latest_prediction():
     # results_dir başındaki "detectionapp/static" kısmını kaldır
     if latest_file is not None:
         latest_file = latest_file.replace("detectionapp/static/", "")
-
+        latest_file = latest_file.replace("\\", "/")
     print("abc: " + latest_file)
  
     return latest_file
@@ -181,7 +180,8 @@ def process_results(results):
             x_min = y_min = x_max = y_max = x_center = y_center = width = height = 0.0
             masks = keypoints = probs = None
             # Append the formatted details to the list
-            data.append({
+            if label != "Unknown":
+                data.append({
                 'label': label,
                 'confidence': confidence,
                 'x_min': x_min,

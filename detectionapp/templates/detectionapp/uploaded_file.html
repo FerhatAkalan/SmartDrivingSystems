@@ -1,67 +1,135 @@
+<!-- uploaded_file.html -->
 {% extends 'layout.html' %}
-
+{% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uploaded File Preview</title>
-</head>
-<body>
-
+<style>
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: none;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    .card-title {
+        font-size: 1.5rem;
+    }
+    .card-body {
+        padding: 2rem;
+    }
+    .uploaded-file-preview {
+        margin-bottom: 2rem;
+    }
+    .img-thumbnail {
+        border: none;
+    }
+</style>
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">Uploaded File Preview</h5>
                 </div>
-                <div class="card-body">
-                    {% if uploaded_file %}
+                <div class="card-body text-center">
+                    <div class="uploaded-file-preview">
+                        <h5>Upload Information</h5>
+                        <h5>Upload File:</h5>
+                        {% if uploaded_file %}
                         <!-- Dosya önizlemesi -->
-                        {% if uploaded_file.file_type == 'video' %}
-                            <video controls class="img-thumbnail">
-                                <source src="{{ uploaded_file.file.url }}" type="video/mp4">
+                        {% if uploaded_file.file.name|slice:'-4:' == '.mp4' %}
+                            <video controls class="img-thumbnail img-fluid">
+                                <source src="{{ MEDIA_URL }}{{ uploaded_file.file.url }}" type="video/mp4">
                             </video>
                         {% else %}
-                            <img src="{{ uploaded_file.file.url }}" class="img-thumbnail">
+                            <img src="{{ MEDIA_URL }}{{ uploaded_file.file.url }}" class="img-thumbnail img-fluid">
                         {% endif %}
-                        <!-- Detect butonu -->
-                        <button type="button" class="btn btn-success btn-lg mt-3" id="detectButton"><i class="fa-solid fa-binoculars"></i> Detect</button>
-                    {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="mt-3">
+                        <!-- Driver bilgisi -->
+                        <h5 class="mt-3">Trip Information</h5>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Driver Name:</th>
+                                    <td>{{ trip.driver.driver_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Driver Surname:</th>
+                                    <td>{{ trip.driver.driver_surname }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Licence:</th>
+                                    <td>{{ trip.driver.driver_licence }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Starting Time:</th>
+                                    <td>{{ trip.start_time }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Ending Time:</th>
+                                    <td>{{ trip.end_time }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Detect butonu -->
+                    <form id="detectForm" method="post" action="{% url 'results' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="file_id" value="{{ uploaded_file.id }}">
+                        <input type="hidden" name="trip_id" value="{{ trip.id }}">
+                        <button type="submit" class="btn btn-success btn-lg mt-3" id="detectButton">
+                            <i class="fa-brands fa-searchengin"></i> Detect
+                        </button>
+                        <div class="spinner-border text-primary mt-3 d-none" role="status" id="spinner">
+                            <div class="sr-only">Loading...</div>
+                        </div>
+                        <a href="{% url 'upload_file' %}" class="btn btn-danger btn-lg mt-3" id="cancelButton">
+                            <i class="fa-solid fa-times"></i> Cancel
+                        </a>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-    // Detect butonuna tıklandığında
-    $('#detectButton').click(function() {
-        // AJAX isteği ile form verilerini al ve results view fonksiyonuna iletilmesi sağla
-        var uploadedFileId = "{{ uploaded_file.id }}"; // Yüklenen dosyanın ID'si
-        var tripId = "{{ trip.id }}"; // Trip ID'si
-        $.ajax({
-            type: "POST",
-            url: "{% url 'results' %}",
-            data: {
-                'uploaded_file_id': uploadedFileId,
-                'trip_id': tripId,
-                'csrfmiddlewaretoken': '{{ csrf_token }}'
-            },
-            success: function(response) {
-                // Sonuçlar alındığında, result fonksiyonunu tetikle
-                window.location.href = response.redirect;  // Sonuçlar sayfasına yönlendir
-            },
-            error: function(xhr, errmsg, err) {
-                // Hata durumunda kullanıcıya bilgi ver
-                console.log(xhr.status + ": " + xhr.responseText);  // Hata mesajını konsola yazdır
-                alert("Error occurred while processing the file. Please try again.");  // Kullanıcıya hata mesajını göster
-            }
+    $(document).ready(function() {
+        // Detect button element
+        const detectButton = $('#detectButton');
+        // Spinner element
+        const spinner = $('#spinner');
+        // Click event listener for the detect button
+        detectButton.on('click', function() {
+            detectButton.hide();
+            $('#cancelButton').hide();
+            spinner.removeClass('d-none'); // Spinner'ı göster
+            $.ajax({
+                url: '/detectionapp/results/',
+                type: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token for Django
+                },
+                data: JSON.stringify({
+                    'file_id': {{ uploaded_file.id }},
+                    'trip_id': {{ trip.id }}
+                }),
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                    spinner.addClass('d-none'); // İşlem tamamlandığında spinner'ı gizle
+                    detectButton.show();
+                    $('#cancelButton').show();
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    spinner.addClass('d-none'); // Hata durumunda da spinner'ı gizle
+                    detectButton.show();
+                    $('#cancelButton').show();
+                }
+            });
         });
     });
 </script>
-</body>
-</html>
 {% endblock %}

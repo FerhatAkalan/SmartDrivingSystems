@@ -51,9 +51,8 @@
                         </div>
                         <div class="text-center mb-3">
                             <div class="spinner-border text-primary" role="status" id="spinner" style="display:none;">
-                                <span class="visually-hidden">Yükleniyor...</span>
+                                <span class="sr-only">Loading...</span>
                             </div>
-                            <div id="loading" style="display:none;">Loading...</div>
                         </div>
                     </form>
                 </div>
@@ -77,9 +76,10 @@
     }
     // Dosya yükleme işlemi sırasında spinner'ı ve loading metnini göster
     $('form').submit(function(){
-        // Dosya seçilmediyse formu gönderme
-        if ($('#fileInput').get(0).files.length === 0) {
-            $('#fileInput').addClass('is-invalid');
+        // Tüm alanlar doldurulmamışsa formu gönderme
+        if ($('#fileInput').get(0).files.length === 0 || $('#start_time').val() === "" || $('#end_time').val() === "") {
+            return false;
+        } else if ($('#driver').val() === null || $('#driver').val() === "") { // Seçili bir sürücü olup olmadığını kontrol et
             return false;
         } else {
             $('#spinner').show();
