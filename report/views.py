@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .forms import DriverForm
-from .models import Driver
+from .models import Driver, ReportDetails
 from .models import Reports
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -37,3 +37,13 @@ def driver_reports(request):
         # page parametresi mevcut sayfa sayısından fazlaysa, son sayfayı al
         reports = paginator.page(paginator.num_pages)
     return render(request, 'driver-reports.html', {'reports': reports})
+
+def report_details(request, report_id):
+    report = get_object_or_404(Reports, pk=report_id)
+    report_details = ReportDetails.objects.filter(report=report).first()
+    
+    context = {
+        'report': report,
+        'report_details': report_details,
+    }
+    return render(request, 'report-details.html',context)

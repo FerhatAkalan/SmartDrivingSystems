@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% load static %}
+<div class="container">
+    <h1 class="my-4">Report Details</h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Report ID: {{ report.id }}</h5>
+            <p class="card-text">Report Text: {{ report.report_text }}</p>
+            <p class="card-text">Created At: {{ report.created_at }}</p>
+            <hr>
+            <h5 class="card-title">Driver Information</h5>
+            <p class="card-text">Driver: {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
+            <p class="card-text">Driver Licence: {{ report.driver.driver_licence }}</p>
+            <hr>
+            <h5 class="card-title">Trip Information</h5>
+            <p class="card-text">Trip Start Time: {{ report.trip.start_time }}</p>
+            <p class="card-text">Trip End Time: {{ report.trip.end_time }}</p>
+            <hr>
+            <p class="card-text">Video Path: {{ report.report_path }}</p>
+            {% if report_details %}
+            <p class="card-text">Safe Driving Score: {{ report_details.safe_driving }}</p>
+            <div class="card-body">
+                {% if report.report_path|slice:'-4:' == '.jpg' %}
+                    <img src="{% static report.report_path %}" alt="Detected Image" class="img-fluid">
+                {% elif report.report_path|slice:'-4:' == '.mp4' %}
+                    <video width="100%" height="auto" controls>
+                        <source src="{% static report_details.report.report_path %}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+            </div>
+            {% endif %}
+            <!-- Diğer rapor detayları buraya eklenebilir -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Field Name</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Top Left X</td>
+                        <td>{{ report_details.top_left_x }}</td>
+                    </tr>
+                    <tr>
+                        <td>Top Left Y</td>
+                        <td>{{ report_details.top_left_y }}</td>
+                    </tr>
+                    <tr>
+                        <td>Bottom Right X</td>
+                        <td>{{ report_details.bottom_right_x }}</td>
+                    </tr>
+                    <tr>
+                        <td>Bottom Right Y</td>
+                        <td>{{ report_details.bottom_right_y }}</td>
+                    </tr>
+                    <tr>
+                        <td>Center X</td>
+                        <td>{{ report_details.center_x }}</td>
+                    </tr>
+                    <tr>
+                        <td>Center Y</td>
+                        <td>{{ report_details.center_y }}</td>
+                    </tr>
+                    <tr>
+                        <td>Width</td>
+                        <td>{{ report_details.width }}</td>
+                    </tr>
+                    <tr>
+                        <td>Height</td>
+                        <td>{{ report_details.height }}</td>
+                    </tr>
+                    <!-- Diğer alanlar buraya eklenebilir -->
+                </tbody>
+            </table>
+            <div>
+                <a href="{% url 'driver_reports' %}" class="btn btn-secondary">Back to Reports</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
