@@ -39,11 +39,12 @@ def driver_reports(request):
     return render(request, 'driver-reports.html', {'reports': reports})
 
 def report_details(request, report_id):
+    # Veritabanından rapor detaylarını al
     report = get_object_or_404(Reports, pk=report_id)
-    report_details = ReportDetails.objects.filter(report=report).first()
-    
+    report_details = ReportDetails.objects.filter(report_id=report_id)
+
     context = {
-        'report': report,
-        'report_details': report_details,
+        'report':report,
+        'report_details': report_details
     }
-    return render(request, 'report-details.html',context)
+    return render(request, 'report-details.html', context)

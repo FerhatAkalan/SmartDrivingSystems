@@ -59,6 +59,7 @@ def results(request):
         # Tehlikeli davranışları tespit et ve sonuçları işle
         file_path = uploaded_file.file.path
         results = detect_dangerous_behavior(file_path)
+        total_frames = len(results)  # Get total frames
         # Sonucun en son oluşturulan dosyasını al
         latest_file = get_latest_prediction()
         # Çıkarım sonuçlarını işleyerek bir grafik oluştur
@@ -68,7 +69,8 @@ def results(request):
             driver=trip.driver,
             trip=trip,  # Trip nesnesi bağlantısı
             report_text="Detection results for dangerous behavior",  # İsteğe bağlı bir rapor metni
-            report_path=latest_file  # İşlenen dosyanın yolunu report_path alanına kaydedin
+            report_path=latest_file, # İşlenen dosyanın yolunu report_path alanına kaydedin
+            total_frames=total_frames  # Include total_frames
         )
         data = process_results(results)
 
@@ -88,7 +90,8 @@ def results(request):
                 height=entry['height'],
                 masks=entry['masks'],
                 keypoints=entry['keypoints'],
-                probabilities=entry['probs']
+                probabilities=entry['probs'],
+                frame_info=entry['current_info']  # Include frame_info
             )
             report_detail.save()
 
@@ -145,6 +148,7 @@ def process_results(results):
     data = []
     total_frames = len(results)
     for i, result in enumerate(results):
+        current_info= i+1
         frame_info = f"{i+1}/{total_frames}"  # Format: current_frame/total_frames
         if result.boxes.cls is not None and len(result.boxes.cls) > 0:  # Eğer cls listesi boş değilse
             label = class_labels.get(int(result.boxes.cls[0]), "Unknown")  # Map class index to label
@@ -172,6 +176,7 @@ def process_results(results):
                 'keypoints': keypoints,
                 'probs': probs,
                 'frame_info': frame_info,  # Kare bilgilerini ekle
+                'current_info' : current_info
             })
         else:
             # cls listesi boşsa, labeli Unknown olarak işaretle
@@ -196,5 +201,6 @@ def process_results(results):
                 'keypoints': keypoints,
                 'probs': probs,
                 'frame_info': frame_info,  # Kare bilgilerini ekle
+                'current_info' : current_info
             })
     return data

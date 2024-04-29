@@ -19,62 +19,95 @@
             <hr>
             <p class="card-text">Video Path: {{ report.report_path }}</p>
             {% if report_details %}
-            <p class="card-text">Safe Driving Score: {{ report_details.safe_driving }}</p>
+            <p class="card-text">Safe Driving Score: {{ report_details.confidence }}</p>
             <div class="card-body">
                 {% if report.report_path|slice:'-4:' == '.jpg' %}
                     <img src="{% static report.report_path %}" alt="Detected Image" class="img-fluid">
                 {% elif report.report_path|slice:'-4:' == '.mp4' %}
                     <video width="100%" height="auto" controls>
-                        <source src="{% static report_details.report.report_path %}" type="video/mp4">
+                        <source src="{% static report.report_path %}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 {% endif %}
             </div>
             {% endif %}
             <!-- Diğer rapor detayları buraya eklenebilir -->
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Field Name</th>
-                        <th scope="col">Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Top Left X</td>
-                        <td>{{ report_details.top_left_x }}</td>
-                    </tr>
-                    <tr>
-                        <td>Top Left Y</td>
-                        <td>{{ report_details.top_left_y }}</td>
-                    </tr>
-                    <tr>
-                        <td>Bottom Right X</td>
-                        <td>{{ report_details.bottom_right_x }}</td>
-                    </tr>
-                    <tr>
-                        <td>Bottom Right Y</td>
-                        <td>{{ report_details.bottom_right_y }}</td>
-                    </tr>
-                    <tr>
-                        <td>Center X</td>
-                        <td>{{ report_details.center_x }}</td>
-                    </tr>
-                    <tr>
-                        <td>Center Y</td>
-                        <td>{{ report_details.center_y }}</td>
-                    </tr>
-                    <tr>
-                        <td>Width</td>
-                        <td>{{ report_details.width }}</td>
-                    </tr>
-                    <tr>
-                        <td>Height</td>
-                        <td>{{ report_details.height }}</td>
-                    </tr>
-                    <!-- Diğer alanlar buraya eklenebilir -->
-                </tbody>
-            </table>
+            <hr>
+            <h5 class="card-title">Report Details </h5>
+                    <div class="card-body" id="result-details">
+                        {% for item in report_details %}
+                            {% if item.label != "Unknown" %}
+                                <div class="card-body" style="display: none;">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            {% comment %} <strong>Detected Boxes:  {{ item.frame_info  }}</strong><br> {% endcomment %}
+                                            Class: {{ item.label }}<br>
+                                            Confidence: {{ item.confidence }}<br>
+                                            Sol Üst Köşe (x_min, y_min): ({{ item.top_left_x }}, {{ item.top_left_y }})<br>
+                                            Sağ Alt Köşe (x_max, y_max): ({{ item.bottom_right_x }}, {{ item.bottom_right_y }})<br>
+                                            Merkez Koordinatlar (x_center, y_center): ({{ item.center_x }}, {{ item.center_y }})<br>
+                                            Genişlik: {{ item.width }}<br>
+                                            Yükseklik: {{ item.height }}<br>
+                                            Masks: {{ item.masks }}<br>
+                                            Keypoints: {{ item.keypoints }}<br>
+                                            Probabilities: {{ item.probabilities }}<br>
+                                            {% comment %} <li class="list-group-item">
+                                                <strong>Frame Info:</strong><br>
+                                                {{ item.frame_info  }}
+                                            </li> {% endcomment %}
+                                        </li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="btn-group" role="group" aria-label="Page Navigation">
+                                <button id="prev-page" class="btn btn-secondary">Previous</button>
+                                <button id="next-page" class="btn btn-secondary">Next</button>
+                                <p id="page-info" class="mb-0 mx-3"></p>
+                            </div>
+                        </div>
+                    </div>
+            <script>
+                // Sayfalama işlemi için gerekli değişkenler
+                var currentPage = 1;
+                var itemsPerPage = 1; // Sayfa başına gösterilecek öğe sayısı
+                // Sayfa yüklendiğinde ilk sayfayı göster
+                showPage(currentPage);
+                // Sayfalama işlemini gerçekleştiren fonksiyon
+                function showPage(page) {
+                    var elements = document.querySelectorAll('#result-details .card-body'); // Sonuçları içeren kartların listesi
+                    // Tüm kartları gizle
+                    elements.forEach(function(element) {
+                        element.style.display = 'none';
+                    });
+                    // Belirtilen aralıktaki kartları göster
+                    elements[page - 1].style.display = 'block';
+                    // Sayfa bilgisini güncelle
+                    var totalItems = elements.length;
+                    var totalPages = Math.ceil(totalItems / itemsPerPage);
+                    document.getElementById('page-info').textContent = 'Page ' + page + '/' + totalPages;
+                }
+                // Sayfa değiştirme düğmelerine tıklama olayını dinle
+                document.getElementById('prev-page').addEventListener('click', function() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        showPage(currentPage);
+                    }
+                });
+                document.getElementById('next-page').addEventListener('click', function() {
+                    var totalItems = document.querySelectorAll('#result-details .card-body').length;
+                    var totalPages = Math.ceil(totalItems / itemsPerPage);
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        showPage(currentPage);
+                    }
+                });
+            </script>
             <div>
                 <a href="{% url 'driver_reports' %}" class="btn btn-secondary">Back to Reports</a>
             </div>
@@ -82,3 +115,4 @@
     </div>
 </div>
 {% endblock %}
+

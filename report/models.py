@@ -26,6 +26,7 @@ class Reports(models.Model):
     report_text = models.TextField()
     report_path = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
+    total_frames = models.IntegerField()
 
 class ReportDetails(models.Model):
     report = models.ForeignKey(Reports, on_delete=models.CASCADE)
@@ -42,6 +43,7 @@ class ReportDetails(models.Model):
     masks = models.JSONField(null=True, blank=True)
     keypoints = models.JSONField(null=True, blank=True)
     probabilities = models.JSONField(null=True, blank=True)
-
+    frame_info = models.IntegerField()  # Frame information
+    
     def __str__(self):
         return f"Report Details for {self.report}"
