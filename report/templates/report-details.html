@@ -1,6 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% load static %}
+
 <div class="container">
     <h1 class="my-4">Report Details</h1>
     <div class="card mb-4">
@@ -66,12 +69,77 @@
                         </div>
                         <div class="d-flex align-items-center">
                             <div class="btn-group" role="group" aria-label="Page Navigation">
-                                <button id="prev-page" class="btn btn-secondary">Previous</button>
-                                <button id="next-page" class="btn btn-secondary">Next</button>
+                                <button id="prev-page" class="btn btn-primary">Previous</button>
+                                <button id="next-page" class="btn btn-primary">Next</button>
                                 <p id="page-info" class="mb-0 mx-3"></p>
                             </div>
                         </div>
                     </div>
+                    <h1>Rapor Detayları</h1>
+                    <p>Rapor Numarası: {{ report.id }}</p>
+                    <p>Tespit Edilen Tehlikeli Davranışlar:</p>
+                    <ul>
+                        {% for label_count in label_counts %}
+                        <li>{{ label_count.label }}: {{ label_count.count }}</li>
+                        {% endfor %}
+                   </ul>
+                   <h1>Rapor Detayları</h1>
+                    <p>Rapor Numarası: {{ report.id }}</p>
+                    <p>Tespit Edilen Tehlikeli Davranışlar:</p>
+                    <canvas id="labelChart" width="20" height="20"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <h1>Rapor Detayları</h1>
+<p>Rapor Numarası: {{ report.id }}</p>
+<p>Tespit Edilen Tehlikeli Davranışlar:</p>
+<canvas id="labelChart" width="400" height="400"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('labelChart').getContext('2d');
+    var labels = [
+        {% for label_count in label_counts %}
+            "{{ label_count.label }}",
+        {% endfor %}
+    ];
+    var counts = [
+        {% for label_count in label_counts %}
+            {{ label_count.count }},
+        {% endfor %}
+    ];
+
+    // Toplam çerçeve sayısını al
+    var totalFrames = {{ report.total_frames }};
+
+    // Geri kalan kısmı hesapla ve 'safe driving' olarak işaretle
+    var safeDrivingCount = totalFrames;
+    for (var i = 0; i < counts.length; i++) {
+        safeDrivingCount -= counts[i];
+    }
+
+    // Hesaplanan değerleri listeye ekle
+    labels.push("Safe Driving");
+    counts.push(safeDrivingCount);
+
+    var labelChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Tespit Edilen Tehlikeli Davranışlar',
+                data: counts,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)',
+                    'rgba(0, 128, 0, 0.5)'  // Safe Driving için yeşil renk
+                ],
+            }]
+        },
+        
+    });
+</script>
             <script>
                 // Sayfalama işlemi için gerekli değişkenler
                 var currentPage = 1;
@@ -108,9 +176,9 @@
                     }
                 });
             </script>
-            <div>
-                <a href="{% url 'driver_reports' %}" class="btn btn-secondary">Back to Reports</a>
-            </div>
+
+            <div><a href="{% url 'driver_reports' %}" class="btn btn-primary">Back to Reports</a></div>
+
         </div>
     </div>
 </div>
