@@ -18,13 +18,13 @@
                     <h5 class="card-title">Driver Dangerous Behavior Detection System</h5>
                 </div>
                 <div class="card-body">
-                    <p class="mb-3">Please upload in-car video. Once the file is processed you will be redirected to the results page.</p>
+                    <p class="mb-3">Please upload both in-car and out-car videos. Once the files are processed you will be redirected to the results page.</p>
                     <form method="post" enctype="multipart/form-data" id="uploadForm" class="needs-validation" novalidate>
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="driver" class="form-label">Select Driver</label>
                             <select class="form-control" id="driver" name="driver" required>
-                                <option value="" selected disabled>Select a driver</option> <!-- Varsayılan seçenek -->
+                                <option value="" selected disabled>Select a driver</option>
                                 {% for driver in form.driver.field.queryset %}
                                     <option value="{{ driver.id }}">{{ driver.driver_name }} {{ driver.driver_surname }}</option>
                                 {% endfor %}
@@ -34,9 +34,14 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="fileInput" class="form-label">Select File (Supported formats: JPG, MP4)</label>
-                            <input type="file" class="form-control" id="fileInput" name="file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
-                            <div class="invalid-feedback" id="fileTypeError" style="display:none;">Sadece JPG veya MP4 dosyaları yüklenebilir.</div>
+                            <label for="fileInputInside" class="form-label">Upload In-car Video (Supported formats: JPG, MP4)</label>
+                            <input type="file" class="form-control" id="fileInputInside" name="car_inside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
+                            <div class="invalid-feedback" id="fileTypeErrorInside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fileInputOutside" class="form-label">Upload Out-car Video (Supported formats: JPG, MP4)</label>
+                            <input type="file" class="form-control" id="fileInputOutside" name="car_outside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
+                            <div class="invalid-feedback" id="fileTypeErrorOutside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
                         </div>
                         <div class="mb-3">
                             <label for="start_time" class="form-label">Start Time</label>
@@ -60,7 +65,7 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
     // Dosya türünü kontrol et
     function checkFileType(input) {
@@ -68,34 +73,25 @@
         var fileType = file.type;
         var allowedTypes = ['image/jpeg', 'video/mp4'];
         if (!allowedTypes.includes(fileType)) {
-            $('#fileTypeError').show();
+            // Dosya türü desteklenmiyorsa uygun hata mesajını göster
+            var errorId = input.id === 'fileInputInside' ? '#fileTypeErrorInside' : '#fileTypeErrorOutside';
+            $(errorId).show();
             input.value = ''; // Dosyayı temizle
         } else {
-            $('#fileTypeError').hide();
+            // Dosya türü destekleniyorsa hata mesajını gizle
+            var errorId = input.id === 'fileInputInside' ? '#fileTypeErrorInside' : '#fileTypeErrorOutside';
+            $(errorId).hide();
         }
     }
+
     // Dosya yükleme işlemi sırasında spinner'ı ve loading metnini göster
-    $('form').submit(function(){
-        // Tüm alanlar doldurulmamışsa formu gönderme
-        if ($('#fileInput').get(0).files.length === 0 || $('#start_time').val() === "" || $('#end_time').val() === "") {
-            return false;
-        } else if ($('#driver').val() === null || $('#driver').val() === "") { // Seçili bir sürücü olup olmadığını kontrol et
-            return false;
-        } else {
-            $('#spinner').show();
-            $('#loading').show();
-            $('#uploadButtonContainer').hide(); // Yükle butonunu gizle
-            return true;
-        }
-    });
     $(document).ready(function() {
-        $('form').submit(function(event) {
+        $('#uploadForm').submit(function(event) {
             event.preventDefault(); // Formun gönderilmesini engelle
             if (this.checkValidity() === false) {
                 event.stopPropagation(); // Olayın üst sınıfa yayılmasını engelle
             } else {
                 $('#spinner').show();
-                $('#loading').show();
                 $('#uploadButtonContainer').hide();
                 this.submit(); // Formu gönder
             }

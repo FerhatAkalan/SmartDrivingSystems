@@ -3,6 +3,7 @@ from .forms import DriverForm
 from .models import Driver, ReportDetails
 from .models import Reports
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Count
 
 
 from django.http import Http404
@@ -39,11 +40,15 @@ def driver_reports(request):
     return render(request, 'driver-reports.html', {'reports': reports})
 
 def report_details(request, report_id):
+    # Veritabanından rapor detaylarını al
     report = get_object_or_404(Reports, pk=report_id)
-    report_details = ReportDetails.objects.filter(report=report).first()
-    
+    report_details = ReportDetails.objects.filter(report_id=report_id)
+    label_counts = ReportDetails.objects.filter(report=report).values('label').annotate(count=Count('label'))
+
     context = {
-        'report': report,
+        'report':report,
         'report_details': report_details,
+        'label_counts': label_counts
+
     }
-    return render(request, 'report-details.html',context)
+    return render(request, 'report-details.html', context)

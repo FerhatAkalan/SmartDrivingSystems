@@ -1,11 +1,9 @@
 from django.db import models
 from django.apps import apps
 
-# Create your models here.
-
 class UploadedFile(models.Model):
-    file = models.FileField(upload_to='uploads/')
+    car_inside_file = models.FileField(upload_to='uploads/', verbose_name="In-car File")
+    car_outside_file = models.FileField(upload_to='uploads/', verbose_name="Out-car File")
 
     class Meta:
         app_label = apps.get_app_config('detectionapp').name
- 
