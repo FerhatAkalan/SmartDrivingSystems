@@ -57,6 +57,7 @@ def results(request):
         uploaded_file = UploadedFile.objects.get(id=file_id)
         trip = Trips.objects.get(id=trip_id)
         # Tehlikeli davranışları tespit et ve sonuçları işle
+<<<<<<< HEAD
         car_inside_file_path = trip.car_inside_file_path
         car_outside_file_path = trip.car_outside_file_path
         # Car Inside Results
@@ -73,6 +74,45 @@ def results(request):
         data_inside = process_results(car_inside_results,is_car_interior=True)
         data_outside = process_results(car_outside_results,is_car_interior=False)
         report = create_report(request.user, trip, car_inside_results, car_inside_latest_file, car_outside_results ,car_outside_latest_file,total_frames_inside,total_frames_outside)
+=======
+        file_path = uploaded_file.file.path
+        results = detect_dangerous_behavior(file_path)
+        total_frames = len(results)  # Get total frames
+        # Sonucun en son oluşturulan dosyasını al
+        latest_file = get_latest_prediction()
+        # Çıkarım sonuçlarını işleyerek bir grafik oluştur
+
+        # İşlenmiş dosyanın yolunu Reports modelinde kaydedin
+        report = Reports.objects.create(
+            driver=trip.driver,
+            trip=trip,  # Trip nesnesi bağlantısı
+            report_text="Detection results for dangerous behavior",  # İsteğe bağlı bir rapor metni
+            report_path=latest_file, # İşlenen dosyanın yolunu report_path alanına kaydedin
+            total_frames=total_frames  # Include total_frames
+        )
+        data = process_results(results)
+
+        # Save the processed data to the database
+        for entry in data:
+            report_detail = ReportDetails(
+                report=Reports.objects.get(trip=trip),  # Link to the corresponding report
+                label=entry['label'],
+                confidence=entry['confidence'],
+                top_left_x=entry['x_min'],
+                top_left_y=entry['y_min'],
+                bottom_right_x=entry['x_max'],
+                bottom_right_y=entry['y_max'],
+                center_x=entry['x_center'],
+                center_y=entry['y_center'],
+                width=entry['width'],
+                height=entry['height'],
+                masks=entry['masks'],
+                keypoints=entry['keypoints'],
+                probabilities=entry['probs'],
+                frame_info=entry['current_info']  # Include frame_info
+            )
+            report_detail.save()
+>>>>>>> 98edbe154e192af30c55f166f9544ed12d278430
 
         # Pass the processed data and other context to the template
         context = {
@@ -198,8 +238,12 @@ def process_results(results, is_car_interior):
                 'width': width,
                 'height': height,
                 'frame_info': frame_info,  # Kare bilgilerini ekle
+<<<<<<< HEAD
                 'current_info' : current_info,
                 'is_car_interior': is_car_interior  # Araç içi veya dışı olduğunu belirt
+=======
+                'current_info' : current_info
+>>>>>>> 98edbe154e192af30c55f166f9544ed12d278430
             })
         else:
             # cls listesi boşsa, labeli Unknown olarak işaretle
