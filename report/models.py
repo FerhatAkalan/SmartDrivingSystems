@@ -29,15 +29,11 @@ class Reports(models.Model):
     car_inside_report_path = models.TextField()
     car_outside_report_path = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
-<<<<<<< HEAD
     total_frames_inside = models.IntegerField()
     total_frames_outside = models.IntegerField()
 
     def __str__(self):
         return f"Report for {self.driver} - {self.created_at}"
-=======
-    total_frames = models.IntegerField()
->>>>>>> 98edbe154e192af30c55f166f9544ed12d278430
 
 class ReportDetails(models.Model):
     report = models.ForeignKey(Reports, on_delete=models.CASCADE)
@@ -51,15 +47,7 @@ class ReportDetails(models.Model):
     center_y = models.FloatField()
     width = models.FloatField()
     height = models.FloatField()
-<<<<<<< HEAD
     frame_info = models.IntegerField()
     is_car_interior = models.BooleanField(default=False)
-=======
-    masks = models.JSONField(null=True, blank=True)
-    keypoints = models.JSONField(null=True, blank=True)
-    probabilities = models.JSONField(null=True, blank=True)
-    frame_info = models.IntegerField()  # Frame information
-    
->>>>>>> 98edbe154e192af30c55f166f9544ed12d278430
     def __str__(self):
         return f"Report Details for {self.report}"
