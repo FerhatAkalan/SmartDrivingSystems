@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-
+{% load static %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -7,13 +7,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background-color: #f5f5f5;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        
+        .card-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-body img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .purpose-list {
+            margin-top: 20px;
+        }
+        
+        .purpose-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .purpose-item {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        /* Kart animasyonu */
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            animation: fadeInLeft 0.5s ease both;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }  
+    </style>
 </head>
 <body>
 
-<div class="container mt-5">
+<div class="container mt-3 mb-3">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
+        <div class="col-md-6">
+            <div class="card h-100"> 
+                <div class="card-header">
+                    <h5 class="card-title">Smart Driving System</h5>
+                </div>
+                <div class="card-body">
+                    <img src="{% static 'detectionapp/img/driving.jpg' %}" alt="Advertisement" class="advertisement">
+                    <div class="card-body">
+                    <div class="purpose-list mt-3">
+                        <h5 class="purpose-title">Smart Driving System Purposes</h5>
+                            <li class="purpose-item">Promoting safe driving habits.</li>
+                            <li class="purpose-item">To increase compliance with traffic rules.</li>
+                            <li class="purpose-item">Increase driver attention.</li>
+                            <li class="purpose-item">Reducing the risk of accidents.</li>
+                            <li class="purpose-item">Creating driver profiles.</li>
+                    </div>  </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 form-container">
+            <div class="card h-100">
                 <div class="card-header">
                     <h5 class="card-title">Driver Dangerous Behavior Detection System</h5>
                 </div>
@@ -51,7 +148,7 @@
                             <label for="end_time" class="form-label">End Time</label>
                             <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
                         </div>
-                        <div class="text-center" id="uploadButtonContainer">
+                        <div class="text-center mt-5" id="uploadButtonContainer">
                             <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-file-arrow-up"></i> Upload</button>
                         </div>
                         <div class="text-center mb-3">
@@ -66,38 +163,7 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script>
-    // Dosya türünü kontrol et
-    function checkFileType(input) {
-        var file = input.files[0];
-        var fileType = file.type;
-        var allowedTypes = ['image/jpeg', 'video/mp4'];
-        if (!allowedTypes.includes(fileType)) {
-            // Dosya türü desteklenmiyorsa uygun hata mesajını göster
-            var errorId = input.id === 'fileInputInside' ? '#fileTypeErrorInside' : '#fileTypeErrorOutside';
-            $(errorId).show();
-            input.value = ''; // Dosyayı temizle
-        } else {
-            // Dosya türü destekleniyorsa hata mesajını gizle
-            var errorId = input.id === 'fileInputInside' ? '#fileTypeErrorInside' : '#fileTypeErrorOutside';
-            $(errorId).hide();
-        }
-    }
-
-    // Dosya yükleme işlemi sırasında spinner'ı ve loading metnini göster
-    $(document).ready(function() {
-        $('#uploadForm').submit(function(event) {
-            event.preventDefault(); // Formun gönderilmesini engelle
-            if (this.checkValidity() === false) {
-                event.stopPropagation(); // Olayın üst sınıfa yayılmasını engelle
-            } else {
-                $('#spinner').show();
-                $('#uploadButtonContainer').hide();
-                this.submit(); // Formu gönder
-            }
-            this.classList.add('was-validated'); // Bootstrap'den gelen stilleri uygula
-        });
-    });
+<script src="{% static 'detectionapp/js/upload.js' %}">
 </script>
 </body>
 </html>

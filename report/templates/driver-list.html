@@ -13,9 +13,9 @@
 <body>
 <main class="container">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="text-center my-5">Driver List</h1>
-            <table class="table table-bordered table-striped table-hover">
+        <div class="col-md-8 offset-md-1 mt-3">
+            <h1 class="text-center">Driver List</h1>
+            <table class="table table-bordered table-striped table-hover animated fadeInUp">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -40,4 +40,62 @@
 </main>
 </body>
 </html>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #dee2e6;
+        margin-top: 20px;
+    }
+    .table th,
+    .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .table th {
+        background-color: #007bff;
+        color: #fff;
+    }
+    
+    .table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    
+    .table-striped tbody tr:nth-child(odd) {
+        background-color: #e9ecef;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: #c8ced3;
+        transition: background-color 0.3s;
+    }
+
+    /* Animasyonlar */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animated {
+        animation-duration: 1s;
+        animation-fill-mode: both;
+    }
+
+    .fadeInUp {
+        animation-name: fadeInUp;
+    }
+</style>
+
 {% endblock %}

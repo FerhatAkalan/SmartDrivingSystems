@@ -9,29 +9,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
     <style>
-        .card-header, .card-footer {
-            background-color: #f8f9fa;
-            color: #495057;
-            font-weight: bold;
-        }
-        .card-body {
-            background-color: #fff;
-        }
-        .card-body img, .card-body video {
-            max-width: 100%;
-            height: auto;
-        }
-        .pagination {
-            margin: 20px 0;
-        }
-        .pagination button {
-            margin: 0 5px;
-        }
+        /* Kartlar ve tablo stilleri */
+    .card {
+        margin-bottom: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card-header, .card-footer {
+        background-color: #f8f9fa;
+        color: #495057;
+        font-weight: bold;
+        border-bottom: none;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    .card-body {
+        background-color: #fff;
+        padding: 20px;
+    }
+    .card-body img,
+    .card-body video {
+        max-width: 100%;
+        height: auto;
+    }
+    .table {
+        margin-bottom: 0;
+    }
+    /* Pagination düğmeleri */
+    .pagination {
+        margin-top: 20px;
+    }
+    .pagination button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .pagination button:hover {
+        background-color: #0056b3;
+    }
+    /* Görsel ve video önizleme kartlarına geçiş animasyonu */
+    .card-body {
+        transition: transform 0.3s ease;
+    }
+    /* Buton animasyonu */
+    .btn {
+        transition: all 0.3s ease;
+    }
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
     </style>
 </head>
 <body>
     <div class="container-fluid">
-        <h2 class="mt-4 mb-3">Result Statistics</h2>
+        <h2 class="mt-3 mb-3">Result Statistics</h2>
         {% if report %}
             <div class="row mt-4 mb-3">
                 <div class="col-md-6">
@@ -211,74 +248,8 @@
                 </div>
             </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        // İç detaylar için sayfalama işlevi
-        var currentPageInside = 1;
-        var itemsPerPageInside = 1;
-        showPageInside(currentPageInside);
-    
-        function showPageInside(page) {
-            var elementsInside = document.querySelectorAll('#result-details-inside .card-body');
-            elementsInside.forEach(function(element) {
-                element.style.display = 'none';
-            });
-            elementsInside[page - 1].style.display = 'block';
-    
-            var totalItemsInside = elementsInside.length;
-            var totalPagesInside = Math.ceil(totalItemsInside / itemsPerPageInside);
-            document.getElementById('page-info-inside').textContent = 'Page ' + page + '/' + totalPagesInside;
-        }
-    
-        $('#prev-page-inside').click(function() {
-            if (currentPageInside > 1) {
-                currentPageInside--;
-                showPageInside(currentPageInside);
-            }
-        });
-    
-        $('#next-page-inside').click(function() {
-            var totalItemsInside = document.querySelectorAll('#result-details-inside .card-body').length;
-            var totalPagesInside = Math.ceil(totalItemsInside / itemsPerPageInside);
-            if (currentPageInside < totalPagesInside) {
-                currentPageInside++;
-                showPageInside(currentPageInside);
-            }
-        });
-    
-        // Dış detaylar için sayfalama işlevi
-        var currentPageOutside = 1;
-        var itemsPerPageOutside = 1;
-        showPageOutside(currentPageOutside);
-    
-        function showPageOutside(page) {
-            var elementsOutside = document.querySelectorAll('#result-details-outside .card-body');
-            elementsOutside.forEach(function(element) {
-                element.style.display = 'none';
-            });
-            elementsOutside[page - 1].style.display = 'block';
-    
-            var totalItemsOutside = elementsOutside.length;
-            var totalPagesOutside = Math.ceil(totalItemsOutside / itemsPerPageOutside);
-            document.getElementById('page-info-outside').textContent = 'Page ' + page + '/' + totalPagesOutside;
-        }
-    
-        $('#prev-page-outside').click(function() {
-            if (currentPageOutside > 1) {
-                currentPageOutside--;
-                showPageOutside(currentPageOutside);
-            }
-        });
-    
-        $('#next-page-outside').click(function() {
-            var totalItemsOutside = document.querySelectorAll('#result-details-outside .card-body').length;
-            var totalPagesOutside = Math.ceil(totalItemsOutside / itemsPerPageOutside);
-            if (currentPageOutside < totalPagesOutside) {
-                currentPageOutside++;
-                showPageOutside(currentPageOutside);
-            }
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{% static 'detectionapp/js/results_script.js' %}"></script>
 </body>
 </html>
 {% endblock %}

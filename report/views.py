@@ -4,10 +4,10 @@ from .models import Driver, ReportDetails
 from .models import Reports
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
-
-
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
+@login_required
 def add_driver(request):
     if request.method == 'POST':
         form = DriverForm(request.POST, user=request.user)
@@ -21,10 +21,12 @@ def add_driver(request):
         form = DriverForm()
     return render(request, 'add-driver.html', {'form': form})
 
+@login_required
 def driver_list(request):
     drivers = Driver.objects.filter(user=request.user)  # Tüm sürücüleri alır
     return render(request, 'driver-list.html', {'drivers': drivers})
 
+@login_required
 def driver_reports(request):
     report_list = Reports.objects.filter(trip__driver__user=request.user).order_by('-created_at')  # Oturum açmış kullanıcının raporlarını filtrele
     paginator = Paginator(report_list, 6)  # Sayfa başına 10 rapor
@@ -39,6 +41,7 @@ def driver_reports(request):
         reports = paginator.page(paginator.num_pages)
     return render(request, 'driver-reports.html', {'reports': reports})
 
+@login_required
 def report_details(request, report_id):
     # Veritabanından rapor detaylarını al
     report = get_object_or_404(Reports, pk=report_id)

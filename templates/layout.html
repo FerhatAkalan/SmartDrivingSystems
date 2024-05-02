@@ -35,10 +35,8 @@
     <!-- Header -->
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-2">{% include 'partials/_sidebar.html' %}</div>
-        <div
-          class="{% if user.is_authenticated %}col-md-9{% else %}col-md-12{% endif %}"
-        >
+        {% if user.is_authenticated %}<div class="col-md-2">{% include 'partials/_sidebar.html' %}</div>{% endif %}
+        <div class="{% if user.is_authenticated %}col-md-10{% else %}col-md-12{% endif %}">
           <!-- Content -->
           <div class="content">{% block content %}{% endblock %}</div>
           <!-- Content -->

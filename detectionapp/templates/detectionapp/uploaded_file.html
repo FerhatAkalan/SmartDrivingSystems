@@ -2,36 +2,75 @@
 {% load static %}
 {% block content %}
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f9f9f9;
+        color: #333;
+    }
     .card-header {
         background-color: #f8f9fa;
         border-bottom: none;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
     }
+    
     .card-title {
         font-size: 1.5rem;
     }
+    
     .card-body {
         padding: 2rem;
         justify-content:center;
-        
     }
+    
     .uploaded-file-preview {
         margin-bottom: 2rem;
     }
+    
     .img-thumbnail {
         border: none;
         max-width: 100%;
         max-height: 100%;
     }
+    
     .uploaded-file-preview video,
     .uploaded-file-preview img {
         width: 100%;
         height: auto;
     }
+    /* Kart animasyonu */
+    .card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        animation: fadeInUp 0.5s ease both;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Buton animasyonu */
+    .btn {
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
 </style>
 
-<div class="container mt-5">
+<div class="container mt-3 mb-3">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -101,13 +140,13 @@
                         <input type="hidden" name="file_id" value="{{ uploaded_file.id }}">
                         <input type="hidden" name="trip_id" value="{{ trip.id }}">
                         <button type="submit" class="btn btn-success btn-lg mt-3" id="detectButton">
-                            <i class="fa-brands fa-searchengin"></i> Detect
+                             Detect
                         </button>
                         <div class="spinner-border text-primary mt-3 d-none" role="status" id="spinner">
                             <div class="sr-only">Loading...</div>
                         </div>
                         <a href="{% url 'upload_file' %}" class="btn btn-danger btn-lg mt-3" id="cancelButton">
-                            <i class="fa-solid fa-times"></i> Cancel
+                             Cancel
                         </a>
                     </form>
                 </div>

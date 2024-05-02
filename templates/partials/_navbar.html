@@ -41,11 +41,11 @@
             ><i class="fa-solid fa-user"></i> Welcome, {{ user.username }}</a
           >
         </li>
-        <li class="nav-item">
+        {% comment %} <li class="nav-item">
           <a class="nav-link" href="{% url 'user_logout' %}"
             ><i class="fas fa-sign-in-alt"></i> Logout</a
           >
-        </li>
+        </li> {% endcomment %}
         {% else %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'user_login' %}"
@@ -63,10 +63,11 @@
   </div>
 </nav>
 <style>
-.nav-link:hover {
-  color: gray !important; /* Üzerine gelindiğinde renk */
-}
+  .nav-link:hover {
+    color: #FFC300 !important; /* Üzerine gelindiğinde renk */
+  }
 .nav-link {
   color: #333 !important; /* Nav linkleri rengi */
 }
+
 </style>

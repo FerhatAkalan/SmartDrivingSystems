@@ -1,24 +1,183 @@
-{% extends 'layout.html' %} {% block content %} {% load static %}
+{% extends 'layout.html' %}
+{% block content %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homepage</title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-8">
-          <img
-          style="height: 80vh;"
-            src="{% static 'img/maintenance.jpg' %}"
-            class="img-fluid"
-            alt="maintenance image"
-          />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Driving System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .jumbotron {
+            font-family: FasterOne, sans-serif;
+            background-image: url('{% static 'img/background.jpg' %}');
+            background-size: cover;
+            padding: 2rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-radius: 15px;
+            position: relative;
+        }
+        .jumbotron h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .jumbotron p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .jumbotron .btn {
+            background-color: gray;
+            border: none;
+            border-radius: 5px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            color: #fff;
+            text-transform: uppercase;
+            margin-top: 2rem;
+            transition: background-color 0.3s ease;
+        }
+        .jumbotron .btn:hover {
+            background-color: #0056b3;
+        }
+        .feature {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .feature i {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .feature p {
+            font-size: 1rem;
+            color: #666;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .card:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .card-text {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container fluid mt-3 mb-5">
+<div class="jumbotron">
+    <h1>Welcome to Smart Driving System</h1>
+    <p class="lead">Making Roads Safer with Advanced Technology</p>
+    <a href="#features" class="btn">Get Started</a>
+</div>
+
+<div class="container" id="features">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="feature">
+                <i class="fas fa-chart-line"></i>
+                <h3>Driving Analysis</h3>
+                <p>Analyze driving patterns and trends.</p>
+            </div>
         </div>
-      </div>
+        <div class="col-md-4">
+            <div class="feature">
+                <i class="fas fa-user"></i>
+                <h3>Drivers</h3>
+                <p>Manage driver information and profiles.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature">
+                <i class="fas fa-file-alt"></i>
+                <h3>Reports</h3>
+                <p>Access detailed reports on driving behavior.</p>
+            </div>
+        </div>
     </div>
-  </body>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{% static 'detectionapp/img/smartdriving.jpg' %}" class="card-img-top" alt="Analysis Image">
+                <div class="card-body">
+                    <h5 class="card-title">Driving Analysis</h5>
+                    <p class="card-text">Analyze driving patterns and trends.</p>
+                    <a href="{% url 'upload_file' %}" class="btn btn-primary">Start Analysis</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{% static 'detectionapp/img/drivers.jpg' %}" class="card-img-top" alt="Driver Image">
+                <div class="card-body">
+                    <h5 class="card-title">Drivers</h5>
+                    <p class="card-text">Manage driver information and profiles.</p>
+                    <a href="{% url 'driver_list' %}" class="btn btn-primary">View Drivers</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{% static 'detectionapp/img/reports.jpg' %}" class="card-img-top" alt="Report Image">
+                <div class="card-body">
+                    <h5 class="card-title">Reports</h5>
+                    <p class="card-text">Access detailed reports on driving behavior.</p>
+                    <a href="{% url 'driver_reports' %}" class="btn btn-primary">View Reports</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
 </html>
 {% endblock %}

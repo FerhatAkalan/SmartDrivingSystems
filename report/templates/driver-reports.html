@@ -1,6 +1,8 @@
-{% extends 'layout.html' %} {% block content %} {% load static %}
-<div class="container">
-  <h1 class="my-4">Driver Reports</h1>
+{% extends 'layout.html' %} 
+{% block content %} 
+{% load static %}
+<div class="container animated fadeInUp">
+  <h1 class="my-3">Driver Reports</h1>
   <div class="row">
     {% if reports %} {% for report in reports %}
     <div class="col-md-4">
@@ -10,11 +12,7 @@
           <p class="card-text">Report Text: {{ report.report_text }}</p>
           <p class="card-text">Trip ID: {{ report.trip.id }}</p>
           <p class="card-text">Created At: {{ report.created_at }}</p>
-          <a
-            href="{% url 'report_details' report.id  %}"
-            class="btn btn-primary"
-            >View Details</a
-          >
+          <a href="{% url 'report_details' report.id  %}" class="btn btn-primary">View Details</a>
         </div>
       </div>
     </div>
@@ -26,9 +24,7 @@
         <a class="page-link" href="?page=1">First</a>
       </li>
       <li class="page-item">
-        <a class="page-link" href="?page={{ reports.previous_page_number }}"
-          >Previous</a
-        >
+        <a class="page-link" href="?page={{ reports.previous_page_number }}">Previous</a>
       </li>
       {% endif %}
       <li class="page-item active">
@@ -36,14 +32,10 @@
       </li>
       {% if reports.has_next %}
       <li class="page-item">
-        <a class="page-link" href="?page={{ reports.next_page_number }}"
-          >Next</a
-        >
+        <a class="page-link" href="?page={{ reports.next_page_number }}">Next</a>
       </li>
       <li class="page-item">
-        <a class="page-link" href="?page={{ reports.paginator.num_pages }}"
-          >Last</a
-        >
+        <a class="page-link" href="?page={{ reports.paginator.num_pages }}">Last</a>
       </li>
       {% endif %}
     </ul>
@@ -52,4 +44,43 @@
     {% endif %}
   </div>
 </div>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  .card:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  /* Animasyonlar */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+  .fadeInUp {
+    animation-name: fadeInUp;
+  }
+</style>
 {% endblock %}
