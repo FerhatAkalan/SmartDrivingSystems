@@ -6,10 +6,10 @@ from .models import UploadedFile
 
 class UploadFileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
+        self.user = kwargs.pop('user', None)  # Kullanıcıyı init'te al
         super(UploadFileForm, self).__init__(*args, **kwargs)
-        if user:
-            self.fields['driver'].queryset = Driver.objects.filter(user=user)
+        if self.user:
+            self.fields['driver'].queryset = Driver.objects.filter(user=self.user)
 
     driver = forms.ModelChoiceField(queryset=Driver.objects.none(), label="Driver")
     start_time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}), required=False)
@@ -20,3 +20,10 @@ class UploadFileForm(forms.ModelForm):
     class Meta:
         model = UploadedFile
         fields = ['car_inside_file', 'car_outside_file', 'driver', 'start_time', 'end_time']
+
+    def save(self, commit=True):
+        instance = super(UploadFileForm, self).save(commit=False)
+        instance.user = self.user  # Kullanıcıyı atama
+        if commit:
+            instance.save()
+        return instance

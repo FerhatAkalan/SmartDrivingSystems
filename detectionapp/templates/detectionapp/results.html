@@ -9,72 +9,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
     <style>
-        /* Kartlar ve tablo stilleri */
-    .card {
-        margin-bottom: 20px;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .card-header, .card-footer {
-        background-color: #f8f9fa;
-        color: #495057;
-        font-weight: bold;
-        border-bottom: none;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-    }
-    .card-body {
-        background-color: #fff;
-        padding: 20px;
-    }
-    .card-body img,
-    .card-body video {
-        max-width: 100%;
-        height: auto;
-    }
-    .table {
-        margin-bottom: 0;
-    }
-    /* Pagination düğmeleri */
-    .pagination {
-        margin-top: 20px;
-    }
-    .pagination button {
-        margin: 0 5px;
-        padding: 5px 10px;
-        border-radius: 4px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    .pagination button:hover {
-        background-color: #0056b3;
-    }
-    /* Görsel ve video önizleme kartlarına geçiş animasyonu */
-    .card-body {
-        transition: transform 0.3s ease;
-    }
-    /* Buton animasyonu */
-    .btn {
-        transition: all 0.3s ease;
-    }
-    .btn:hover {
-        transform: scale(1.05);
-    }
-
+        .card {
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-header, .card-footer {
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: bold;
+            border-bottom: none;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .card-body {
+            background-color: #fff;
+            padding: 20px;
+        }
+        .card-body img,
+        .card-body video {
+            max-width: 100%;
+            height: auto;
+        }
+        .table {
+            margin-bottom: 0;
+        }
+        .pagination {
+            margin-top: 20px;
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+        .card-body {
+            transition: transform 0.3s ease;
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <h2 class="mt-3 mb-3">Result Statistics</h2>
-        {% if report %}
             <div class="row mt-4 mb-3">
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-header">
-                            Car İnside Detected Media
+                            Car Inside Detected Media
                         </div>
                         <div class="card-body d-flex justify-content-center align-items-center">
                             {% if report.car_inside_report_path|slice:'-4:' == '.jpg' %}
@@ -113,50 +107,56 @@
                             Result Details Detected Inside the Vehicle
                         </div>
                         <div class="card-body" id="result-details-inside">
-                            {% for item in data_inside %}
-                                {% if item.label != "Unknown" %}
-                                    <div class="card-body" style="display: none;">
-                                        <table class="table table-bordered table-hover">
-                                            <tr>
-                                                <th scope="row">Detected Boxes</th>
-                                                <td>{{ item.frame_info }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Class</th>
-                                                <td>{{ item.label }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Confidence</th>
-                                                <td>{{ item.confidence }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Sol Üst Köşe (x_min, y_min)</th>
-                                                <td>({{ item.x_min }}, {{ item.y_min }})</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Sağ Alt Köşe (x_max, y_max)</th>
-                                                <td>({{ item.x_max }}, {{ item.y_max }})</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Merkez Koordinatlar (x_center, y_center)</th>
-                                                <td>({{ item.x_center }}, {{ item.y_center }})</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Genişlik</th>
-                                                <td>{{ item.width }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Yükseklik</th>
-                                                <td>{{ item.height }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Frame Info</th>
-                                                <td>{{ item.frame_info }}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                            {% if data_inside %}
+                                {% for item in data_inside %}
+                                    {% if item.label != "Unknown" %}
+                                        <div class="card-body" style="display: none;">
+                                            <table class="table table-bordered table-hover">
+                                                <tr>
+                                                    <th scope="row">Detected Boxes</th>
+                                                    <td>{{ item.frame_info }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Class</th>
+                                                    <td>{{ item.label }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Confidence</th>
+                                                    <td>{{ item.confidence }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Sol Üst Köşe (x_min, y_min)</th>
+                                                    <td>({{ item.x_min }}, {{ item.y_min }})</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Sağ Alt Köşe (x_max, y_max)</th>
+                                                    <td>({{ item.x_max }}, {{ item.y_max }})</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Merkez Koordinatlar (x_center, y_center)</th>
+                                                    <td>({{ item.x_center }}, {{ item.y_center }})</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Genişlik</th>
+                                                    <td>{{ item.width }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Yükseklik</th>
+                                                    <td>{{ item.height }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Frame Info</th>
+                                                    <td>{{ item.frame_info }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="alert alert-warning" role="alert">
+                                    No results found inside.
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
@@ -175,54 +175,56 @@
                             Result Details Detected Outside the Vehicle
                         </div>
                         <div class="card-body" id="result-details-outside">
-                            {% for item in data_outside %}
-                                {% if item.label != "Unknown" %}
-                                    <div class="card-body" style="display: none;">
-                                                <table class="table table-bordered table-hover">
-                                                    <tr>
-                                                        <th scope="row">Detected Boxes</th>
-                                                        <td>{{ item.frame_info }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Class</th>
-                                                        <td>{{ item.label }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Confidence</th>
-                                                        <td>{{ item.confidence }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Sol Üst Köşe (x_min, y_min)</th>
-                                                        <td>({{ item.x_min }}, {{ item.y_min }})</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Sağ Alt Köşe (x_max, y_max)</th>
-                                                        <td>({{ item.x_max }}, {{ item.y_max }})</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Merkez Koordinatlar (x_center, y_center)</th>
-                                                        <td>({{ item.x_center }}, {{ item.y_center }})</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Genişlik</th>
-                                                        <td>{{ item.width }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Yükseklik</th>
-                                                        <td>{{ item.height }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Frame Info</th>
-                                                        <td>{{ item.frame_info }}</td>
-                                                    </tr>
-                                                </table>
-                                    </div>
-                                {% else %}
-                                    <div class="alert alert-warning" role="alert">
-                                        No results found.
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                            {% if data_outside %}
+                                {% for item in data_outside %}
+                                    {% if item.label != "Unknown" %}
+                                        <div class="card-body" style="display: none;">
+                                            <table class="table table-bordered table-hover">
+                                                <tr>
+                                                    <th scope="row">Detected Boxes</th>
+                                                    <td>{{ item.frame_info }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Class</th>
+                                                    <td>{{ item.label }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Confidence</th>
+                                                    <td>{{ item.confidence }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Sol Üst Köşe (x_min, y_min)</th>
+                                                    <td>({{ item.x_min }}, {{ item.y_min }})</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Sağ Alt Köşe (x_max, y_max)</th>
+                                                    <td>({{ item.x_max }}, {{ item.y_max }})</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Merkez Koordinatlar (x_center, y_center)</th>
+                                                    <td>({{ item.x_center }}, {{ item.y_center }})</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Genişlik</th>
+                                                    <td>{{ item.width }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Yükseklik</th>
+                                                    <td>{{ item.height }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Frame Info</th>
+                                                    <td>{{ item.frame_info }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <div class="alert alert-warning" role="alert">
+                                    No results found outside.
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
@@ -236,11 +238,6 @@
                     </div>
                 </div>
             </div>
-        {% else %}
-            <div class="alert alert-dark" role="alert">
-                No results found.
-            </div>
-        {% endif %}
             <div class="d-flex align-items-center justify-content-center mb-3 mt-3">
                 <div class"d-flex align-items-center">
                     <a href="{% url 'upload_file' %}" class="btn btn-primary">Upload Another File</a>

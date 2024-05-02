@@ -2,3 +2,9 @@
     font-family: 'FasterOne';
     src: url('/static/fonts/ADLaMDisplay-Regular.ttf') format('truetype');
 }
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+  }

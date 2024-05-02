@@ -7,16 +7,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Profile</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
+        .card-body {
+            background-color: #fff;
+            border-color: transparent;
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 5px solid #007bff;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card mt-5">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <div class="card">
                     <div class="card-header">
-                        <h3>Driver Profile</h3>
+                        <h3 class="mb-0">Driver Profile</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body text-center">
+                        {% if driver.driver_photo %}
+                        <img src="{{ MEDIA_URL }}{{ driver.driver_photo.url }}" alt="Driver Photo" class="profile-pic">
+                        {% endif %}
                         <div class="mb-3">
                             <label for="driver_name" class="form-label">Name:</label>
                             <input type="text" class="form-control" id="driver_name" value="{{ driver.driver_name }}" disabled>
@@ -29,13 +66,9 @@
                             <label for="driver_licence" class="form-label">Licence:</label>
                             <input type="text" class="form-control" id="driver_licence" value="{{ driver.driver_licence }}" disabled>
                         </div>
-                        <!-- Eğer sürücünün fotoğrafı varsa -->
-                        {% if driver.driver_photo %}
                         <div class="mb-3">
-                            <label for="driver_photo" class="form-label">Photo:</label>
-                            <img src="{{ MEDIA_URL }}{{ driver.driver_photo.url }}" alt="Driver Photo" class="img-fluid">
+                            <button type="submit" class="btn btn-success">Driver Reports</button>
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -45,4 +78,3 @@
 </html>
 
 {% endblock %}
-
