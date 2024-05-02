@@ -19,7 +19,7 @@
             </div>
             
             <form method="post">
-                {% csrf_token %}
+                {% csrf_token %} 
                 <input type="hidden" name="user" value="{{ request.user.id }}">
                 <div class="mb-3">
                     <label for="driver_name" class="form-label">Driver Name</label>
@@ -33,6 +33,12 @@
                     <label for="driver_licence" class="form-label">Driver Licence</label>
                     <input type="text" class="form-control" id="driver_licence" name="driver_licence">
                 </div>
+                {% if driver.driver_photo %}
+                <div class="mb-3">
+                    <label for="driver_photo" class="form-label">Driver Photo:</label>
+                    <img src="{{ MEDIA_URL }}{{ driver.driver_photo.url }}" alt="connect" class="img-fluid">
+                </div>
+                {% endif %}
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>

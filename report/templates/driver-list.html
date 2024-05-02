@@ -22,6 +22,8 @@
                         <th scope="col">Driver Name</th>
                         <th scope="col">Driver Surname</th>
                         <th scope="col">Driver Licence</th>
+                        <th scope="col">Driver Profile</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +33,7 @@
                         <td>{{ driver.driver_name }}</td>
                         <td>{{ driver.driver_surname }}</td>
                         <td>{{ driver.driver_licence }}</td>
+                        <td><a href="{% url 'driver_profiles' driver.id  %}"class="btn btn-danger">View Details</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

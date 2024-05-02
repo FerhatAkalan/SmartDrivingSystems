@@ -4,175 +4,391 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% load static %}
 
-<div class="container">
-    <h1 class="my-3">Report Details</h1>
-    <div class="card mb-4">
+<div class="container mb-4 mt-4">
+    {% comment %} <h1 class="my-4">Report Details</h1> {% endcomment %}
+    <div class="card mb-4 mt-4 ">
+        <div class="card-header text-center"> Report - {{ report.id }} </div>
         <div class="card-body">
-            <h5 class="card-title">Report ID: {{ report.id }}</h5>
-            <p class="card-text">Report Text: {{ report.report_text }}</p>
-            <p class="card-text">Created At: {{ report.created_at }}</p>
-            <hr>
-            <h5 class="card-title">Driver Information</h5>
-            <p class="card-text">Driver: {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
-            <p class="card-text">Driver Licence: {{ report.driver.driver_licence }}</p>
-            <hr>
-            <h5 class="card-title">Trip Information</h5>
-            <p class="card-text">Trip Start Time: {{ report.trip.start_time }}</p>
-            <p class="card-text">Trip End Time: {{ report.trip.end_time }}</p>
-            <hr>
-            <p class="card-text">Video Path: {{ report.report_path }}</p>
-            {% if report_details %}
-            <p class="card-text">Safe Driving Score: {{ report_details.confidence }}</p>
-            <div class="card-body">
-                {% if report.report_path|slice:'-4:' == '.jpg' %}
-                    <img src="{% static report.report_path %}" alt="Detected Image" class="img-fluid">
-                {% elif report.report_path|slice:'-4:' == '.mp4' %}
-                    <video width="100%" height="auto" controls>
-                        <source src="{% static report.report_path %}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                {% endif %}
-            </div>
-            {% endif %}
-            <!-- Diğer rapor detayları buraya eklenebilir -->
-            <hr>
-            <h5 class="card-title">Report Details </h5>
-                    <div class="card-body" id="result-details">
-                        {% for item in report_details %}
-                            {% if item.label != "Unknown" %}
-                                <div class="card-body" style="display: none;">
-                                    <ul class="list-group">
-                                        <li class="list-group-item">
-                                            {% comment %} <strong>Detected Boxes:  {{ item.frame_info  }}</strong><br> {% endcomment %}
-                                            Class: {{ item.label }}<br>
-                                            Confidence: {{ item.confidence }}<br>
-                                            Sol Üst Köşe (x_min, y_min): ({{ item.top_left_x }}, {{ item.top_left_y }})<br>
-                                            Sağ Alt Köşe (x_max, y_max): ({{ item.bottom_right_x }}, {{ item.bottom_right_y }})<br>
-                                            Merkez Koordinatlar (x_center, y_center): ({{ item.center_x }}, {{ item.center_y }})<br>
-                                            Genişlik: {{ item.width }}<br>
-                                            Yükseklik: {{ item.height }}<br>
-                                        </li>
-                                    </ul>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    <div class="card-footer d-flex justify-content-between align-items-center">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <button id="prev-page" class="btn btn-warning">Previous</button>
-                                <button id="next-page" class="btn btn-warning">Next</button>
-                            </div>
-                            <p id="page-info" class="mb-0 mx-3"></p>
+            <p class="card-text ">{{ report.report_text }} This report created at {{ report.created_at }}</p>
+            <p class="card-text ">This report created at {{ report.created_at }}</p>
+            
+            <h5 class="card-title ">Driver Information</h5>
+            <p class="card-text ">Driver: {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
+            <p class="card-text ">Driver Licence: {{ report.driver.driver_licence }}</p>
+            
+            <h5 class="card-title ">Trip Information</h5>
+            <p class="card-text ">Trip Start Time: {{ report.trip.start_time }}</p>
+            <p class="card-text ">Trip End Time: {{ report.trip.end_time }}</p>
+           
 
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center"> in-vehicle video </div>
+                        <div class="card-body">
+                            <p class="card-text">Video Path: {{ report.car_inside_report_path }}</p>
+                            {% if report_details_interior %}
+                                {% if report.car_inside_report_path|slice:'-4:' == '.jpg' %}
+                                    <img src="{% static report.car_inside_report_path %}" alt="Detected Image" class="img-fluid">
+                                {% elif report.car_inside_report_path|slice:'-4:' == '.mp4' %}
+                                    <video width="100%" height="auto" controls>
+                                        <source src="{% static report.car_inside_report_path %}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                {% endif %}
+                            {% endif %}
                         </div>
                     </div>
-                    <h1>Rapor Detayları</h1>
-                    <p>Rapor Numarası: {{ report.id }}</p>
-                    <p>Tespit Edilen Tehlikeli Davranışlar:</p>
-                    <ul>
-                        {% for label_count in label_counts %}
-                        <li>{{ label_count.label }}: {{ label_count.count }}</li>
-                        {% endfor %}
-                   </ul>
-                   <h1>Rapor Detayları</h1>
-                    <p>Rapor Numarası: {{ report.id }}</p>
-                    <p>Tespit Edilen Tehlikeli Davranışlar:</p>
-                    <canvas id="labelChart" width="20" height="20"></canvas>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <h1>Rapor Detayları</h1>
-<p>Rapor Numarası: {{ report.id }}</p>
-<p>Tespit Edilen Tehlikeli Davranışlar:</p>
-<canvas id="labelChart" width="400" height="400"></canvas>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var ctx = document.getElementById('labelChart').getContext('2d');
-    var labels = [
-        {% for label_count in label_counts %}
-            "{{ label_count.label }}",
-        {% endfor %}
-    ];
-    var counts = [
-        {% for label_count in label_counts %}
-            {{ label_count.count }},
-        {% endfor %}
-    ];
+                </div>
+                <div class="col-md-6">
+                    <div class="card"> 
+                        <div class="card-header text-center"> off-vehicle video </div>
+                        <div class="card-body">
+                            <p class="card-text">Video Path: {{ report.car_outside_report_path }}</p>
+                            {% if report_details_exterior %}
+                                {% if report.car_outside_report_path|slice:'-4:' == '.jpg' %}
+                                    <img src="{% static report.car_outside_report_path %}" alt="Detected Image" class="img-fluid">
+                                {% elif report.car_outside_report_path|slice:'-4:' == '.mp4' %}
+                                    <video width="100%" height="auto" controls>
+                                        <source src="{% static report.car_outside_report_path %}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    // Toplam çerçeve sayısını al
-    var totalFrames = {{ report.total_frames }};
+            <!-- Diğer rapor detayları buraya eklenebilir -->
+        
+        <div class="row mt-4 mb-3">
+        
+        <!--Card inside--> 
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">Result Details Detected Inside the Vehicle</div>
+                        <!--Card body-->
+                            <div class="card-body" id="result-details-inside">
+                            {% for item in report_details_interior %}
+                                {% if item.label != "Unknown" %}
+                                <!--Table1-->
+                                <div class="card-body" style="display: none;">
+                                    <!--Table1-->
+                                    <table class="table table-bordered table-hover">
+                                            <tr><th scope="row">Detected Boxes</th><td>{{ item.frame_info }}</td></tr>
+                                            <tr><th scope="row">Class</th><td>{{ item.label }}</td></tr>
+                                            <tr><th scope="row">Confidence</th><td>{{ item.confidence }}</td></tr>
+                                            <tr><th scope="row">Sol Üst Köşe</th><td>({{ item.top_left_x }}, {{ item.top_left_y }})</td></tr>
+                                            <tr><th scope="row">Sağ Alt Köşe</th><td>({{ item.bottom_right_x }}, {{ item.bottom_right_x }})</td></tr>
+                                            <tr><th scope="row">Merkez Koordinatlar</th><td>({{ item.center_x }}, {{ item.center_y }})</td></tr>
+                                            <tr><th scope="row">Genişlik</th><td>{{ item.width }}</td></tr>
+                                            <tr><th scope="row">Yükseklik</th><td>{{ item.height }}</td></tr>
+                                            <tr><th scope="row">Frame Info</th><td>{{ item.frame_info }}</td></tr>
+                                    </table>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+                                <!--Buttons 1-->        
+                                    <div class="card-footer d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">  
+                                            <div>
+                                                <button id="prev-page-inside" class="btn btn-warning">Previous</button>
+                                                <button id="next-page-inside" class="btn btn-warning">Next</button>
+                                                </div><p id="page-info-inside" class="mb-0 mx-3"></p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+        <!--Card outside-->     
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">Result Details Detected Outside the Vehicle</div>
+                        <!--Card body-->
+                        <div class="card-body" id="result-details-outside">
+                            {% for item in report_details_exterior %}
+                                {% if item.label != "Unknown" %}
+                                <!--Table1-->
+                                    <div class="card-body" style="display: none;">
+                                        <table class="table table-bordered table-hover">
+                                            <tr><th scope="row">Detected Boxes</th><td>{{ item.frame_info }}</td></tr>
+                                            <tr><th scope="row">Class</th><td>{{ item.label }}</td></tr>
+                                            <tr><th scope="row">Confidence</th><td>{{ item.confidence }}</td></tr>
+                                            <tr><th scope="row">Sol Üst Köşe</th><td>({{ item.top_left_x }}, {{ item.top_left_y }})</td></tr>
+                                            <tr><th scope="row">Sağ Alt Köşe</th><td>({{ item.bottom_right_x }}, {{ item.bottom_right_y }})</td></tr>
+                                            <tr><th scope="row">Merkez Koordinatlar</th><td>({{ item.center_x }}, {{ item.center_y }})</td></tr>
+                                            <tr><th scope="row">Genişlik</th><td>{{ item.width }}</td></tr>
+                                            <tr><th scope="row">Yükseklik</th><td>{{ item.height }}</td></tr>
+                                            <tr><th scope="row">Frame Info</th><td>{{ item.frame_info }}</td></tr>
+                                        </table>
+                                    </div>    
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                                <!--Buttons 2-->    
+                                    <div class="card-footer d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                            <button id="prev-page-outside" class="btn btn-warning">Previous</button>
+                                            <button id="next-page-outside" class="btn btn-warning">Next</button>
+                                            </div><p id="page-info-outside" class="mb-0 mx-3"></p></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                </div>     
+        
+        </div>
 
-    // Geri kalan kısmı hesapla ve 'safe driving' olarak işaretle
-    var safeDrivingCount = totalFrames;
-    for (var i = 0; i < counts.length; i++) {
-        safeDrivingCount -= counts[i];
-    }
+        <!-- Tespitler -->
+        <div class="mt-3 mb-3"><div class="container">
+            <div class="row">
+                <!-- Tespitler araç içi-->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center"> in-vehicle labels </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Label</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for label_count in label_counts_interior %}
+                                    <tr>
+                                        <td>{{ label_count.label }}</td>
+                                        <td>{{ label_count.count }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div></div>
+                <!-- Tespitler araç dışı -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center"> off-vehicle labels </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Label</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for label_count in label_counts_exterior %}
+                                    <tr>
+                                        <td>{{ label_count.label }}</td>
+                                        <td>{{ label_count.count }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div></div>
 
-    // Hesaplanan değerleri listeye ekle
-    labels.push("Safe Driving");
-    counts.push(safeDrivingCount);
+        <!-- Chart -->
+        <div class="row">
+            <div class="col">
+                <canvas id="labelChart" width="400" height="400"></canvas>
+            </div>
+            <div class="col">
+                <canvas id="labelChart2" width="400" height="400"></canvas>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    var labelChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
+        <script>
+            var ctx = document.getElementById('labelChart').getContext('2d');
+            var labels = [
+                {% for label_count in label_counts_interior %}
+                "{{ label_count.label }}",
+                {% endfor %}
+                        ];
+            var counts = [
+                {% for label_count in label_counts_interior %}
+                {{ label_count.count }},
+                {% endfor %}
+                        ];
+
+            // Toplam çerçeve sayısını al
+            var total_frames_inside = {{ report.total_frames_inside }};
+            {% comment %} var total_frames_outside = {{ report.total_frames_outside }}; {% endcomment %}
+
+            // Geri kalan kısmı hesapla ve 'safe driving' olarak işaretle
+            var safeDrivingCount = total_frames_inside;
+            for (var i = 0; i < counts.length; i++) {
+                safeDrivingCount -= counts[i];
+                }
+
+            // Hesaplanan değerleri listeye ekle
+            labels.push("safe driving");
+            counts.push(safeDrivingCount);
+
+            var labelChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
             labels: labels,
             datasets: [{
-                label: 'Tespit Edilen Tehlikeli Davranışlar',
+            label: 'Tespit Edilen Davranışlar',
+            data: counts,
+            backgroundColor: [
+            "#f15a5a", "#b47cc7", "#6d6e71", "#ffd700","#86c5da", "#f39237", "#7ac943"
+  
+                                    ],
+                                }]
+                            },
+                            
+                        });
+            </script>
+            <script>
+                var ctx = document.getElementById('labelChart2').getContext('2d');
+                var labels = [
+                    {% for label_count in label_counts_exterior %}
+                    "{{ label_count.label }}",
+                    {% endfor %}
+                            ];
+                var counts = [
+                    {% for label_count in label_counts_exterior %}
+                    {{ label_count.count }},
+                    {% endfor %}
+                            ];
+    
+                // Toplam çerçeve sayısını al
+                var total_frames_outside = {{ report.total_frames_outside }}; 
+    
+                // Geri kalan kısmı hesapla ve 'safe driving' olarak işaretle
+                var safeDrivingCount = total_frames_outside;
+                for (var i = 0; i < counts.length; i++) {
+                    safeDrivingCount -= counts[i];
+                    }
+    
+                // Hesaplanan değerleri listeye ekle
+                labels.push("safe driving");
+                counts.push(safeDrivingCount);
+    
+                var labelChart2 = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                labels: labels,
+                datasets: [{
+                label: 'Tespit Edilen Davranışlar',
                 data: counts,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(153, 102, 255, 0.5)',
-                    'rgba(255, 159, 64, 0.5)',
-                    'rgba(0, 128, 0, 0.5)'  // Safe Driving için yeşil renk
-                ],
-            }]
-        },
-        
-    });
-</script>
-            <script>
-                // Sayfalama işlemi için gerekli değişkenler
-                var currentPage = 1;
-                var itemsPerPage = 1; // Sayfa başına gösterilecek öğe sayısı
-                // Sayfa yüklendiğinde ilk sayfayı göster
-                showPage(currentPage);
-                // Sayfalama işlemini gerçekleştiren fonksiyon
-                function showPage(page) {
-                    var elements = document.querySelectorAll('#result-details .card-body'); // Sonuçları içeren kartların listesi
-                    // Tüm kartları gizle
-                    elements.forEach(function(element) {
-                        element.style.display = 'none';
-                    });
-                    // Belirtilen aralıktaki kartları göster
-                    elements[page - 1].style.display = 'block';
-                    // Sayfa bilgisini güncelle
-                    var totalItems = elements.length;
-                    var totalPages = Math.ceil(totalItems / itemsPerPage);
-                    document.getElementById('page-info').textContent = 'Page ' + page + '/' + totalPages;
-                }
-                // Sayfa değiştirme düğmelerine tıklama olayını dinle
-                document.getElementById('prev-page').addEventListener('click', function() {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        showPage(currentPage);
-                    }
-                });
-                document.getElementById('next-page').addEventListener('click', function() {
-                    var totalItems = document.querySelectorAll('#result-details .card-body').length;
-                    var totalPages = Math.ceil(totalItems / itemsPerPage);
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        showPage(currentPage);
-                    }
-                });
-            </script>
+                "#f15a5a", "#b47cc7", "#6d6e71", "#ffd700","#86c5da", "#f39237", "#7ac943"
+                                        ],
+                                    }]
+                                },
+                               
+                            });
+                </script>
 
-            <div><a href="{% url 'driver_reports' %}" class="btn btn-primary">Back to Reports</a></div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <style>
+                        .card-header, .card-footer {
+                            background-color: #f8f9fa;
+                            color: #495057;
+                            font-size: 18px;
+                        }
+                        .card-body {
+                            background-color: #fff;
+                        }
+                        .card-body img, .card-body video {
+                            max-width: 100%;
+                            height: auto;
+                        }
+                        .pagination {
+                            margin: 20px 0;
+                        }
+                        .pagination button {
+                            margin: 0 5px;
+                        }
+            </style>
+
+            <script>
+                        // İç detaylar için sayfalama işlevi
+                        var currentPageInside = 1;
+                        var itemsPerPageInside = 1;
+                        showPageInside(currentPageInside);
+                    
+                        function showPageInside(page) {
+                            var elementsInside = document.querySelectorAll('#result-details-inside .card-body');
+                            elementsInside.forEach(function(element) {
+                                element.style.display = 'none';
+                            });
+                            elementsInside[page - 1].style.display = 'block';
+                    
+                            var totalItemsInside = elementsInside.length;
+                            var totalPagesInside = Math.ceil(totalItemsInside / itemsPerPageInside);
+                            document.getElementById('page-info-inside').textContent = 'Page ' + page + '/' + totalPagesInside;
+                        }
+                    
+                        $('#prev-page-inside').click(function() {
+                            if (currentPageInside > 1) {
+                                currentPageInside--;
+                                showPageInside(currentPageInside);
+                            }
+                        });
+                    
+                        $('#next-page-inside').click(function() {
+                            var totalItemsInside = document.querySelectorAll('#result-details-inside .card-body').length;
+                            var totalPagesInside = Math.ceil(totalItemsInside / itemsPerPageInside);
+                            if (currentPageInside < totalPagesInside) {
+                                currentPageInside++;
+                                showPageInside(currentPageInside);
+                            }
+                        });
+                    
+                        // Dış detaylar için sayfalama işlevi
+                        var currentPageOutside = 1;
+                        var itemsPerPageOutside = 1;
+                        showPageOutside(currentPageOutside);
+                    
+                        function showPageOutside(page) {
+                            var elementsOutside = document.querySelectorAll('#result-details-outside .card-body');
+                            elementsOutside.forEach(function(element) {
+                                element.style.display = 'none';
+                            });
+                            elementsOutside[page - 1].style.display = 'block';
+                    
+                            var totalItemsOutside = elementsOutside.length;
+                            var totalPagesOutside = Math.ceil(totalItemsOutside / itemsPerPageOutside);
+                            document.getElementById('page-info-outside').textContent = 'Page ' + page + '/' + totalPagesOutside;
+                        }
+                    
+                        $('#prev-page-outside').click(function() {
+                            if (currentPageOutside > 1) {
+                                currentPageOutside--;
+                                showPageOutside(currentPageOutside);
+                            }
+                        });
+                    
+                        $('#next-page-outside').click(function() {
+                            var totalItemsOutside = document.querySelectorAll('#result-details-outside .card-body').length;
+                            var totalPagesOutside = Math.ceil(totalItemsOutside / itemsPerPageOutside);
+                            if (currentPageOutside < totalPagesOutside) {
+                                currentPageOutside++;
+                                showPageOutside(currentPageOutside);
+                            }
+                        });
+                    </script>
+
+            <!--Back to Reports Button-->        
+            <div class="d-flex justify-content-center"><a href="{% url 'driver_reports' %}" class="btn btn-danger mt-3 mb-3 md-3">Back to Reports</a></div>
 
         </div>
     </div>
 </div>
+<style>
+    .card-header {
+      background-color: #E5E7E9; /* Başlık arka plan rengi */
+      color: black; /* Başlık metin rengi */
+    }
+  </style>
 {% endblock %}
-

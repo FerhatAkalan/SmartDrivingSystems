@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Profile</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h3>Driver Profile</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="driver_name" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="driver_name" value="{{ driver.driver_name }}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="driver_surname" class="form-label">Surname:</label>
+                            <input type="text" class="form-control" id="driver_surname" value="{{ driver.driver_surname }}" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="driver_licence" class="form-label">Licence:</label>
+                            <input type="text" class="form-control" id="driver_licence" value="{{ driver.driver_licence }}" disabled>
+                        </div>
+                        <!-- Eğer sürücünün fotoğrafı varsa -->
+                        {% if driver.driver_photo %}
+                        <div class="mb-3">
+                            <label for="driver_photo" class="form-label">Photo:</label>
+                            <img src="{{ MEDIA_URL }}{{ driver.driver_photo.url }}" alt="Driver Photo" class="img-fluid">
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}
+

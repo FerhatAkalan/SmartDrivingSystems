@@ -7,6 +7,7 @@ class Driver(models.Model):
     driver_name = models.CharField(max_length=100)
     driver_surname = models.CharField(max_length=100)
     driver_licence = models.CharField(max_length=50)
+    driver_photo = models.FileField(upload_to='driver_photos/', null=True, blank=True)  
     
     def __str__(self):
         return f"{self.driver_name} {self.driver_surname}"

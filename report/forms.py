@@ -4,7 +4,7 @@ from .models import Driver
 class DriverForm(forms.ModelForm):
     class Meta:
         model = Driver
-        fields = ['user','driver_name', 'driver_surname', 'driver_licence']
+        fields = ['user','driver_name', 'driver_surname', 'driver_licence','driver_photo']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)  # Oturum açmış kullanıcıyı alın
