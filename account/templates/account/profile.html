@@ -60,23 +60,25 @@
                         {% if user.profile_photo %}
                         <img src="{{ MEDIA_URL }}{{ user.profile_photo.url }}" alt="User Photo" class="profile-pic">
                         {% endif %}
-                        <div class="col">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username:</label>
-                                <input type="text" class="form-control" id="username" value="{{ user.username }}" disabled>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div id="profile-view">
+                            <div class="col">
                                 <div class="mb-3">
-                                    <label for="first_name" class="form-label">Name:</label>
-                                    <input type="text" class="form-control" id="first_name" value="{{ user.first_name }}" disabled>
+                                    <label for="username" class="form-label">Username:</label>
+                                    <input type="text" class="form-control" id="username" value="{{ user.username }}" disabled>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="last_name" class="form-label">Surname:</label>
-                                    <input type="text" class="form-control" id="last_name" value="{{ user.last_name }}" disabled>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="first_name" class="form-label">Name:</label>
+                                        <input type="text" class="form-control" id="first_name" value="{{ user.first_name }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="last_name" class="form-label">Surname:</label>
+                                        <input type="text" class="form-control" id="last_name" value="{{ user.last_name }}" disabled>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col">
@@ -89,18 +91,129 @@
                                     <input type="text" class="form-control" id="date_joined" value="{{ user.date_joined|date:'d.m.Y' }}" disabled>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="my-3">
-                                <a href="{% url 'home' %}"class="btn btn-success">Edit Profile</a>
-                                <a href="{% url 'driver_reports' %}"class="btn btn-warning">Driver Reports</a>
+                            <div class="row">
+                                <div class="my-3">
+                                    <button id="edit-profile-btn" class="btn btn-primary">Edit Profile</button>
+                                    <a href="{% url 'driver_reports' %}" class="btn btn-warning">Driver Reports</a>
+                                </div>
                             </div>
+                        </div>
+                        <div id="profile-edit" style="display: none;">
+                            <form id="profile-edit-form" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% if user.profile_photo %}
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="profile_photo" class="form-label">Profile Photo:</label>
+                                        <input type="file" name="profile_photo" id="profile_photo" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="username_edit" class="form-label">Username:</label>
+                                        <input type="text" class="form-control" id="username_edit" name="username" value="{{ user.username }}" disabled>
+                                        {% if form.errors.username %}
+                                        <div class="invalid-feedback">{{ form.errors.username.0 }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="first_name_edit" class="form-label">First Name:</label>
+                                            <input type="text" class="form-control" id="first_name_edit" name="first_name" value="{{ user.first_name }}" required>
+                                            <div class="invalid-feedback">Please provide a first name.</div>
+                                            {% if form.errors.first_name %}
+                                            <div class="invalid-feedback">{{ form.errors.first_name.0 }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="last_name_edit" class="form-label">Last Name:</label>
+                                            <input type="text" class="form-control" id="last_name_edit" name="last_name" value="{{ user.last_name }}" required>
+                                            <div class="invalid-feedback">Please provide a last name.</div>
+                                            {% if form.errors.last_name %}
+                                            <div class="invalid-feedback">{{ form.errors.last_name.0 }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="email_edit" class="form-label">Email:</label>
+                                        <input type="email" class="form-control" id="email_edit" name="email" value="{{ user.email }}" required>
+                                        <div class="invalid-feedback">Please provide a valid email address.</div>
+                                        {% if form.errors.email %}
+                                        <div class="invalid-feedback">{{ form.errors.email.0 }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="date_joined_edit" class="form-label">Date Joined:</label>
+                                        <input type="text" class="form-control" id="date_joined_edit" value="{{ user.date_joined|date:'d.m.Y' }}" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="my-3">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        <button type="button" id="cancel-edit-btn" class="btn btn-danger">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('edit-profile-btn').addEventListener('click', function() {
+            document.getElementById('profile-view').style.display = 'none';
+            document.getElementById('profile-edit').style.display = 'block';
+        });
+    
+        document.getElementById('cancel-edit-btn').addEventListener('click', function() {
+            document.getElementById('profile-view').style.display = 'block';
+            document.getElementById('profile-edit').style.display = 'none';
+        });
+    
+        document.getElementById('profile-edit-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            fetch('{% url "profile-edit" %}', {
+                method: 'POST',
+                body: new FormData(this),
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Güncelleme işlemi başarılı olduğunda edit formunu kapat ve profil görünümünü aç
+                    document.getElementById('profile-view').style.display = 'block';
+                    document.getElementById('profile-edit').style.display = 'none';
+                    window.location.reload();
+                } else {
+                    // Hata durumunda JSON yanıtını parse et ve hataları göster
+                    response.json().then(data => {
+                        if (data.errors) {
+                            Object.keys(data.errors).forEach(key => {
+                                const errorField = document.getElementById(`${key}-edit`);
+                                if (errorField) {
+                                    errorField.classList.add('is-invalid');
+                                    errorField.insertAdjacentHTML('afterend', `<div class="invalid-feedback">${data.errors[key]}</div>`);
+                                }
+                            });
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error updating profile:', error);
+            });
+        });
+    </script>
+    
 </body>
 </html>
 {% endblock %}

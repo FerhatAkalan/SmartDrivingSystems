@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .forms import ProfileUpdateForm
+from django.http import JsonResponse
 
 # Create your views here.
 def user_login(request):
@@ -75,3 +77,18 @@ def user_profile(request):
         # Eğer kullanıcının profiline özgü başka veriler varsa, context içerisine ekleyebilirsiniz
     }
     return render(request, 'account/profile.html', context)
+
+
+
+@login_required
+def profile_edit(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True})  # Başarı durumunda JSON yanıtı döndür
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)  # Hata durumunda JSON yanıtı döndür
+    else:
+        form = ProfileUpdateForm(instance=request.user)
+    return render(request, 'profile.html', {'form': form})
