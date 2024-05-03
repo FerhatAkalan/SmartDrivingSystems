@@ -15,6 +15,7 @@
     <div class="row">
         <div class="col-md-8 offset-md-1 mt-3">
             <h1 class="text-center">Driver List</h1>
+            {% if driver %}
             <table class="table table-bordered table-striped table-hover animated fadeInUp">
                 <thead>
                     <tr>
@@ -38,7 +39,13 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+            <div class="alert alert-info" role="alert">
+                No drivers available.
+            </div>
+            {% endif %}
         </div>
+        
     </div>
 </main>
 </body>
@@ -101,5 +108,4 @@
         animation-name: fadeInUp;
     }
 </style>
-
 {% endblock %}
