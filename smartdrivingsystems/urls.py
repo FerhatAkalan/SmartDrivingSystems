@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from detectionapp.views import home, about, contact
+from detectionapp.views import home, about, contact, help
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -24,6 +24,7 @@ urlpatterns = [
     path('', home, name='home'),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
+    path('help/', help, name='help'),
     path('detectionapp/', include("detectionapp.urls")),
     path('account/', include("account.urls")),
     path('report/', include("report.urls")),

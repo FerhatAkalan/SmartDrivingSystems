@@ -1,0 +1,104 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+      
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .accordion {
+            margin-bottom: 20px;
+        }
+        .accordion-item {
+            border-bottom: 1px solid #ccc;
+        }
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+        .accordion-item-header {
+            padding: 15px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #ccc;
+        }
+        .accordion-item-header:hover {
+            background-color: #e9ecef;
+        }
+        .accordion-item-header i {
+            margin-right: 10px;
+        }
+        .accordion-item-body {
+            display: none;
+            padding: 15px;
+        }
+        .accordion-item-body p {
+            margin: 0;
+        }
+        .accordion-item.active .accordion-item-body {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Help</h1>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-item-header" onclick="toggleAccordion(this)">
+                    <i class="fas fa-plus"></i>
+                    How do I create a new account?
+                </div>
+                <div class="accordion-item-body">
+                    <p>To create a new account, click on the "Register" button on the top right corner of the page. Fill out the required information and submit the form.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-item-header" onclick="toggleAccordion(this)">
+                    <i class="fas fa-plus"></i>
+                    How do I reset my password?
+                </div>
+                <div class="accordion-item-body">
+                    <p>To reset your password, click on the "Forgot Password?" link on the login page. Follow the instructions to reset your password.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-item-header" onclick="toggleAccordion(this)">
+                    <i class="fas fa-plus"></i>
+                    How do I contact support?
+                </div>
+                <div class="accordion-item-body">
+                    <p>You can contact our support team via email at support@example.com or by phone at +123456789.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAccordion(accordion) {
+            accordion.classList.toggle('active');
+            var panel = accordion.nextElementSibling;
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
+
+{% endblock %}

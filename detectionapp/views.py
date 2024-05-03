@@ -27,6 +27,8 @@ def about(request):
     return render(request, 'detectionapp/about.html')
 def contact(request):
     return render(request, 'detectionapp/contact.html')
+def help(request):
+    return render(request, 'detectionapp/help.html')
 
 @login_required
 def upload_file(request):
