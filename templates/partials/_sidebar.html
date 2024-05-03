@@ -11,13 +11,6 @@
               ><i class="fas fa-car"></i> Driving Analysis</a
             >
           </li>
-          {% comment %} <li
-            class="list-group-item nav-item-sidebar list-group-item-action"
-          >
-            <a href="/"
-              ><i class="fa-solid fa-square-poll-vertical"></i> Results</a
-            >
-          </li> {% endcomment %}
           <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/driver-reports/' in request.path %}active{% endif %}">
             <a href="{% url 'driver_reports' %}"><i class="fas fa-id-card"></i> Driver Reports</a>
           </li>

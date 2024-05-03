@@ -37,7 +37,7 @@
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="#"
+          <a class="nav-link" href="{% url 'user_profile' %}"
             ><i class="fa-solid fa-user"></i> Welcome, {{ user.username }}</a
           >
         </li>
