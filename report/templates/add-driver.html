@@ -12,30 +12,78 @@
 <main class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <h1 class="text-center my-5">Add Driver</h1>
+            <h1 class="text-center my-3">Add Driver</h1>
             <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="user" class="form-label">User</label>
+                    <input type="text" class="form-control" id="user" name="user" value="{{ request.user }}" disabled>
+                </div>
                 {% csrf_token %} 
+                <input type="hidden" name="user" value="{{ request.user.id }}">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="driver_name" class="form-label">Driver Name</label>
+                            <input type="text" class="form-control" id="driver_name" name="driver_name" required>
+                            <div class="invalid-feedback">Please enter the driver's name.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="driver_surname" class="form-label">Driver Surname</label>
+                            <input type="text" class="form-control" id="driver_surname" name="driver_surname" required>
+                            <div class="invalid-feedback">Please enter the driver's surname.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="driver_licence" class="form-label">Driver Licence</label>
+                            <input type="text" class="form-control" id="driver_licence" name="driver_licence" required>
+                            <div class="invalid-feedback">Please enter the driver's licence.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="birth_date" class="form-label">Birth Date</label>
+                            <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                            <div class="invalid-feedback">Please enter the driver's birth date.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="contact_number" class="form-label">Contact Number</label>
+                            <input type="tel" class="form-control" id="contact_number" name="contact_number" required>
+                            <div class="invalid-feedback">Please enter the driver's contact number.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="driver_email" class="form-label">Driver Email</label>
+                            <input type="email" class="form-control" id="driver_email" name="driver_email" required>
+                            <div class="invalid-feedback">Please enter the driver's email.</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="mb-3">
                     <label for="driver_photo" class="form-label">Driver Photo</label>
                     <input type="file" class="form-control" id="driver_photo" name="driver_photo" required>
                     <div class="invalid-feedback" id="fileValidationError">Please upload a valid image (jpg or png).</div>
                 </div>
-                <input type="hidden" name="user" value="{{ request.user.id }}">
-                <div class="mb-3">
-                    <label for="driver_name" class="form-label">Driver Name</label>
-                    <input type="text" class="form-control" id="driver_name" name="driver_name" required>
-                    <div class="invalid-feedback">Please enter the driver's name.</div>
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
                 </div>
-                <div class="mb-3">
-                    <label for="driver_surname" class="form-label">Driver Surname</label>
-                    <input type="text" class="form-control" id="driver_surname" name="driver_surname" required>
-                    <div class="invalid-feedback">Please enter the driver's surname.</div>
-                </div>
-                <div class="mb-3">
-                    <label for="driver_licence" class="form-label">Driver Licence</label>
-                    <input type="text" class="form-control" id="driver_licence" name="driver_licence" required>
-                    <div class="invalid-feedback">Please enter the driver's licence.</div>
-                </div>
+                {% endif %}
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>

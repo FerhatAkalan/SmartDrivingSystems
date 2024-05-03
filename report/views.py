@@ -25,10 +25,22 @@ def driver_list(request):
     drivers = Driver.objects.filter(user=request.user)  # Tüm sürücüleri alır
     return render(request, 'driver-list.html', {'drivers': drivers})
 
+from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Reports, Driver
+
 @login_required
-def driver_reports(request):
-    report_list = Reports.objects.filter(trip__driver__user=request.user).order_by('-created_at')  # Oturum açmış kullanıcının raporlarını filtrele
-    paginator = Paginator(report_list, 6)  # Sayfa başına 10 rapor
+def driver_reports(request, driver_id=None):
+    # Eğer driver_id belirtilmemişse, kullanıcının kendi raporlarını göster
+    if driver_id:
+        driver = get_object_or_404(Driver, pk=driver_id)
+        report_list = Reports.objects.filter(trip__driver=driver)
+    else:
+        report_list = Reports.objects.filter(trip__driver__user=request.user)
+    
+    report_list = report_list.order_by('-created_at')
+
+    paginator = Paginator(report_list, 6)  # Sayfa başına 6 rapor
     page = request.GET.get('page')
     try:
         reports = paginator.page(page)
@@ -38,6 +50,7 @@ def driver_reports(request):
     except EmptyPage:
         # page parametresi mevcut sayfa sayısından fazlaysa, son sayfayı al
         reports = paginator.page(paginator.num_pages)
+    
     return render(request, 'driver-reports.html', {'reports': reports})
 
 @login_required

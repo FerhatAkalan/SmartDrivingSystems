@@ -6,9 +6,13 @@ class Driver(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     driver_name = models.CharField(max_length=100)
     driver_surname = models.CharField(max_length=100)
-    driver_licence = models.CharField(max_length=50)
-    driver_photo = models.FileField(upload_to='driver_photos/', null=True, blank=True)  
-    
+    driver_licence = models.CharField(max_length=50, unique=True)
+    driver_photo = models.ImageField(upload_to='driver_photos/', null=True, blank=True, 
+                                     help_text="Maximum 2MB and allowed formats: JPG, JPEG, PNG") 
+    created_at = models.DateTimeField(default=timezone.now)
+    birth_date = models.DateField(null=True, blank=True)
+    contact_number = models.CharField(max_length=20, null=True, blank=True)
+    driver_email = models.EmailField(null=True, blank=True)
     def __str__(self):
         return f"{self.driver_name} {self.driver_surname}"
 

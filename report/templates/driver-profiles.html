@@ -9,6 +9,12 @@
     <title>Driver Profile</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+        }
         .card-header {
             background-color: #007bff;
             color: #fff;
@@ -44,7 +50,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="row justify-content-center mt-5">
+        <div class="row justify-content-center mt-3">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
@@ -54,20 +60,50 @@
                         {% if driver.driver_photo %}
                         <img src="{{ MEDIA_URL }}{{ driver.driver_photo.url }}" alt="Driver Photo" class="profile-pic">
                         {% endif %}
-                        <div class="mb-3">
-                            <label for="driver_name" class="form-label">Name:</label>
-                            <input type="text" class="form-control" id="driver_name" value="{{ driver.driver_name }}" disabled>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="driver_name" class="form-label">Name:</label>
+                                    <input type="text" class="form-control" id="driver_name" value="{{ driver.driver_name }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="driver_surname" class="form-label">Surname:</label>
+                                    <input type="text" class="form-control" id="driver_surname" value="{{ driver.driver_surname }}" disabled>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="driver_surname" class="form-label">Surname:</label>
-                            <input type="text" class="form-control" id="driver_surname" value="{{ driver.driver_surname }}" disabled>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="birth_date" class="form-label">Birth Date:</label>
+                                    <input type="text" class="form-control" id="birth_date" value="{{ driver.birth_date|date:'d.m.Y' }}" disabled> <!-- Added date filter -->
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="driver_license" class="form-label">Driver's License:</label>
+                                    <input type="text" class="form-control" id="driver_license" value="{{ driver.driver_licence }}" disabled> 
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="driver_licence" class="form-label">Licence:</label>
-                            <input type="text" class="form-control" id="driver_licence" value="{{ driver.driver_licence }}" disabled>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="contact_number" class="form-label">Contact Number:</label>
+                                    <input type="text" class="form-control" id="contact_number" value="{{ driver.contact_number }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="driver_email" class="form-label">E-Mail:</label>
+                                    <input type="text" class="form-control" id="driver_email" value="{{ driver.driver_email }}" disabled>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-success">Driver Reports</button>
+                        <div class="my-3">
+                            <a href="{% url 'driver_reports_driver_id' driver.id %}"class="btn btn-success">Driver Reports</a>
                         </div>
                     </div>
                 </div>
@@ -76,5 +112,4 @@
     </div>
 </body>
 </html>
-
 {% endblock %}
