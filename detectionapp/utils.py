@@ -65,11 +65,11 @@ def process_results(results, is_car_interior):
         frame_info = f"{i+1}/{total_frames}"
         if result.boxes.cls is not None and len(result.boxes.cls) > 0:
             label = inside_class_labels.get(int(result.boxes.cls[0]), "Unknown") if is_car_interior else outside_class_labels.get(int(result.boxes.cls[0]), "Unknown")
-            confidence = float(result.boxes.conf[0])
-            x_min, y_min = float(result.boxes.xyxy[0][0]), float(result.boxes.xyxy[0][1])
-            x_max, y_max = float(result.boxes.xyxy[0][2]), float(result.boxes.xyxy[0][3])
-            x_center, y_center = float(result.boxes.xywh[0][0]), float(result.boxes.xywh[0][1])
-            width, height = float(result.boxes.xywh[0][2]), float(result.boxes.xywh[0][3])
+            confidence = round(float(result.boxes.conf[0]),3)
+            x_min, y_min = round(float(result.boxes.xyxy[0][0]),3), round(float(result.boxes.xyxy[0][1]),3)
+            x_max, y_max = round(float(result.boxes.xyxy[0][2]),3), round(float(result.boxes.xyxy[0][3]),3)
+            x_center, y_center = round(float(result.boxes.xywh[0][0]),3), round(float(result.boxes.xywh[0][1]),3)
+            width, height = round(float(result.boxes.xywh[0][2]),3), round(float(result.boxes.xywh[0][3]),3)
             data.append({
                 'label': label,
                 'confidence': confidence,
