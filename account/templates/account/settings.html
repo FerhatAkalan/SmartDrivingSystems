@@ -17,7 +17,6 @@
                 transform: translateX(0);
             }
         }  
-        /* Card styling */
         .card {
             animation: fadeInLeft 0.5s ease both;
             border-radius: 15px;
@@ -34,7 +33,6 @@
             background-color: #007bff;
             color: white;
             border-radius: 15px 15px 0 0;
-            padding: 0.75rem 1.25rem;
         }
         .card-body {
             padding: 1.5rem;
@@ -86,11 +84,21 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Settings</h5>
+                        <h3 class="card-title">Model Settings</h3>
                     </div>
                     <div class="card-body">
                         <form id="settings-form" method="POST" novalidate>
                             {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="alert alert-info" role="alert">
+                                    <p class="card-text"><strong>Confidence</strong>, refers to the probability that an object recognition model recognizes an object. A high confidence level indicates that the model is more likely to recognize an object correctly. A low confidence level means that recognition accuracy is likely low.
+                                    </div></div>
+                                <div class="col-md-6">
+                                    <div class="alert alert-info" role="alert">
+                                    <p class="card-text"><strong>Video Frame Stride</strong>, specifies the number of skips between frames in the video. A larger skip value means fewer frames are processed and processing time can be shortened. However, as the skip value increases, there may be loss of details in the video.</p>
+                                </div></div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -115,18 +123,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <p class="card-text"><strong>Confidence</strong>, refers to the probability that an object recognition model recognizes an object. A high confidence level indicates that the model is likely to recognize an object correctly. A low confidence level means that the recognition accuracy is likely to be low, which means that the model may produce false positive or false negative results.
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="card-text"><strong>Video Frame Stride</strong>, specifies the number of skips between frames in the video. A larger skip value means fewer frames are processed and processing time can be shortened. However, as the skip value increases, there may be loss of details in the video. The model cannot detect cases in skipped frames.</p>
-                                </div>
-                            </div>
-                            <button type="submit" id="save-btn" class="btn btn-primary">Save</button>
+                            <button type="submit" id="save-btn" class="btn btn-primary mb-3">Save</button>
                         </form>
                         <div class="alert alert-success mt-3" role="alert" id="success-alert" style="display: none;">
-                            Ayarlar başarıyla güncellendi yükleme sayfasına yönlendiriliyorsunuz...
+                            The settings have been updated successfully, you are directed to the installation page...
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-grow mt-2" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                              </div>
                         </div>
                     </div>
                 </div>

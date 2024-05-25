@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('success-alert').style.display = 'block';
                 setTimeout(function() {
                     window.location.href = uploadUrl;
-                }, 1500);
+                }, 1000);
             })
             .catch(error => {
                 console.error('Error updating settings:', error);

@@ -1,37 +1,70 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-</head>
-<body>
-<main class="container">
+<div class="container mt-3">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h1 class="text-center my-5">Contact Us</h1>
-            <p class="text-center">You can contact us at <a href="mailto:site@mailadresi.com">smartdrivingsystems@smartdrivingsystems.com</a></p>
-            <form action="mailto:site@mailadresi.com" method="post" enctype="text/plain">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Your Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="text-center mb-3" style="font-family: 'FasterOne';">Contact Us</h2>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header">
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Your Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                <div class="card-body">
+                    <p class="text-left mb-4" style="text-decoration: none;">You can contact us at <a href="mailto:smartdrivingsystems@smartdrivingsystems.com">smartdrivingsystems@smartdrivingsystems.com</a></p>
+                    <form action="mailto:smartdrivingsystems@smartdrivingsystems.com" method="post" enctype="text/plain">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Your Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="message" class="form-label">Your Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
+            </div>
         </div>
     </div>
-</main>
-</body>
-</html>
+</div>
+<style>
+    @keyframes fadeInLeft {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }  
+    .card {
+        animation: fadeInLeft 0.5s ease both;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+    .card-header {
+        font-weight: bold;
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+    }
+    .card-body {
+        background-color: #fff;
+        border-color: transparent;
+        background-color: #f8f9fa;
+    }
+    .card:hover {
+        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+    }
+    .form-label {
+        font-weight: bold;
+    }
+</style>
 {% endblock %}

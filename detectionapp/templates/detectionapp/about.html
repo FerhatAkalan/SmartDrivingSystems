@@ -1,26 +1,127 @@
-{% extends 'layout.html' %} {% load static %} {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <h1 class="text-center mt-5">About Us</h1>
-      <p class="text-center">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget
-        consequat urna. Sed pretium vestibulum nulla, a volutpat justo convallis
-        nec.
-      </p>
-      <p class="text-center">
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-        cubilia Curae; Proin et elit risus.
-      </p>
-      <p class="text-center">
-        Integer molestie nisi nec erat convallis, in ultricies nisi vehicula.
-        Donec quis viverra leo, id molestie turpis. Integer sit amet magna in
-        nisi feugiat pharetra.
-      </p>
-      <div class="text-center">
-        <a href="#" class="btn btn-primary">Learn More</a>
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-3 mb-3">
+  <h2 class="text-center mb-3" style="font-family: fasterOne, sans-serif;">About Us</h2>
+  <h2 class="text-left mb-3" style="font-family: fasterOne, sans-serif;">Our Team</h2>
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card border-0 shadow">
+        <div class="card-body text-center">
+          <img src="https://avatars.githubusercontent.com/u/168827405?s=400&u=20f55e80a3a3c32b64dd289d52634b9f822e99b8&v=4" class="img-fluid rounded-circle mb-3" alt="Profile Picture">
+          <h5 class="card-title mb-1">Project Team</h5>
+          <p class="card-text text-muted">TECNOROUTE</p>
+          <div class="social-links">
+            <a href="https://github.com/TECNOROUTE" class="social-icon"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/TECNOROUTE" class="social-icon"><i class="fab fa-github"></i></a>
+            <a href="https://github.com/TECNOROUTE" class="social-icon"><i class="fab fa-medium"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow">
+        <div class="card-body text-center">
+          <img src="https://avatars.githubusercontent.com/u/102834897?v=4" class="img-fluid rounded-circle mb-3" alt="Profile Picture">
+          <h5 class="card-title mb-1">Project Leader</h5>
+          <p class="card-text text-muted">Ferhat AKALAN</p>
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/ferhatakalan/" class="social-icon"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/FerhatAkalan" class="social-icon"><i class="fab fa-github"></i></a>
+            <a href="https://medium.com/@ferhatakalan" class="social-icon"><i class="fab fa-medium"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow">
+        <div class="card-body text-center">
+          <img src="https://avatars.githubusercontent.com/u/76564800?v=4" class="img-fluid rounded-circle mb-3" alt="Profile Picture">
+          <h5 class="card-title mb-1">Project Partner</h5>
+          <p class="card-text text-muted">Betül MUMCU</p>
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/betulmumcu/" class="social-icon"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/betuullm" class="social-icon"><i class="fab fa-github"></i></a>
+            <a href="https://medium.com/@betuullm01" class="social-icon"><i class="fab fa-medium"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h2 class="text-left mb-4" style="font-family: fasterOne, sans-serif;">Supporters</h2>
+  <div class="row mb-5">
+    <div class="col-md-6">
+      <div class="card border-0 shadow">
+        <div class="card-body text-center">
+          <h5 class="card-title mb-1">TÜBİTAK</h5>
+          <p class="card-text text-muted"> 2209-A Üniversite Öğrencileri Araştırma Projeleri Programı</p>
+          <img src="https://tubitak.gov.tr/sites/default/files/2023-08/logo.svg" style="width: 200px;height: 200px;" class="img-fluid mb-3" alt="Profile Picture">
+          <div class="social-links">
+            <a href="https://tubitak.gov.tr/tr" class="social-icon"><i class="fas fa-globe"></i></a>
+            <a href="https://www.linkedin.com/company/tubitak/" class="social-icon"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-0 shadow">
+        <div class="card-body text-center">
+          <h5 class="card-title mb-1">Giresun Üniversitesi</h5>
+          <p class="card-text text-muted">Bilgisayar Mühendisliği Bölümü</p>
+          <img src="https://muhendislik.giresun.edu.tr/Files/Images/logo_230x230.png" style="width: 200px;height: 200px;" class="img-fluid rounded-circle mb-3" alt="Profile Picture">
+          <div class="social-links">
+            <a href="https://www.giresun.edu.tr/" class="social-icon"><i class="fas fa-globe"></i></a>
+            <a href="https://www.linkedin.com/school/giresun-universitesi/" class="social-icon"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<style>
+  @keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+  }  
+  .card{
+    animation: fadeInLeft 0.5s ease both;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .card-title {
+    font-weight: bold; 
+  }
+  .rounded-circle {
+    max-width: 300px;
+    max-height: 300px;
+  }
+  .social-icon {
+    font-size: 24px;
+    color: #6c757d;
+    margin-right: 10px;
+  }
+  .social-icon:hover {
+    color: #343a40;
+  } 
+  .social-links {
+    margin-top: 20px;
+  }
+  .card {
+    transition: transform 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+</style>
 {% endblock %}
+
+

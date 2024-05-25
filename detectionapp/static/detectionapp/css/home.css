@@ -37,7 +37,8 @@ body {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 .jumbotron .btn {
-    background-color: gray;
+    /*background-color: gray;*/
+    background-color: #007bff;
     border: none;
     border-radius: 5px;
     padding: 1rem 2rem;
@@ -48,6 +49,42 @@ body {
     transition: background-color 0.3s ease;
 }
 .jumbotron .btn:hover {
+    background-color: #0056b3;
+}
+.jumbotron2 {
+    font-family: FasterOne, sans-serif;
+    background-image: url('/static/img/background.jpg');
+    background-size: cover;
+    padding: 4rem 2rem;
+    color: #fff;
+    text-align: center;
+    border-radius: 15px;
+    animation: fadeInUp 1s ease;
+    position: relative;
+}
+.jumbotron2 h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.jumbotron2 p {
+    font-size: 1.8rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+.jumbotron2 .btn {
+    /*background-color: gray;*/
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    color: #fff;
+    text-transform: uppercase;
+    margin-top: 2rem;
+    transition: background-color 0.3s ease;
+}
+.jumbotron2 .btn:hover {
     background-color: #0056b3;
 }
 .feature {

@@ -10,72 +10,78 @@
     <link rel="stylesheet" href="{% static 'detectionapp/css/home.css' %}">
 </head>
 <body>
-<div class="container fluid mt-3 mb-5">
-<div class="jumbotron">
-    <h1>Welcome to Smart Driving System</h1>
-    <p class="lead">Making Roads Safer with Advanced Technology</p>
-    <a href="#features" class="btn">Get Started</a>
-</div>
-<div class="container" id="features">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="feature">
-                <i class="fas fa-chart-line"></i>
-                <h3>Driving Analysis</h3>
-                <p>Analyze driving patterns and trends.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature">
-                <i class="fas fa-user"></i>
-                <h3>Drivers</h3>
-                <p>Manage driver information and profiles.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature">
-                <i class="fas fa-file-alt"></i>
-                <h3>Reports</h3>
-                <p>Access detailed reports on driving behavior.</p>
-            </div>
-        </div>
+<div class="container fluid mt-3 mb-3">
+    <div class="jumbotron">
+        <h1>Welcome to Smart Driving System</h1>
+        <p class="lead">Making Roads Safer with Advanced Technology</p>
+        <a href="#features" class="btn">Get Started</a>
     </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{% static 'detectionapp/img/smartdriving.jpg' %}" class="card-img-top" alt="Analysis Image">
-                <div class="card-body">
-                    <h5 class="card-title">Driving Analysis</h5>
-                    <p class="card-text">Analyze driving patterns and trends.</p>
-                    <a href="{% url 'upload_file' %}" class="btn btn-primary">Start Analysis</a>
+    <div class="container" id="features">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Driving Analysis</h3>
+                    <p>Analyze driving patterns and trends.</p>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{% static 'detectionapp/img/drivers.jpg' %}" class="card-img-top" alt="Driver Image">
-                <div class="card-body">
-                    <h5 class="card-title">Drivers</h5>
-                    <p class="card-text">Manage driver information and profiles.</p>
-                    <a href="{% url 'driver_list' %}" class="btn btn-primary">View Drivers</a>
+            <div class="col-md-4">
+                <div class="feature">
+                    <i class="fas fa-user"></i>
+                    <h3>Drivers</h3>
+                    <p>Manage driver information and profiles.</p>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{% static 'detectionapp/img/reports.jpg' %}" class="card-img-top" alt="Report Image">
-                <div class="card-body">
-                    <h5 class="card-title">Reports</h5>
-                    <p class="card-text">Access detailed reports on driving behavior.</p>
-                    <a href="{% url 'driver_reports' %}" class="btn btn-primary">View Reports</a>
+            <div class="col-md-4">
+                <div class="feature">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Reports</h3>
+                    <p>Access detailed reports on driving behavior.</p>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{% static 'detectionapp/img/smartdriving.jpg' %}" class="card-img-top" alt="Analysis Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Driving Analysis</h5>
+                        <p class="card-text">Analyze driving patterns and trends.</p>
+                        <a href="{% url 'upload_file' %}" class="btn btn-primary">Start Analysis</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{% static 'detectionapp/img/drivers.jpg' %}" class="card-img-top" alt="Driver Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Drivers</h5>
+                        <p class="card-text">Manage driver information and profiles.</p>
+                        <a href="{% url 'driver_list' %}" class="btn btn-primary">View Drivers</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{% static 'detectionapp/img/reports.jpg' %}" class="card-img-top" alt="Report Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Reports</h5>
+                        <p class="card-text">Access detailed reports on driving behavior.</p>
+                        <a href="{% url 'driver_reports' %}" class="btn btn-primary">View Reports</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron2">
+        <h1>Smart Driving System</h1>
+        <p class="lead">Step into a Safe Future on the Roads</p>
+        <a href="{% url "about" %}" class="btn">Who are we?</a>
+    </div>
 </div>
 </body>
 </html>
 {% endblock %}
+{% url "" %}

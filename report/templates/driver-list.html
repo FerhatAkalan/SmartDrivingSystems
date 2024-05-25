@@ -1,20 +1,11 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver List</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
 <body>
 <main class="container">
     <div class="row">
         <div class="col-md-8 offset-md-1 mt-3">
-            <h1 class="text-center">Driver List</h1>
+            <h1 class="text-left"><strong>Driver List</strong></h1>
             {% if drivers %}
             <table class="table table-bordered table-striped table-hover animated fadeInUp">
                 <thead>
@@ -24,7 +15,6 @@
                         <th scope="col">Driver Surname</th>
                         <th scope="col">Driver Licence</th>
                         <th scope="col">Driver Profile</th>
-
                     </tr>
                 </thead>
                 <tbody>
