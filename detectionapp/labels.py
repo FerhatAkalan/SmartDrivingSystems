@@ -1,10 +1,8 @@
 inside_class_labels = {
-    0: 'drinking', 
-    1: 'reaching behind', 
-    2: 'safe driving', 
-    3: 'talking on the phone', 
-    4: 'talking to passenger', 
-    5: 'texting'
+    0: 'Drinking or eating', 
+    1: 'Drowsiness', 
+    2: 'Smoking', 
+    3: 'Using phone'
 }
 outside_class_labels = {
     0: "-",
