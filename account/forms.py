@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from .models import UserSettings
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
@@ -24,3 +25,27 @@ class ProfileUpdateForm(forms.ModelForm):
         if len(last_name) > 50:
             raise ValidationError("Soyisim çok uzun.")
         return last_name
+
+class UserSettingsForm(forms.ModelForm):
+    class Meta:
+        model = UserSettings
+        fields = ['vid_stride', 'confidence']
+
+    def clean_vid_stride(self):
+        vid_stride = self.cleaned_data.get('vid_stride')
+        # Tür kontrolü
+        if not isinstance(vid_stride, int):
+            raise forms.ValidationError("Video Frame Stride tamsayı olmalıdır.")
+        if vid_stride < 1:
+            raise forms.ValidationError("Video Frame Stride en az 1 olmalıdır.")
+        return vid_stride
+
+    def clean_confidence(self):
+        confidence = self.cleaned_data.get('confidence')
+        # Tür kontrolü
+        if not isinstance(confidence, (int, float)):
+            raise ValidationError("Confidence bir sayı olmalıdır.")
+        if confidence < 0 or confidence > 1:
+            print("Confidence değeri 0 ile 1 arasında olmalıdır.")
+            raise ValidationError("Confidence değeri 0 ile 1 arasında olmalıdır.")
+        return confidence

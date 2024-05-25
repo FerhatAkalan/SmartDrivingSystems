@@ -1,0 +1,143 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }  
+        /* Card styling */
+        .card {
+            animation: fadeInLeft 0.5s ease both;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .card:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+        .card-header {
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 0.75rem 1.25rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #000;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="settings-form" method="POST" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="confidence" class="form-label">Confidence Threshold:</label>
+                                        <input type="number" id="confidence" name="confidence" class="form-control {% if form.errors.confidence %}is-invalid{% endif %}" min="0" max="1" step="0.01" value="{{ form.instance.confidence }}" required>
+                                        <div class="invalid-feedback">Confidence değeri maximum 1 olmalı.</div>
+                                        <div class="form-text">The recommended value is 0.7. The maximum value can be set to 1.</div>
+                                        {% if form.errors.confidence %}
+                                            <div class="invalid-feedback">{{ form.errors.confidence.0 }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="vid-stride" class="form-label">Video Frame Stride:</label>
+                                        <input type="number" id="vid_stride" name="vid_stride" class="form-control {% if form.errors.vid_stride %}is-invalid{% endif %}" value="{{ form.instance.vid_stride }}" required>
+                                        <div class="invalid-feedback">Video Frame Stride gerekli bir alandır.</div>
+                                        <div class="form-text">The recommended value is 10. </div>
+                                        {% if form.errors.vid_stride %}
+                                            <div class="invalid-feedback">{{ form.errors.vid_stride.0 }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <p class="card-text"><strong>Confidence</strong>, refers to the probability that an object recognition model recognizes an object. A high confidence level indicates that the model is likely to recognize an object correctly. A low confidence level means that the recognition accuracy is likely to be low, which means that the model may produce false positive or false negative results.
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="card-text"><strong>Video Frame Stride</strong>, specifies the number of skips between frames in the video. A larger skip value means fewer frames are processed and processing time can be shortened. However, as the skip value increases, there may be loss of details in the video. The model cannot detect cases in skipped frames.</p>
+                                </div>
+                            </div>
+                            <button type="submit" id="save-btn" class="btn btn-primary">Save</button>
+                        </form>
+                        <div class="alert alert-success mt-3" role="alert" id="success-alert" style="display: none;">
+                            Ayarlar başarıyla güncellendi yükleme sayfasına yönlendiriliyorsunuz...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var settingsUrl = "{% url 'settings' %}";
+    var uploadUrl = "{% url 'upload_file' %}";
+</script>
+<script src="{% static 'account/js/settings.js' %}"></script>
+{% endblock %}

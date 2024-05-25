@@ -1,10 +1,10 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileUpdateForm
+from .forms import ProfileUpdateForm, UserSettingsForm
 from django.http import JsonResponse
+from .models import UserSettings 
 
 # Create your views here.
 def user_login(request):
@@ -58,6 +58,8 @@ def user_register(request):
                 
         user = User.objects.create_user(username=username,first_name=first_name, last_name=last_name,email=email,password=password)
         user.save()
+        user_settings = UserSettings.objects.create(user=user)
+        user_settings.save()    
         return redirect("user_login")
         
             
@@ -78,8 +80,6 @@ def user_profile(request):
     }
     return render(request, 'account/profile.html', context)
 
-
-
 @login_required
 def profile_edit(request):
     if request.method == 'POST':
@@ -92,3 +92,17 @@ def profile_edit(request):
     else:
         form = ProfileUpdateForm(instance=request.user)
     return render(request, 'profile.html', {'form': form})
+
+@login_required
+def settings(request):
+    if request.method == 'POST':
+        form = UserSettingsForm(request.POST, instance=request.user.usersettings)
+        if form.is_valid():
+            form.clean()
+            form.save()
+            return JsonResponse({'success': True}) 
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+    else:
+        form = UserSettingsForm(instance=request.user.usersettings)
+    return render(request, 'account/settings.html', {'form': form})

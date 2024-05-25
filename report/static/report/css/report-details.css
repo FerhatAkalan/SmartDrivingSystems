@@ -1,0 +1,22 @@
+.card-header {
+    background-color: #E5E7E9; /* Başlık arka plan rengi */
+    color: black; /* Başlık metin rengi */
+  }
+  .card-header, .card-footer {
+      background-color: #f8f9fa;
+      color: #495057;
+      font-size: 18px;
+  }
+  .card-body {
+      background-color: #fff;
+  }
+  .card-body img, .card-body video {
+      max-width: 100%;
+      height: auto;
+  }
+  .pagination {
+      margin: 20px 0;
+  }
+  .pagination button {
+      margin: 0 5px;
+  }

@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'report/css/report-details.css' %}">
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-{% load static %}
-
 <div class="container mb-4 mt-4">
     {% comment %} <h1 class="my-4">Report Details</h1> {% endcomment %}
     <div class="card mb-4 mt-4 ">
@@ -11,17 +11,12 @@
         <div class="card-body">
             <p class="card-text ">{{ report.report_text }} This report created at {{ report.created_at }}</p>
             <p class="card-text ">This report created at {{ report.created_at }}</p>
-            
             <h5 class="card-title ">Driver Information</h5>
             <p class="card-text ">Driver: {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
             <p class="card-text ">Driver Licence: {{ report.driver.driver_licence }}</p>
-            
             <h5 class="card-title ">Trip Information</h5>
             <p class="card-text ">Trip Start Time: {{ report.trip.start_time }}</p>
             <p class="card-text ">Trip End Time: {{ report.trip.end_time }}</p>
-           
-
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
@@ -60,11 +55,8 @@
                     </div>
                 </div>
             </div>
-
             <!-- Diğer rapor detayları buraya eklenebilir -->
-        
         <div class="row mt-4 mb-3">
-        
         <!--Card inside--> 
             <div class="col-md-6">
                 <div class="card h-100">
@@ -192,7 +184,6 @@
                 </div>
             </div>
         </div></div>
-
         <!-- Chart -->
         <div class="row">
             <div class="col">
@@ -202,8 +193,6 @@
                 <canvas id="labelChart2" width="400" height="400"></canvas>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
         <script>
             var ctx = document.getElementById('labelChart').getContext('2d');
             var labels = [
@@ -287,108 +276,11 @@
                                 },
                                
                             });
-                </script>
-
+            </script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            <style>
-                        .card-header, .card-footer {
-                            background-color: #f8f9fa;
-                            color: #495057;
-                            font-size: 18px;
-                        }
-                        .card-body {
-                            background-color: #fff;
-                        }
-                        .card-body img, .card-body video {
-                            max-width: 100%;
-                            height: auto;
-                        }
-                        .pagination {
-                            margin: 20px 0;
-                        }
-                        .pagination button {
-                            margin: 0 5px;
-                        }
-            </style>
-
-            <script>
-                        // İç detaylar için sayfalama işlevi
-                        var currentPageInside = 1;
-                        var itemsPerPageInside = 1;
-                        showPageInside(currentPageInside);
-                    
-                        function showPageInside(page) {
-                            var elementsInside = document.querySelectorAll('#result-details-inside .card-body');
-                            elementsInside.forEach(function(element) {
-                                element.style.display = 'none';
-                            });
-                            elementsInside[page - 1].style.display = 'block';
-                    
-                            var totalItemsInside = elementsInside.length;
-                            var totalPagesInside = Math.ceil(totalItemsInside / itemsPerPageInside);
-                            document.getElementById('page-info-inside').textContent = 'Page ' + page + '/' + totalPagesInside;
-                        }
-                    
-                        $('#prev-page-inside').click(function() {
-                            if (currentPageInside > 1) {
-                                currentPageInside--;
-                                showPageInside(currentPageInside);
-                            }
-                        });
-                    
-                        $('#next-page-inside').click(function() {
-                            var totalItemsInside = document.querySelectorAll('#result-details-inside .card-body').length;
-                            var totalPagesInside = Math.ceil(totalItemsInside / itemsPerPageInside);
-                            if (currentPageInside < totalPagesInside) {
-                                currentPageInside++;
-                                showPageInside(currentPageInside);
-                            }
-                        });
-                    
-                        // Dış detaylar için sayfalama işlevi
-                        var currentPageOutside = 1;
-                        var itemsPerPageOutside = 1;
-                        showPageOutside(currentPageOutside);
-                    
-                        function showPageOutside(page) {
-                            var elementsOutside = document.querySelectorAll('#result-details-outside .card-body');
-                            elementsOutside.forEach(function(element) {
-                                element.style.display = 'none';
-                            });
-                            elementsOutside[page - 1].style.display = 'block';
-                    
-                            var totalItemsOutside = elementsOutside.length;
-                            var totalPagesOutside = Math.ceil(totalItemsOutside / itemsPerPageOutside);
-                            document.getElementById('page-info-outside').textContent = 'Page ' + page + '/' + totalPagesOutside;
-                        }
-                    
-                        $('#prev-page-outside').click(function() {
-                            if (currentPageOutside > 1) {
-                                currentPageOutside--;
-                                showPageOutside(currentPageOutside);
-                            }
-                        });
-                    
-                        $('#next-page-outside').click(function() {
-                            var totalItemsOutside = document.querySelectorAll('#result-details-outside .card-body').length;
-                            var totalPagesOutside = Math.ceil(totalItemsOutside / itemsPerPageOutside);
-                            if (currentPageOutside < totalPagesOutside) {
-                                currentPageOutside++;
-                                showPageOutside(currentPageOutside);
-                            }
-                        });
-                    </script>
-
-            <!--Back to Reports Button-->        
+            <script src="{% static 'report/js/report_details_pagination.js' %}"></script>
             <div class="d-flex justify-content-center"><a href="{% url 'driver_reports' %}" class="btn btn-danger mt-3 mb-3 md-3">Back to Reports</a></div>
-
         </div>
     </div>
 </div>
-<style>
-    .card-header {
-      background-color: #E5E7E9; /* Başlık arka plan rengi */
-      color: black; /* Başlık metin rengi */
-    }
-  </style>
 {% endblock %}

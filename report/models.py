@@ -42,7 +42,7 @@ class Reports(models.Model):
 
 class ReportDetails(models.Model):
     report = models.ForeignKey(Reports, on_delete=models.CASCADE)
-    label = models.CharField(max_length=10)
+    label = models.CharField(max_length=100)
     confidence = models.FloatField()
     top_left_x = models.FloatField()
     top_left_y = models.FloatField()

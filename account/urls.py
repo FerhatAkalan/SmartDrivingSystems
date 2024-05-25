@@ -9,5 +9,6 @@ urlpatterns = [
     path('register/', views.user_register,name="user_register"),
     path('logout/', views.user_logout,name="user_logout"),
     path('profile/', views.user_profile, name='user_profile'),
-    path('profile-edit/', views.profile_edit, name='profile-edit'),  # Profil düzenleme URL'si
+    path('profile-edit/', views.profile_edit, name='profile-edit'),
+    path('settings/', views.settings, name='settings'),
 ]

@@ -99,12 +99,13 @@
                     <div class="card-body">
                     <div class="purpose-list mt-3">
                         <h5 class="purpose-title">Smart Driving System Purposes</h5>
-                            <li class="purpose-item">Promoting safe driving habits.</li>
-                            <li class="purpose-item">To increase compliance with traffic rules.</li>
-                            <li class="purpose-item">Increase driver attention.</li>
-                            <li class="purpose-item">Reducing the risk of accidents.</li>
-                            <li class="purpose-item">Creating driver profiles.</li>
-                    </div>  </div>
+                        <li class="purpose-item">Promoting safe driving habits.</li>
+                        <li class="purpose-item">To increase compliance with traffic rules.</li>
+                        <li class="purpose-item">Increase driver attention.</li>
+                        <li class="purpose-item">Reducing the risk of accidents.</li>
+                        <li class="purpose-item">Creating driver profiles.</li>
+                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,10 +117,37 @@
                 </div>
                 <div class="card-body">
                     <p class="mb-3">Please upload both in-car and out-car videos. Once the files are processed you will be redirected to the results page.</p>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <div class="alert alert-primary" role="alert">
+                                    <div class="row mb-1">
+                                        <div class="col-sm">
+                                            <div class="form-group d-flex align-items-center">
+                                                <label for="confidence" class="form-label"><strong>Confidence:</strong></label>
+                                                <div class="col-sm-2">
+                                                    <a href="{% url "settings" %}" class="alert-link" style="text-decoration: none;"><input style="text-decoration: none; cursor: pointer;" type="text" id="confidence" name="confidence" class="form-control form-control-sm ms-2" value="{{ form.initial.confidence }}" readonly ></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group d-flex align-items-center">
+                                                <label for="vid-stride" class="form-label"><strong>Video Frame Stride:</strong></label>
+                                                <div class="col-sm-2">
+                                                    <a href="{% url "settings" %}" class="alert-link" style="text-decoration: none;"><input style="cursor: pointer;" type="text" id="vid-stride" name="vid-stride" class="form-control form-control-sm ms-2" value="{{ form.initial.vid_stride }}" readonly></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    You can customize model settings like confidence and video frame step.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <form method="post" enctype="multipart/form-data" id="uploadForm" class="needs-validation" novalidate>
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="driver" class="form-label">Select Driver</label>
+                            <label for="driver" class="form-label"><strong>Select Driver</strong></label>
                             <select class="form-control" id="driver" name="driver" required>
                                 <option value="" selected disabled>Select a driver</option>
                                 {% for driver in form.driver.field.queryset %}
@@ -131,24 +159,33 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="fileInputInside" class="form-label">Upload In-car Video (Supported formats: JPG, MP4)</label>
+                            <label for="fileInputInside" class="form-label"><strong>Upload In-car Video (Supported formats: JPG, MP4)</strong></label>
                             <input type="file" class="form-control" id="fileInputInside" name="car_inside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
+                            <div class="form-text">(Supported formats: JPG, MP4)</div>
                             <div class="invalid-feedback" id="fileTypeErrorInside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
                         </div>
                         <div class="mb-3">
-                            <label for="fileInputOutside" class="form-label">Upload Out-car Video (Supported formats: JPG, MP4)</label>
+                            <label for="fileInputOutside" class="form-label"><strong>Upload Out-car Video (Supported formats: JPG, MP4)</strong></label>
                             <input type="file" class="form-control" id="fileInputOutside" name="car_outside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
+                            <div class="form-text">(Supported formats: JPG, MP4)</div>
                             <div class="invalid-feedback" id="fileTypeErrorOutside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="start_time" class="form-label">Start Time</label>
-                            <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="start_time" class="form-label"><strong>Start Time</strong></label>
+                                    <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="end_time" class="form-label"><strong>End Time</strong></label>
+                                    <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="end_time" class="form-label">End Time</label>
-                            <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
-                        </div>
-                        <div class="text-center mt-5" id="uploadButtonContainer">
+                        
+                        <div class="text-center mt-3" id="uploadButtonContainer">
                             <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-file-arrow-up"></i> Upload</button>
                         </div>
                         <div class="text-center mb-3">
