@@ -22,7 +22,8 @@ class Trips(models.Model):
     end_time = models.DateTimeField(null=True, blank=True)
     car_inside_file_path = models.TextField(null=True, blank=True)
     car_outside_file_path = models.TextField(null=True, blank=True)
-    
+    car_data_file_path = models.TextField(null=True, blank=True)
+
     def __str__(self):
         return f"Trip for {self.driver} from {self.start_time} to {self.end_time}"
 
@@ -33,6 +34,7 @@ class Reports(models.Model):
     report_text = models.TextField()
     car_inside_report_path = models.TextField()
     car_outside_report_path = models.TextField()
+    car_data_report_path = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
     total_frames_inside = models.IntegerField()
     total_frames_outside = models.IntegerField()
@@ -56,3 +58,12 @@ class ReportDetails(models.Model):
     is_car_interior = models.BooleanField(default=False)
     def __str__(self):
         return f"Report Details for {self.report}"
+
+class SpeedingViolationDetails(models.Model):
+    report = models.ForeignKey(Reports, on_delete=models.CASCADE)
+    speed_limit = models.FloatField() 
+    detected_speed = models.FloatField()
+    violation_time = models.CharField(max_length=20) 
+
+    def __str__(self):
+        return f"Speeding Violation Details for {self.report}"
