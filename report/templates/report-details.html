@@ -1,28 +1,66 @@
 {% extends 'layout.html' %}
 {% block content %}
 {% load static %}
+<style>
+    .card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        animation: fadeInUp 0.5s ease both;
+    }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+</style>
 <link rel="stylesheet" href="{% static 'report/css/report-details.css' %}">
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="container mb-4 mt-4">
-    {% comment %} <h1 class="my-4">Report Details</h1> {% endcomment %}
     <div class="card mb-4 mt-4 ">
-        <div class="card-header text-center"> Report - {{ report.id }} </div>
+        <div class="card-header text-center" style="background-color:#8294C4; color:white;"> <h5 class="card-title"> Report - {{ report.id }} </h5> </div>
         <div class="card-body">
             <p class="card-text ">{{ report.report_text }} This report created at {{ report.created_at }}</p>
             <p class="card-text ">This report created at {{ report.created_at }}</p>
-            <h5 class="card-title ">Driver Information</h5>
+
+            <div class="row">
+             <div class="col-md-6">
+                <div class="card">
+                    <h5 class="card-header text-center" >Driver Information</h5>
+                    <div class="card-body">
+           
             <p class="card-text ">Driver: {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
             <p class="card-text ">Driver Licence: {{ report.driver.driver_licence }}</p>
-            <h5 class="card-title ">Trip Information</h5>
+            </div>
+        </div>
+    </div>
+            <div class="col-md-6">
+             <div class="card">
+                <h5 class="card-header text-center " >Trip Information</h5>
+             <div class="card-body">
+           
             <p class="card-text ">Trip Start Time: {{ report.trip.start_time }}</p>
             <p class="card-text ">Trip End Time: {{ report.trip.end_time }}</p>
+        </div>
+            </div>
+        </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header text-center"> in-vehicle video </div>
+                        <div class="card-header text-center" style="background-color:#8576FF; color: white;" > in-vehicle video </div>
                         <div class="card-body">
-                            <p class="card-text">Video Path: {{ report.car_inside_report_path }}</p>
+                    
                             {% if report_details_interior %}
                                 {% if report.car_inside_report_path|slice:'-4:' == '.jpg' %}
                                     <img src="{% static report.car_inside_report_path %}" alt="Detected Image" class="img-fluid">
@@ -38,9 +76,9 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card"> 
-                        <div class="card-header text-center"> off-vehicle video </div>
+                        <div class="card-header text-center" style="background-color:#8576FF; color: white;"> off-vehicle video </div>
                         <div class="card-body">
-                            <p class="card-text">Video Path: {{ report.car_outside_report_path }}</p>
+                          
                             {% if report_details_exterior %}
                                 {% if report.car_outside_report_path|slice:'-4:' == '.jpg' %}
                                     <img src="{% static report.car_outside_report_path %}" alt="Detected Image" class="img-fluid">
@@ -138,8 +176,8 @@
                 <!-- Tespitler araç içi-->
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header text-center"> in-vehicle labels </div>
-                        <div class="card-body">
+                        <div class="card-header text-center" > in-vehicle labels </div>
+                        <div class="card-body ">
                             <table class="table">
                                 <thead>
                                     <tr>
