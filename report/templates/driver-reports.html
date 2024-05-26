@@ -1,6 +1,6 @@
 {% extends 'layout.html' %} {% block content %} {% load static %}
 <div class="container">
-  <h1 class="my-3"><strong>Driver Reports</strong></h1>
+  <h2 class="text-center mb-4 mt-3" style="font-family: fasterOne, sans-serif;">Driver Reports</h2>
   <div class="row">
     {% if reports %} {% for report in reports %}
     <div class="col-md-4">
@@ -55,42 +55,23 @@
   </div>
 </div>
 <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    .card {
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: box-shadow 0.3s ease;
-    }
-    .card:hover {
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-    }
-    .card-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    /* Animasyonlar */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animated {
-      animation-duration: 1s;
-      animation-fill-mode: both;
-    }
-    .fadeInUp {
-      animation-name: fadeInUp;
-    }
+  .card{
+    animation: fadeInLeft 0.5s ease both;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .card-title {
+    font-weight: bold; 
+  }
+  .card {
+    transition: transform 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
 </style>
 {% endblock %}
