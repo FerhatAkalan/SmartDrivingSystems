@@ -4,6 +4,7 @@ from .forms import UploadFileForm
 from django.contrib.auth.decorators import login_required
 from .models import UploadedFile
 from .utils import detect_dangerous_behavior, process_results, get_latest_prediction, create_report
+import cv2
 
 def home(request):
     return render(request, 'detectionapp/home.html')
@@ -29,7 +30,8 @@ def upload_file(request):
                 start_time=form.cleaned_data['start_time'],  # Formdan alınan başlangıç zamanı
                 end_time=form.cleaned_data['end_time'],  # Formdan alınan bitiş zamanı
                 car_inside_file_path=uploaded_file.car_inside_file.path, 
-                car_outside_file_path=uploaded_file.car_outside_file.path   
+                car_outside_file_path=uploaded_file.car_outside_file.path,
+                car_data_file_path=uploaded_file.car_data_file.path
             )
             return render(request, 'detectionapp/uploaded_file.html', {'uploaded_file': uploaded_file, 'trip': trip})
     else:
@@ -46,6 +48,7 @@ def results(request):
         # Tehlikeli davranışları tespit et ve sonuçları işle
         car_inside_file_path = trip.car_inside_file_path
         car_outside_file_path = trip.car_outside_file_path
+        car_data_file_path = trip.car_data_file_path
         # Car Inside Results
         car_inside_results = detect_dangerous_behavior(car_inside_file_path, user=request.user)
         car_inside_latest_file = get_latest_prediction()
@@ -57,17 +60,36 @@ def results(request):
         # Çıkarım sonuçlarını işleyerek bir grafik oluştur
 
         # İşlenmiş dosyanın yolunu Reports modelinde kaydedin
-        data_inside = process_results(car_inside_results,is_car_interior=True)
-        data_outside = process_results(car_outside_results,is_car_interior=False)
-        report = create_report(request.user, trip, car_inside_results, car_inside_latest_file, car_outside_results ,car_outside_latest_file,total_frames_inside,total_frames_outside)
-
+        data_inside = process_results(car_inside_results,car_data_file_path,is_car_interior=True)
+        data_outside = process_results(car_outside_results,car_data_file_path,is_car_interior=False)
+        report = create_report(request.user, 
+                               trip, car_inside_results, 
+                               car_inside_latest_file, 
+                               car_outside_results ,
+                               car_outside_latest_file,
+                               total_frames_inside,
+                               total_frames_outside, 
+                               car_data_file_path)
         # Pass the processed data and other context to the template
         context = {
             'report': report,
             'data_inside': data_inside,
             'data_outside': data_outside,
+            'data_car': car_data_file_path,
         }
         return render(request, 'detectionapp/results.html', context)
     else:
         # Handle GET request (if needed)
         pass
+
+def get_video_fps(video_path):
+    # Video dosyasını oku
+    cap = cv2.VideoCapture(video_path)
+
+    # Video dosyasından fps değerini al
+    fps = cap.get(cv2.CAP_PROP_FPS)
+
+    # Videoyu serbest bırak
+    cap.release()
+
+    return fps

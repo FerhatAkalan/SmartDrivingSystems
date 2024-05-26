@@ -158,17 +158,31 @@
                                 Please select a driver.
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="fileInputInside" class="form-label"><strong>Upload In-car Video (Supported formats: JPG, MP4)</strong></label>
-                            <input type="file" class="form-control" id="fileInputInside" name="car_inside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
-                            <div class="form-text">(Supported formats: JPG, MP4)</div>
-                            <div class="invalid-feedback" id="fileTypeErrorInside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="fileInputInside" class="form-label"><strong>Upload In Car Video</strong></label>
+                                    <input type="file" class="form-control" id="fileInputInside" name="car_inside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
+                                    <div class="form-text">(Supported formats: JPG, MP4)</div>
+                                    <div class="invalid-feedback" id="fileTypeErrorInside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="fileInputOutside" class="form-label"><strong>Upload Out Car Video</strong></label>
+                                    <input type="file" class="form-control" id="fileInputOutside" name="car_outside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
+                                    <div class="form-text">(Supported formats: JPG, MP4)</div>
+                                    <div class="invalid-feedback" id="fileTypeErrorOutside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
+                                </div>
+                            </div>
                         </div>
+                        
+                        
                         <div class="mb-3">
-                            <label for="fileInputOutside" class="form-label"><strong>Upload Out-car Video (Supported formats: JPG, MP4)</strong></label>
-                            <input type="file" class="form-control" id="fileInputOutside" name="car_outside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
-                            <div class="form-text">(Supported formats: JPG, MP4)</div>
-                            <div class="invalid-feedback" id="fileTypeErrorOutside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
+                            <label for="fileInputCarData" class="form-label"><strong>Upload Car Data</strong></label>
+                            <input type="file" class="form-control" id="fileInputCarData" name="car_data_file" required accept=".csv">
+                            <div class="form-text">(Supported format: CSV)</div>
+                            <div class="invalid-feedback" id="fileTypeErrorCarData" style="display:none;">Only CSV files can be uploaded.</div>
                         </div>
                         <div class="row">
                             <div class="col">

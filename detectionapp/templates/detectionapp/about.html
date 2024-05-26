@@ -55,7 +55,7 @@
         <div class="card-body text-center">
           <h5 class="card-title mb-1">TÜBİTAK</h5>
           <p class="card-text text-muted"> 2209-A Üniversite Öğrencileri Araştırma Projeleri Programı</p>
-          <img src="https://tubitak.gov.tr/sites/default/files/2023-08/logo.svg" style="width: 200px;height: 200px;" class="img-fluid mb-3" alt="Profile Picture">
+          <img src="https://tubitak.gov.tr/sites/default/files/2023-08/logo.svg" style="width: 170px;height: 170px;" class="img-fluid mb-3" alt="Profile Picture">
           <div class="social-links">
             <a href="https://tubitak.gov.tr/tr" class="social-icon"><i class="fas fa-globe"></i></a>
             <a href="https://www.linkedin.com/company/tubitak/" class="social-icon"><i class="fab fa-linkedin"></i></a>
@@ -68,7 +68,7 @@
         <div class="card-body text-center">
           <h5 class="card-title mb-1">Giresun Üniversitesi</h5>
           <p class="card-text text-muted">Bilgisayar Mühendisliği Bölümü</p>
-          <img src="https://muhendislik.giresun.edu.tr/Files/Images/logo_230x230.png" style="width: 200px;height: 200px;" class="img-fluid rounded-circle mb-3" alt="Profile Picture">
+          <img src="https://muhendislik.giresun.edu.tr/Files/Images/logo_230x230.png" style="width: 170px;height: 170px;" class="img-fluid rounded-circle mb-3" alt="Profile Picture">
           <div class="social-links">
             <a href="https://www.giresun.edu.tr/" class="social-icon"><i class="fas fa-globe"></i></a>
             <a href="https://www.linkedin.com/school/giresun-universitesi/" class="social-icon"><i class="fab fa-linkedin"></i></a>
@@ -88,21 +88,27 @@
         opacity: 1;
         transform: translateX(0);
     }
-  }  
-  .card{
+  }
+  .col-md-4{
     animation: fadeInLeft 0.5s ease both;
+  }
+  .card{
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s;
     overflow: hidden;
     margin-bottom: 2rem;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    transform: scale(1.05);
   }
   .card-title {
     font-weight: bold; 
   }
   .rounded-circle {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 80%;
+    max-height: auto;
   }
   .social-icon {
     font-size: 24px;
@@ -114,12 +120,6 @@
   } 
   .social-links {
     margin-top: 20px;
-  }
-  .card {
-    transition: transform 0.3s;
-  }
-  .card:hover {
-    transform: translateY(-5px);
   }
 </style>
 {% endblock %}
