@@ -99,7 +99,7 @@
                 </div>
             </div>
             <!-- Diğer rapor detayları buraya eklenebilir -->
-        <div class="row mt-4 mb-3">
+        <div class="row  mb-3">
         <!--Card inside--> 
             <div class="col-md-6">
                 <div class="card h-100 border-0 shadow">
@@ -226,6 +226,8 @@
             </div>
         </div>
 
+
+
     <!-- Chart -->
     <div class="row">
         <div class="col-md-6">
@@ -260,8 +262,82 @@
     </div>
     </div>
 
+     
+    <div class="row">
+        <div class="col-md-6">
+        <div class="card border-0 shadow">
+        <div class="card-body">
+        <h4>Araç İçi Davranışlar İçin Normal Dağılım Analizi</h4>
+        <img src="{{ normal_dist_plot_interior_url }}" alt="İç Davranışlar İçin Normal Dağılım Grafiği">
+        </div>
+    </div>
+</div>
+        <div class="col-md-6">
+        <div class="card border-0 shadow">
+        <div class="card-body">
+        <h4>Araç Dışı Davranışlar İçin Normal Dağılım Analizi</h4>
+        <img src="{{ normal_dist_plot_exterior_url }}" alt="Dış Davranışlar İçin Normal Dağılım Grafiği">
+        </div>
+    </div>
+</div>
+        </div>
+        <div class="row">
+        <div class="col-md-6">
+        <div class="card border-0 shadow">
+        <div class="card-body">
+        <h4>Araç İçi Davranışlar İçin Üstel Dağılım Analizi</h4>
+        <img src="{{ exponential_dist_plot_interior_url }}" alt="İç Davranışlar İçin Üstel Dağılım Grafiği">
+        </div>
+    </div>
+</div>
+        <div class="col-md-6">
+        <div class="card border-0 shadow">
+        <div class="card-body">
+        <h4>Araç Dışı Davranışlar için Üstel Dağılım Analizi</h4>
+        <img src="{{ exponential_dist_plot_exterior_url }}" alt="Dış Davranışlar İçin Üstel Dağılım Grafiği">
+            </div>
+        </div>
+        </div>
+        </div>
 
+     
+    <h2>Speed vs Time Graph</h2>
+    <div id="graph"></div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
+  
+    document.addEventListener("DOMContentLoaded", function() {
+        var times = {{ times|safe }};
+        var speeds = {{ speeds|safe }};
+        var speedLimits = {{ speed_limits|safe }};
+
+        var speedTrace = {
+            x: times,
+            y: speeds,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Detected Speed',
+            marker: { color: 'red' }
+        };
+
+        var limitTrace = {
+            x: times,
+            y: speedLimits,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Speed Limit',
+            line: { dash: 'dash', color: 'blue' }
+        };
+
+        var layout = {
+            title: 'Speed vs Time',
+            xaxis: { title: 'Time' },
+            yaxis: { title: 'Speed' }
+        };
+
+        Plotly.newPlot('graph', [speedTrace, limitTrace], layout);
+    });
+    //Label Chart
     var ctx = document.getElementById('labelChart').getContext('2d');
     var labels = [
         {% for label_count in label_counts_interior %}
@@ -394,6 +470,7 @@
 
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'report/js/report_details_pagination.js' %}"></script>
             <div class="d-flex justify-content-center"><a href="{% url 'driver_reports' %}" class="btn btn-danger mt-3 mb-3 md-3">Back to Reports</a></div>
         </div>

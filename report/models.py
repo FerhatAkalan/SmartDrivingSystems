@@ -36,15 +36,15 @@ class Reports(models.Model):
     car_outside_report_path = models.TextField()
     car_data_report_path = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
-    total_frames_inside = models.IntegerField()
-    total_frames_outside = models.IntegerField()
+    total_frames_inside = models.IntegerField() #Toplam araç içi tespit edilen davranış sayısı
+    total_frames_outside = models.IntegerField() #Toplam araç dışı tespit edilen davranış sayısı
 
     def __str__(self):
         return f"Report for {self.driver} - {self.created_at}"
 
 class ReportDetails(models.Model):
     report = models.ForeignKey(Reports, on_delete=models.CASCADE)
-    label = models.CharField(max_length=100)
+    label = models.CharField(max_length=100) #Tespit edilen davranış etiketi
     confidence = models.FloatField()
     top_left_x = models.FloatField()
     top_left_y = models.FloatField()
@@ -54,7 +54,7 @@ class ReportDetails(models.Model):
     center_y = models.FloatField()
     width = models.FloatField()
     height = models.FloatField()
-    frame_info = models.IntegerField()
+    frame_info = models.IntegerField() #Davranışın videoda kaçıncı çerçevede tespit edildiğini tutar.
     is_car_interior = models.BooleanField(default=False)
     def __str__(self):
         return f"Report Details for {self.report}"
