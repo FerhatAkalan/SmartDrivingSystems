@@ -7,11 +7,11 @@
       <div class="card mb-4">
         <div class="card-header">Report ID: {{ report.id }}</div>
         <div class="card-body">
-          <p class="card-text">Report Text: {{ report.report_text }}</p>
-          <p class="card-text">Trip ID: {{ report.trip.id }}</p>
-          <p class="card-text">Driver ID: {{ report.driver.id }}</p>
-          <p class="card-text">Driver Name: {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
-          <p class="card-text">Created At: {{ report.created_at }}</p>
+          <p class="card-text"><strong>Report Text: </strong>{{ report.report_text }}</p>
+          <p class="card-text"><strong>Trip ID: </strong> {{ report.trip.id }}</p>
+          <p class="card-text"><strong>Driver ID: </strong> {{ report.driver.id }}</p>
+          <p class="card-text"><strong>Driver Name: </strong> {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
+          <p class="card-text"><strong>Created At: </strong> {{ report.created_at }}</p>
           <a
             href="{% url 'report_details' report.id  %}"
             class="btn btn-danger">View Details</a>
@@ -55,6 +55,16 @@
   </div>
 </div>
 <style>
+  @keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+  }
   .card{
     animation: fadeInLeft 0.5s ease both;
     border-radius: 15px;
