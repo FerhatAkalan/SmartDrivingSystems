@@ -1,22 +1,62 @@
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animated-title {
+    animation: fadeInLeft 0.5s ease both;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    font-weight: bold; 
+}
+
+.card, .card-header, .card-footer {
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
 .card-header {
-    background-color: #E5E7E9; /* Başlık arka plan rengi */
-    color: black; /* Başlık metin rengi */
-  }
-  .card-header, .card-footer {
-      background-color: #f8f9fa;
-      color: #495057;
-      font-size: 18px;
-  }
-  .card-body {
-      background-color: #fff;
-  }
-  .card-body img, .card-body video {
-      max-width: 100%;
-      height: auto;
-  }
-  .pagination {
-      margin: 20px 0;
-  }
-  .pagination button {
-      margin: 0 5px;
-  }
+    background-color: #E5E7E9;
+    color: black;
+}
+
+.card-header, .card-footer {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-size: 18px;
+}
+
+.card-body {
+    background-color: #fff;
+}
+
+.card-body img, .card-body video {
+    max-width: 100%;
+    height: auto;
+}
+
+.pagination {
+    margin: 20px 0;
+}
+
+.pagination button {
+    margin: 0 5px;
+}
