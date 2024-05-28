@@ -47,6 +47,11 @@
 .card-body {
     background-color: #fff;
 }
+.card-body {
+    display: grid;
+    place-items: center; /* Hem yatay hem de dikey olarak hizalamak için */
+    height: 100%; /* Yüksekliği doldurması için */
+}
 
 .card-body img, .card-body video {
     max-width: 100%;
