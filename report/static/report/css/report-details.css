@@ -52,7 +52,10 @@
     place-items: center; /* Hem yatay hem de dikey olarak hizalamak için */
     height: 100%; /* Yüksekliği doldurması için */
 }
-
+#labelChart, #labelChart2 {
+    max-width: 65%; /* veya istediğiniz bir değer */
+    max-height: auto;
+}
 .card-body img, .card-body video {
     max-width: 100%;
     height: auto;

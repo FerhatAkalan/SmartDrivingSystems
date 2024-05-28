@@ -25,10 +25,12 @@ def get_user_settings(user):
 def detect_dangerous_behavior(file_path, user, isOutside=False):
     vid_stride, confidence = get_user_settings(user)
     if isOutside:
-        model = YOLO(os.path.join('detectionapp/static/detectionapp/model/best_outside.pt'))
+        model = YOLO(os.path.join('detectionapp/static/detectionapp/model/best_outside2.pt'))
+        results = model.predict(file_path, save=True, conf=0.9, save_dir=results_dir, vid_stride=vid_stride)
     else:
         model = YOLO(os.path.join('detectionapp/static/detectionapp/model/best50.pt'))
-    results = model.predict(file_path, save=True, conf=confidence, save_dir=results_dir, vid_stride=vid_stride)
+        results = model.predict(file_path, save=True, conf=confidence, save_dir=results_dir, vid_stride=vid_stride)
+    #results = model.predict(file_path, save=True, conf=confidence, save_dir=results_dir, vid_stride=vid_stride)
     #print("Results:", results)
     return results
 
