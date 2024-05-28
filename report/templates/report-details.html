@@ -1,58 +1,18 @@
 {% extends 'layout.html' %}
 {% load static %}
-{% load static %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'report/css/report-details.css' %}">
 <div class="container">
     <h2 class="animated-title text-center mb-4 mt-3" style="font-family: fasterOne, sans-serif;">Report {{report.id}}</h2>
     <div class="row animated-title">
         <div class="col-md-4">
-<style>
-    @keyframes fadeInLeft {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    .animated-title {
-        animation: fadeInLeft 0.5s ease both;
-    }
-    .card{
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease;
-        overflow: hidden;
-        margin-bottom: 2rem;
-      }
-      .card-title {
-        font-weight: bold; 
-      }
-      .card {
-        transition: transform 0.3s;
-      }
-      .card:hover {
-        transform: translateY(-5px);
-      }
-</style>
-<div class="container">
-    <h2 class="animated-title text-center mb-4 mt-3" style="font-family: fasterOne, sans-serif;">Report {{report.id}}</h2>
-
-    <!--Informations-->
-    <div class="row">
-        <div class="col-md-4">
             <div class="card border-0 shadow">
                 <div class="card-body" style="background-color:#FFC93C; color: white;">
-                    <h4 class="card-title">Report Information</h4>
-                    <p class="card-text ">{{ report.report_text }}</p>
-                    <p class="card-text ">This report created at {{ report.created_at }}</p>
+                <h4 class="card-title">Report Information</h4>
+                <p class="card-text ">{{ report.report_text }}</p>
+                <p class="card-text ">This report created at {{ report.created_at }}</p>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
         </div>
         <div class="col-md-4">
             <div class="card border-0 shadow">
@@ -64,83 +24,84 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card border-0 shadow">
-                <div class="card-body " style="background-color:#FF6F3C; color: white;">
-                    <h4 class="card-title ">Trip Information</h4>
-                    <p class="card-text ">Trip Start Time: {{ report.trip.start_time }}</p>
-                    <p class="card-text ">Trip End Time: {{ report.trip.end_time }}</p>
-                </div>
-            </div>
+        <div class="card border-0 shadow">
+        <div class="card-body " style="background-color:#FF6F3C; color: white;">
+        <h4 class="card-title ">Trip Information</h4>
+        <p class="card-text ">Trip Start Time: {{ report.trip.start_time }}</p>
+        <p class="card-text ">Trip End Time: {{ report.trip.end_time }}</p>
+        </div>
+        </div>
         </div>
     </div>
-
-    <!--Videos-->
-    <div class="row">
+    <div class="row animated-title">
         <div class="col-md-6">
             <div class="card border-0 shadow">
                 <div class="card-header text-center" style="background-color:#1D267D; color: white;">in-vehicle video</div>
-                    <div class="card-body">
-                        {% if report.car_inside_report_path|slice:'-4:' == '.jpg' %}
-                            <img src="{% static report.car_inside_report_path %}" alt="Detected Image" class="img-fluid">
-                        {% elif report.car_inside_report_path|slice:'-4:' == '.mp4' %}
-                            <video width="100%" height="auto" controls>
-                                <source src="{% static report.car_inside_report_path %}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        {% endif %}
-                    </div>
+                <div class="card-body">
+                    {% if report.car_inside_report_path|slice:'-4:' == '.jpg' %}
+                    <img src="{% static report.car_inside_report_path %}" alt="Detected Image" class="img-fluid">
+                    {% elif report.car_inside_report_path|slice:'-4:' == '.mp4' %}
+                    <video width="100%" height="auto" controls>
+                        <source src="{% static report.car_inside_report_path %}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% endif %}
+                </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card border-0 shadow"> 
                 <div class="card-header text-center" style="background-color:#1D267D; color: white;"> off-vehicle video </div>
-                    <div class="card-body">
-                        {% if report.car_outside_report_path|slice:'-4:' == '.jpg' %}
-                            <img src="{% static report.car_outside_report_path %}" alt="Detected Image" class="img-fluid">
-                        {% elif report.car_outside_report_path|slice:'-4:' == '.mp4' %}
-                            <video width="100%" height="auto" controls>
-                                <source src="{% static report.car_outside_report_path %}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        {% endif %}
-                    </div>
+                <div class="card-body">
+                    {% if report.car_outside_report_path|slice:'-4:' == '.jpg' %}
+                    <img src="{% static report.car_outside_report_path %}" alt="Detected Image" class="img-fluid">
+                    {% elif report.car_outside_report_path|slice:'-4:' == '.mp4' %}
+                    <video width="100%" height="auto" controls>
+                        <source src="{% static report.car_outside_report_path %}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-
-    <!--Result Detais-->
-    <div class="row">
+    <div class="row animated-title">
         <div class="col-md-6">
             <div class="card h-100 border-0 shadow">
                 <div class="card-header" style="background-color:#EEEEEE; color: black;">Result Details Detected Inside the Vehicle</div>
                 <div class="card-body" id="result-details-inside">
-                    {% for item in report_details_interior %}
-                        {% if item.label != "Unknown" %}
-                        <!--Table1-->
-                        <div class="card-body" style="display: none;">
+                    {% if report_details_interior %}
+                        {% for item in report_details_interior %}
+                            {% if item.label != "Unknown" %}
                             <!--Table1-->
-                            <table class="table table-bordered table-hover">
-                                    <tr><th scope="row">Detected Boxes</th><td>{{ item.frame_info }}</td></tr>
-                                    <tr><th scope="row">Class</th><td>{{ item.label }}</td></tr>
-                                    <tr><th scope="row">Confidence</th><td>{{ item.confidence }}</td></tr>
-                                    <tr><th scope="row">Sol Üst Köşe</th><td>({{ item.top_left_x }}, {{ item.top_left_y }})</td></tr>
-                                    <tr><th scope="row">Sağ Alt Köşe</th><td>({{ item.bottom_right_x }}, {{ item.bottom_right_x }})</td></tr>
-                                    <tr><th scope="row">Merkez Koordinatlar</th><td>({{ item.center_x }}, {{ item.center_y }})</td></tr>
-                                    <tr><th scope="row">Genişlik</th><td>{{ item.width }}</td></tr>
-                                    <tr><th scope="row">Yükseklik</th><td>{{ item.height }}</td></tr>
-                                    <tr><th scope="row">Frame Info</th><td>{{ item.frame_info }}</td></tr>
-                            </table>
+                            <div class="card-body" style="display: none;">
+                                <table class="table table-bordered table-hover">
+                                        <tr><th scope="row">Detected Boxes</th><td>{{ item.frame_info }}</td></tr>
+                                        <tr><th scope="row">Class</th><td>{{ item.label }}</td></tr>
+                                        <tr><th scope="row">Confidence</th><td>{{ item.confidence }}</td></tr>
+                                        <tr><th scope="row">Sol Üst Köşe</th><td>({{ item.top_left_x }}, {{ item.top_left_y }})</td></tr>
+                                        <tr><th scope="row">Sağ Alt Köşe</th><td>({{ item.bottom_right_x }}, {{ item.bottom_right_x }})</td></tr>
+                                        <tr><th scope="row">Merkez Koordinatlar</th><td>({{ item.center_x }}, {{ item.center_y }})</td></tr>
+                                        <tr><th scope="row">Genişlik</th><td>{{ item.width }}</td></tr>
+                                        <tr><th scope="row">Yükseklik</th><td>{{ item.height }}</td></tr>
+                                        <tr><th scope="row">Frame Info</th><td>{{ item.frame_info }}</td></tr>
+                                </table>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            No results found inside.
                         </div>
-                        {% endif %}
-                    {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">  
+                    <div class="d-flex align-items-center">
                         <div>
-                            <button id="prev-page-inside" class="btn btn-danger">Previous</button>
-                            <button id="next-page-inside" class="btn btn-danger">Next</button>
-                            <p id="page-info-inside" class="mb-0 mx-3"></p>
+                            <button id="prev-page-inside" class="btn btn-warning">Previous</button>
+                            <button id="next-page-inside" class="btn btn-warning">Next</button>
                         </div>
+                        <p id="page-info-inside" class="mb-0 mx-3"></p>
                     </div>
                 </div>
             </div>
@@ -148,46 +109,50 @@
         <div class="col-md-6">
             <div class="card h-100 border-0 shadow">
                 <div class="card-header" style="background-color:#EEEEEE; color:black;">Result Details Detected Outside the Vehicle</div>
-                <div class="card-body " id="result-details-outside">
-                    {% for item in report_details_exterior %}
-                        {% if item.label != "Unknown" %}
-                        <!--Table1-->
-                            <div class="card-body" style="display: none;">
-                                <table class="table table-bordered table-hover">
-                                    <tr><th scope="row">Detected Boxes</th><td>{{ item.frame_info }}</td></tr>
-                                    <tr><th scope="row">Class</th><td>{{ item.label }}</td></tr>
-                                    <tr><th scope="row">Confidence</th><td>{{ item.confidence }}</td></tr>
-                                    <tr><th scope="row">Sol Üst Köşe</th><td>({{ item.top_left_x }}, {{ item.top_left_y }})</td></tr>
-                                    <tr><th scope="row">Sağ Alt Köşe</th><td>({{ item.bottom_right_x }}, {{ item.bottom_right_y }})</td></tr>
-                                    <tr><th scope="row">Merkez Koordinatlar</th><td>({{ item.center_x }}, {{ item.center_y }})</td></tr>
-                                    <tr><th scope="row">Genişlik</th><td>{{ item.width }}</td></tr>
-                                    <tr><th scope="row">Yükseklik</th><td>{{ item.height }}</td></tr>
-                                    <tr><th scope="row">Frame Info</th><td>{{ item.frame_info }}</td></tr>
-                                </table>
-                            </div>    
-                        {% endif %}
-                    {% endfor %}
+                <div class="card-body" id="result-details-outside">
+                    {% if  report_details_exterior %}
+                        {% for item in report_details_exterior %}
+                            {% if item.label != "Unknown" %}
+                                <div class="card-body" style="display: none;">
+                                    <table class="table table-bordered table-hover">
+                                        <tr><th scope="row">Detected Boxes</th><td>{{ item.frame_info }}</td></tr>
+                                        <tr><th scope="row">Class</th><td>{{ item.label }}</td></tr>
+                                        <tr><th scope="row">Confidence</th><td>{{ item.confidence }}</td></tr>
+                                        <tr><th scope="row">Sol Üst Köşe</th><td>({{ item.top_left_x }}, {{ item.top_left_y }})</td></tr>
+                                        <tr><th scope="row">Sağ Alt Köşe</th><td>({{ item.bottom_right_x }}, {{ item.bottom_right_y }})</td></tr>
+                                        <tr><th scope="row">Merkez Koordinatlar</th><td>({{ item.center_x }}, {{ item.center_y }})</td></tr>
+                                        <tr><th scope="row">Genişlik</th><td>{{ item.width }}</td></tr>
+                                        <tr><th scope="row">Yükseklik</th><td>{{ item.height }}</td></tr>
+                                        <tr><th scope="row">Frame Info</th><td>{{ item.frame_info }}</td></tr>
+                                    </table>
+                                </div>    
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        No results found outside.
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                         <div>
-                            <button id="prev-page-outside" class="btn btn-danger">Previous</button>
-                            <button id="next-page-outside" class="btn btn-danger">Next</button>
-                            </div><p id="page-info-outside" class="mb-0 mx-3"></p></div>
+                            <button id="prev-page-outside" class="btn btn-warning">Previous</button>
+                            <button id="next-page-outside" class="btn btn-warning">Next</button>
                         </div>
+                        <p id="page-info-outside" class="mb-0 mx-3"></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--Labels-->
-    <div class="row mt-4">
+    
+    <div class="row mt-4 animated-title">
         <div class="col-md-6">
             <div class="card border-0 shadow">
                 <div class="card-header text-center" style="background-color:#00ADB5; color: white;"> in-vehicle labels </div>
-                <div class="card-body " >
-                    <table class="table" >
+                <div class="card-body">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Label</th>
@@ -230,17 +195,12 @@
             </div>
         </div>
     </div>
-    <style>
-        #labelChart, #labelChart2 {
-            max-width: 60%; /* veya istediğiniz bir değer */
-            max-height: auto;
-        }
-    </style>
+    
     <div class="row animated-title">
         <div class="col-md-6">
             <div class="card border-0 shadow">
                 <div class="card-body">
-                    <canvas class="justify-content-center" id="labelChart" width="100" height="100"></canvas>
+                    <canvas id="labelChart" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>  
