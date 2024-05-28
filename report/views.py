@@ -102,14 +102,6 @@ def report_details(request, report_id):
         'report_details_exterior': report_details_exterior,
         'label_counts_interior': label_counts_interior,
         'label_counts_exterior': label_counts_exterior,
-        'interior_plot_url': interior_plot_url,
-        'exterior_plot_url': exterior_plot_url,
-        'normal_dist_plot_interior_url': normal_dist_plot_interior_url,
-        'exponential_dist_plot_interior_url': exponential_dist_plot_interior_url,
-        'normal_dist_plot_exterior_url': normal_dist_plot_exterior_url,
-        'exponential_dist_plot_exterior_url': exponential_dist_plot_exterior_url,
-        'chi_square_test_result_interior': chi_square_test_result_interior,
-        'chi_square_test_result_exterior': chi_square_test_result_exterior,
         'violations': violations,
         'times': times,
         'speeds': speeds,
@@ -117,78 +109,7 @@ def report_details(request, report_id):
     }
     return render(request, 'report-details.html', context)
 
-def create_bar_plot(labels, counts, title, ylabel):
-    plt.figure(figsize=(10, 6))
-    plt.bar(labels, counts, color='skyblue')
-    plt.xlabel('Etiketler')
-    plt.ylabel(ylabel)
-    plt.title(title)
-    plt.xticks(rotation=45)
-    plt.tight_layout()
 
-    buffer = io.BytesIO()
-    plt.savefig(buffer, format='png')
-    plt.close()
-    buffer.seek(0)
-    image_png = buffer.getvalue()
-    buffer.close()
-
-    graphic = base64.b64encode(image_png)
-    graphic = graphic.decode('utf-8')
-    return 'data:image/png;base64,' + graphic
-
-def create_normal_distribution_plot(report_details, title):
-    frame_infos = [detail.frame_info for detail in report_details]
-
-    plt.figure(figsize=(10, 6))
-    plt.hist(frame_infos, bins=30, density=True, alpha=0.6, color='r')
-
-    mu, std = np.mean(frame_infos), np.std(frame_infos)
-    xmin, xmax = plt.xlim()
-    x = np.linspace(xmin, xmax, 100)
-    p = stats.norm.pdf(x, mu, std)
-    plt.plot(x, p, 'k', linewidth=2)
-    plt.title(f"{title}\nFit results: mu = {mu:.2f},  std = {std:.2f}")
-
-    buffer = io.BytesIO()
-    plt.savefig(buffer, format='png')
-    plt.close()
-    buffer.seek(0)
-    image_png = buffer.getvalue()
-    buffer.close()
-
-    graphic = base64.b64encode(image_png)
-    graphic = graphic.decode('utf-8')
-    return 'data:image/png;base64,' + graphic
-
-def perform_chi_square_test(label_counts):
-    observed = [item['count'] for item in label_counts]
-    expected = [np.mean(observed)] * len(observed)  # Beklenen değerler ortalama olarak alındı
-    chi2, p = stats.chisquare(f_obs=observed, f_exp=expected)
-    return f"Ki-Kare Değeri: {chi2:.2f}, p-değeri: {p:.2e}"
-
-def create_exponential_distribution_plot(report_details, title):
-    frame_infos = [detail.frame_info for detail in report_details]
-
-    plt.figure(figsize=(10, 6))
-    plt.hist(frame_infos, bins=30, density=True, alpha=0.6, color='g')
-
-    lambda_param = 1 / np.mean(frame_infos)
-    x = np.linspace(0, max(frame_infos), 100)
-    p = lambda_param * np.exp(-lambda_param * x)
-    plt.plot(x, p, 'k', linewidth=2)
-    plt.title(f"{title}\nFit results: lambda = {lambda_param:.2f}")
-
-    buffer = io.BytesIO()
-    plt.savefig(buffer, format='png')
-    plt.close()
-    buffer.seek(0)
-    image_png = buffer.getvalue()
-    buffer.close()
-
-    graphic = base64.b64encode(image_png)
-    graphic = graphic.decode('utf-8')
-    return 'data:image/png;base64,' + graphic
 
 
 @login_required
