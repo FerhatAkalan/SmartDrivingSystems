@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'detectionapp/css/home.css' %}">
 </head>
 <body>
-<div class="container fluid mt-3 mb-3">
+<div class="container mb-3">
     <div class="jumbotron">
         <h1>Welcome to Smart Driving System</h1>
         <p class="lead">Making Roads Safer with Advanced Technology</p>
@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container mb-3">
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
@@ -75,6 +75,31 @@
             </div>
         </div>
     </div>
+    <div class="container" id="features">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Advanced AI Analysis</h3>
+                    <p>Revolutionary AI algorithms analyze driving patterns and predict behavior.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature">
+                    <i class="fas fa-users"></i>
+                    <h3>Driver Profiles</h3>
+                    <p>Effortlessly manage driver information and enhance safety profiles.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Detailed Insights</h3>
+                    <p>Gain Insights with Comprehensive Driving Reports.</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="jumbotron2">
         <h1>Smart Driving System</h1>
         <p class="lead">Step into a Safe Future on the Roads</p>
@@ -84,4 +109,3 @@
 </body>
 </html>
 {% endblock %}
-{% url "" %}

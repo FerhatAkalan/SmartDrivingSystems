@@ -1,27 +1,20 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/">
       <img src="{% static 'img/logo.png' %}" alt="Logo" width="65" />
-      <span class="ms-2" style="font-family: 'FasterOne'; font-size: 1.25rem"
+      <span class="ms-2" style="font-family: 'FasterOne'; font-size: 1.55rem"
         >Smart Driving Systems</span
       >
     </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    {% if user.is_authenticated %}<button id="toggle-sidebar-btn" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" class="btn btn-outline-secondary"><i class="fas fa-bars"></i> Menu</button>{% endif %}
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"  aria-controls="navbarNav"  aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+        
         <li class="nav-item">
           <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
         </li>
@@ -41,11 +34,11 @@
             ><i class="fa-solid fa-user"></i> Welcome, {{ user.username }}</a
           >
         </li>
-        {% comment %} <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'user_logout' %}"
             ><i class="fas fa-sign-in-alt"></i> Logout</a
           >
-        </li> {% endcomment %}
+        </li>
         {% else %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'user_login' %}"
@@ -54,7 +47,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'user_register' %}"
-            ><i class="fas fa-sign-in-alt"></i> Register</a
+            ><i class="fas fa-user-plus"></i> Register</a
           >
         </li>
         {% endif %}
@@ -66,7 +59,11 @@
   .nav-link:hover {
     color: #FFC300 !important; /* Üzerine gelindiğinde renk */
   }
-.nav-link {
-  color: #333 !important; /* Nav linkleri rengi */
-}
+  .nav-link {
+    color: #333 !important; /* Nav linkleri rengi */
+  }
+  #toggle-sidebar-btn {
+    height: auto;
+    font-size: 1rem;
+  }
 </style>

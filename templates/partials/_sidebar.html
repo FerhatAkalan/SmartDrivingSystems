@@ -1,86 +1,86 @@
-    <div class="position-sticky top-0 start-0 ">
-      <div class="sidebar" style="cursor: pointer">
-        <ul class="list-group">
-          <li class="list-group-item nav-item-sidebar list-group-item-action {% if request.path == '/' %}active{% endif %}">
-            <a class="sidebar-link" href="{% url 'home' %}"
-              ><i class="fas fa-home"></i> Home</a
-            >
-          </li>
-          <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/upload/' in request.path %}active{% endif %}">
-            <a href="{% url 'upload_file' %}"
-              ><i class="fas fa-car"></i> Driving Analysis</a
-            >
-          </li>
-          <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/driver-reports/' in request.path %}active{% endif %}">
-            <a href="{% url 'driver_reports' %}"><i class="fas fa-id-card"></i> Driver Reports</a>
-          </li>
-          <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/add-driver/' in request.path %}active{% endif %}">
-            <a href="{% url 'add_driver' %}"
-              ><i class="fa-solid fa-car-side"></i> Add Driver</a
-            >
-          </li>
-          <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/drivers/' in request.path %}active{% endif %}">
-            <a href="{% url 'driver_list' %}"
-              ><i class="fa-solid fa-id-badge"></i> Driver Profiles</a
-            >
-          </li>
-          
-          {% if user.is_staff %}
-          <li
-            class="list-group-item nav-item-sidebar list-group-item-action"
-          >
-            <a href="/">Admin</a>
-          </li>
-          {% endif %}
-          <li
-            class="list-group-item nav-item-sidebar list-group-item-action"
-          >
-            <a href="/"><i class="fa-solid fa-users"></i> All Users</a>
-          </li>
-          {% if user.is_staff %}
-          <li
-            class="list-group-item nav-item-sidebar list-group-item-action"
-          >
-            <a href="/"><i class="fa-solid fa-file"></i> All Reports</a>
-          </li>
-          {% endif %}
-          <li
-            class="list-group-item nav-item-sidebar list-group-item-action"
-          >
-            <a href="/"
-              ><i class="fa-solid fa-chart-simple"></i> All Statistics</a
-            >
-          </li>
-        
-          <li
-            class="list-group-item nav-item-sidebar list-group-item-action"
-          >
-            <a href="/"><i class="fa-solid fa-user-plus"></i> Add User</a>
-          </li>
-          <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/help/' in request.path %}active{% endif %}">
-            <a href="{% url 'help' %}"><i class="fa-solid fa-circle-info"></i> Help</a>
-          </li>
-          <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/settings/' in request.path %}active{% endif %}">
-            <a href="{% url 'settings' %}"><i class="fa-solid fa-gear"></i> Settings</a>
-          </li>
-          <li
-            class="list-group-item nav-item-sidebar list-group-item-action"
-          >
-            <a href="{% url 'user_logout' %}"
-              ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
-            >
-          </li>
-          {% comment %} <li
-            class="list-group-item nav-item-sidebar list-group-item-action"
-          >
-            <a href="/"
-              ><i class="fa-solid fa-clock"></i> Real-time driving analysis
-              (coming soon)</a
-            >
-          </li> {% endcomment %}
-        </ul>
-      </div>
-    </div>
+<div class="position-sticky top-0 start-0 ">
+  <div class="sidebar" style="cursor: pointer">
+    <ul class="list-group">
+      <li class="list-group-item nav-item-sidebar list-group-item-action {% if request.path == '/' %}active{% endif %}">
+        <a class="sidebar-link" href="{% url 'home' %}"
+          ><i class="fas fa-home"></i> Home</a
+        >
+      </li>
+      <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/upload/' in request.path %}active{% endif %}">
+        <a href="{% url 'upload_file' %}"
+          ><i class="fas fa-car"></i> Driving Analysis</a
+        >
+      </li>
+      <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/driver-reports/' in request.path %}active{% endif %}">
+        <a href="{% url 'driver_reports' %}"><i class="fas fa-id-card"></i> Driver Reports</a>
+      </li>
+      <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/add-driver/' in request.path %}active{% endif %}">
+        <a href="{% url 'add_driver' %}"
+          ><i class="fa-solid fa-car-side"></i> Add Driver</a
+        >
+      </li>
+      <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/drivers/' in request.path %}active{% endif %}">
+        <a href="{% url 'driver_list' %}"
+          ><i class="fa-solid fa-id-badge"></i> Driver Profiles</a
+        >
+      </li>
+      
+      {% if user.is_staff %}
+      <li
+        class="list-group-item nav-item-sidebar list-group-item-action"
+      >
+        <a href="/">Admin</a>
+      </li>
+      {% endif %}
+      <li
+        class="list-group-item nav-item-sidebar list-group-item-action"
+      >
+        <a href="/"><i class="fa-solid fa-users"></i> All Users</a>
+      </li>
+      {% if user.is_staff %}
+      <li
+        class="list-group-item nav-item-sidebar list-group-item-action"
+      >
+        <a href="/"><i class="fa-solid fa-file"></i> All Reports</a>
+      </li>
+      {% endif %}
+      <li
+        class="list-group-item nav-item-sidebar list-group-item-action"
+      >
+        <a href="/"
+          ><i class="fa-solid fa-chart-simple"></i> All Statistics</a
+        >
+      </li>
+    
+      <li
+        class="list-group-item nav-item-sidebar list-group-item-action"
+      >
+        <a href="/"><i class="fa-solid fa-user-plus"></i> Add User</a>
+      </li>
+      <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/help/' in request.path %}active{% endif %}">
+        <a href="{% url 'help' %}"><i class="fa-solid fa-circle-info"></i> Help</a>
+      </li>
+      <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/settings/' in request.path %}active{% endif %}">
+        <a href="{% url 'settings' %}"><i class="fa-solid fa-gear"></i> Settings</a>
+      </li>
+      <li
+        class="list-group-item nav-item-sidebar list-group-item-action"
+      >
+        <a href="{% url 'user_logout' %}"
+          ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
+        >
+      </li>
+      {% comment %} <li
+        class="list-group-item nav-item-sidebar list-group-item-action"
+      >
+        <a href="/"
+          ><i class="fa-solid fa-clock"></i> Real-time driving analysis
+          (coming soon)</a
+        >
+      </li> {% endcomment %}
+    </ul>
+  </div>
+</div>
 <style>
   /* Sidebar Stilleri */
   .sidebar {
@@ -89,10 +89,11 @@
     top: 0;
     left: 0; /* Yeni eklenen stil - en sola sabitlenmesini sağlar */
     background-color: #ffffff; /* Arka plan rengi */
-    border-right: 1px solid #e0e0e0; /* Sağ kenar çizgisi */
+    border-right: 1px solid #e0e0e0; /* Sağ kenar çizgisi */ 
     margin-left: -1px; /* Sayfanın solundan 5px kaydırır */
+    transition: width 0.3s ease; /* Genişlik değişiminde animasyon */
   }
-
+  
   .sidebar ul {
     list-style: none; /* Liste işaretlerini kaldır */
     padding-left: 0; /* Liste içeriğinin sola kayması */

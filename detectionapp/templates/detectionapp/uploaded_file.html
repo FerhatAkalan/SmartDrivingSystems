@@ -144,6 +144,7 @@
                         <div class="spinner-border text-primary mt-3 d-none" role="status" id="spinner">
                             <div class="sr-only">Loading...</div>
                         </div>
+                        <div id="loadingText" style="font-family: fasterOne, sans-serif;" class="mt-2 text-primary d-none">Loading...</div>
                         <a href="{% url 'upload_file' %}" class="btn btn-danger btn-lg mt-3" id="cancelButton">
                              Cancel
                         </a>
@@ -160,11 +161,13 @@
         const detectButton = $('#detectButton');
         // Spinner element
         const spinner = $('#spinner');
+        const loadingText = $('#loadingText');
         // Click event listener for the detect button
         detectButton.on('click', function() {
             detectButton.hide();
             $('#cancelButton').hide();
-            spinner.removeClass('d-none'); // Spinner'ı göster
+            spinner.removeClass('d-none');
+            loadingText.removeClass('d-none');
             $.ajax({
                 url: '/detectionapp/results/',
                 type: 'POST',
@@ -190,6 +193,14 @@
                     $('#cancelButton').show();
                 }
             });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.URL);
         });
     });
 </script>

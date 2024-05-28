@@ -16,7 +16,7 @@ body {
 }
 .jumbotron {
     font-family: FasterOne, sans-serif;
-    background-image: url('/static/img/background2.jpg');
+    background-image: url('/static/img/road3.jpg');
     background-size: cover;
     padding: 4rem 2rem;
     color: #fff;
@@ -53,7 +53,7 @@ body {
 }
 .jumbotron2 {
     font-family: FasterOne, sans-serif;
-    background-image: url('/static/img/background.jpg');
+    background-image: url('/static/img/roada.jpg');
     background-size: cover;
     padding: 4rem 2rem;
     color: #fff;

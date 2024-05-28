@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-<div class="container mt-3 mb-3">
-  <h2 class="text-center mb-3" style="font-family: fasterOne, sans-serif;">About Us</h2>
-  <h2 class="text-left mb-3" style="font-family: fasterOne, sans-serif;">Our Team</h2>
+<div class="container">
+  <h2 class="animated-title text-center mb-3" style="font-family: fasterOne, sans-serif;">About Us</h2>
+  <h2 class="animated-title text-left mb-3" style="font-family: fasterOne, sans-serif;">Our Team</h2>
   <div class="row mb-4">
     <div class="col-md-4">
       <div class="card border-0 shadow">
@@ -48,7 +48,7 @@
       </div>
     </div>
   </div>
-  <h2 class="text-left mb-4" style="font-family: fasterOne, sans-serif;">Supporters</h2>
+  <h2 class="animated-title text-left mb-4" style="font-family: fasterOne, sans-serif;">Supporters</h2>
   <div class="row mb-5">
     <div class="col-md-6">
       <div class="card border-0 shadow">
@@ -89,6 +89,9 @@
         transform: translateX(0);
     }
   }
+  .animated-title {
+    animation: fadeInLeft 0.5s ease both;
+  }  
   .col-md-4{
     animation: fadeInLeft 0.5s ease both;
   }
@@ -123,5 +126,3 @@
   }
 </style>
 {% endblock %}
-
-

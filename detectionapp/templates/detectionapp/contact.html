@@ -1,11 +1,10 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-<div class="container mt-3">
+<div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <h2 class="text-center mb-3" style="font-family: 'FasterOne';">Contact Us</h2>
-
+            <h2 class="animated-title text-center mb-3" style="font-family: 'FasterOne';">Contact Us</h2>
             <div class="card border-0 shadow-sm">
                 <div class="card-header">
                 </div>
@@ -41,6 +40,9 @@
             opacity: 1;
             transform: translateX(0);
         }
+    }
+    .animated-title {
+        animation: fadeInLeft 0.5s ease both;
     }  
     .card {
         animation: fadeInLeft 0.5s ease both;

@@ -1,6 +1,6 @@
 {% extends 'layout.html' %} {% block content %} {% load static %}
 <div class="container">
-  <h2 class="text-center mb-4 mt-3" style="font-family: fasterOne, sans-serif;">Driver Reports</h2>
+  <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Driver Reports</h2>
   <div class="row">
     {% if reports %} {% for report in reports %}
     <div class="col-md-4">
@@ -48,7 +48,7 @@
       {% endif %}
     </ul>
     {% else %}
-    <div class="col-md-8 alert alert-info" role="alert">
+    <div class="col animated-title alert alert-info" role="alert">
       No reports available.
     </div>
     {% endif %}
@@ -65,8 +65,13 @@
         transform: translateX(0);
     }
   }
-  .card{
+  .animated-title {
+      animation: fadeInLeft 0.5s ease both;
+  }
+  .col-md-4{
     animation: fadeInLeft 0.5s ease both;
+  }
+  .card{
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
@@ -82,6 +87,5 @@
   .card:hover {
     transform: translateY(-5px);
   }
-
 </style>
 {% endblock %}
