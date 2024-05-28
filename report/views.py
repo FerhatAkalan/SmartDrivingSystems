@@ -72,7 +72,25 @@ def report_details(request, report_id):
     
     label_counts_interior = ReportDetails.objects.filter(report=report, is_car_interior=True).values('label').annotate(count=Count('label'))
     label_counts_exterior = ReportDetails.objects.filter(report=report, is_car_interior=False).values('label').annotate(count=Count('label'))
-    
+
+    # Bar Plot oluşturma
+    if(label_counts_interior and label_counts_exterior):
+        interior_labels, interior_counts = zip(*[(item['label'], item['count']) for item in label_counts_interior])
+        exterior_labels, exterior_counts = zip(*[(item['label'], item['count']) for item in label_counts_exterior])
+
+        interior_plot_url = create_bar_plot(interior_labels, interior_counts, "İç Davranış Etiketleri", "Frekans")
+        exterior_plot_url = create_bar_plot(exterior_labels, exterior_counts, "Dış Davranış Etiketleri", "Frekans")
+
+        # Normal Dağılım, Ki-Kare Testi ve Üstel Dağılım analizleri
+        normal_dist_plot_interior_url = create_normal_distribution_plot(report_details_interior, "İç Davranışlar İçin Normal Dağılım")
+        exponential_dist_plot_interior_url = create_exponential_distribution_plot(report_details_interior, "İç Davranışlar İçin Üstel Dağılım")
+        
+        normal_dist_plot_exterior_url = create_normal_distribution_plot(report_details_exterior, "Dış Davranışlar İçin Normal Dağılım")
+        exponential_dist_plot_exterior_url = create_exponential_distribution_plot(report_details_exterior, "Dış Davranışlar İçin Üstel Dağılım")
+        
+        chi_square_test_result_interior = perform_chi_square_test(label_counts_interior)
+        chi_square_test_result_exterior = perform_chi_square_test(label_counts_exterior)
+
     times = [violation.violation_time for violation in violations]
     speeds = [violation.detected_speed for violation in violations]
     speed_limits = [violation.speed_limit for violation in violations]
@@ -90,6 +108,8 @@ def report_details(request, report_id):
         'speed_limits': speed_limits,
     }
     return render(request, 'report-details.html', context)
+
+
 
 
 @login_required

@@ -1,6 +1,12 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'report/css/report-details.css' %}">
+<div class="container">
+    <h2 class="animated-title text-center mb-4 mt-3" style="font-family: fasterOne, sans-serif;">Report {{report.id}}</h2>
+    <div class="row animated-title">
+        <div class="col-md-4">
 <style>
     @keyframes fadeInLeft {
         from {
@@ -45,6 +51,8 @@
                     <p class="card-text ">This report created at {{ report.created_at }}</p>
                 </div>
             </div>
+        </div>
+        <div class="col-md-4">
         </div>
         <div class="col-md-4">
             <div class="card border-0 shadow">
@@ -240,46 +248,78 @@
             </div>
         </div>
     </div>
-
-     <!--Bar Charts-->
+    
     <div class="row">
         <div class="col-md-6">
-            <div class="card border-0 shadow">
+            <div class="card border-0 shadow mt-4">
                 <div class="card-body">
                     <canvas id="barChart" width="400" height="400"></canvas>
                 </div>
             </div>
-        </div>  
+        </div>
         <div class="col-md-6">
-            <div class="card border-0 shadow">
+            <div class="card border-0 shadow mt-4">
                 <div class="card-body">
                     <canvas id="barChart2" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--Speed Graph-->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card border-0 shadow">
                 <div class="card-body">
-                    <h2>Speed vs Time Graph</h2>
+                    <h4>Araç İçi Davranışlar İçin Normal Dağılım Analizi</h4>
+                    <img src="{{ normal_dist_plot_interior_url }}" alt="İç Davranışlar İçin Normal Dağılım Grafiği">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h4>Araç Dışı Davranışlar İçin Normal Dağılım Analizi</h4>
+                    <img src="{{ normal_dist_plot_exterior_url }}" alt="Dış Davranışlar İçin Normal Dağılım Grafiği">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h4>Araç İçi Davranışlar İçin Üstel Dağılım Analizi</h4>
+                    <img src="{{ exponential_dist_plot_interior_url }}" alt="İç Davranışlar İçin Üstel Dağılım Grafiği">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h4>Araç Dışı Davranışlar için Üstel Dağılım Analizi</h4>
+                    <img src="{{ exponential_dist_plot_exterior_url }}" alt="Dış Davranışlar İçin Üstel Dağılım Grafiği">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card h-100 border-0 shadow">
+                <div class="card-header" style="background-color:#EEEEEE; color: black;">Speed vs Time Graph</div>
+                <div class="card-body">
                     <div id="graph"></div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!--Button-->
     <div class="row">
-        <div class="d-flex justify-content-center"><a href="{% url 'driver_reports' %}" class="btn btn-danger mt-3 mb-3 md-3">Back to Reports</a></div>
+        <div class="d-flex justify-content-center"><a href="{% url 'driver_reports' %}" class="btn btn-danger mt-3 mb-3 md-3">Back to Reports</a></div></div>
     </div>
-</div>
-
+</div>   
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'report/js/report_details_pagination.js' %}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {

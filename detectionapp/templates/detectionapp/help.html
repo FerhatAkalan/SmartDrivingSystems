@@ -1,40 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-<body>
-    <div class="container">
-        <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Help Center</h2>
-        <div class="accordion">
-            <div class="accordion-item">
-                <div class="accordion-item-header" onclick="toggleAccordion(this)">
-                    <i class="fas fa-plus"></i>
-                    How do I create a new account?
-                </div>
-                <div class="accordion-item-body">
-                    <p>To create a new account, click on the "Register" button on the top right corner of the page. Fill out the required information and submit the form.</p>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-item-header" onclick="toggleAccordion(this)">
-                    <i class="fas fa-plus"></i>
-                    How do I reset my password?
-                </div>
-                <div class="accordion-item-body">
-                    <p>To reset your password, click on the "Forgot Password?" link on the login page. Follow the instructions to reset your password.</p>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-item-header" onclick="toggleAccordion(this)">
-                    <i class="fas fa-plus"></i>
-                    How do I contact support?
-                </div>
-                <div class="accordion-item-body">
-                    <p>You can contact our support team via email at support@example.com or by phone at +123456789.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
 <style>
     @keyframes fadeInLeft {
         from {
@@ -94,6 +60,40 @@
         display: block;
     }
 </style>
+<body>
+    <div class="container">
+        <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Help Center</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-item-header" onclick="toggleAccordion(this)">
+                    <i class="fas fa-plus"></i>
+                    How do I create a new account?
+                </div>
+                <div class="accordion-item-body">
+                    <p>To create a new account, click on the "Register" button on the top right corner of the page. Fill out the required information and submit the form.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-item-header" onclick="toggleAccordion(this)">
+                    <i class="fas fa-plus"></i>
+                    How do I reset my password?
+                </div>
+                <div class="accordion-item-body">
+                    <p>To reset your password, click on the "Forgot Password?" link on the login page. Follow the instructions to reset your password.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-item-header" onclick="toggleAccordion(this)">
+                    <i class="fas fa-plus"></i>
+                    How do I contact support?
+                </div>
+                <div class="accordion-item-body">
+                    <p>You can contact our support team via email at support@example.com or by phone at +123456789.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 <script>
     function toggleAccordion(accordion) {
         accordion.classList.toggle('active');

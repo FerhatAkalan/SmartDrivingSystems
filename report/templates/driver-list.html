@@ -1,48 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-<body>
-<main class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Driver List</h2>
-            {% if drivers %}
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-bordered table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Driver Name</th>
-                                <th scope="col">Driver Surname</th>
-                                <th scope="col">Driver Licence</th>
-                                <th scope="col">Driver Profile</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for driver in drivers %}
-                            <tr>
-                                <td>{{ driver.id }}</td>
-                                <td>{{ driver.driver_name }}</td>
-                                <td>{{ driver.driver_surname }}</td>
-                                <td>{{ driver.driver_licence }}</td>
-                                <td><a href="{% url 'driver_profiles' driver.id  %}"class="btn btn-danger">View Details</a></td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            {% else %}
-            <div class="alert alert-info" role="alert">
-                No drivers available.
-            </div>
-            {% endif %}
-        </div>
-    </div>
-</main>
-</body>
-</html>
 <style>
     @keyframes fadeInLeft {
         from {
@@ -108,4 +66,45 @@
         transition: background-color 0.3s;
     }
 </style>
+<body>
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Driver List</h2>
+                {% if drivers %}
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Driver Name</th>
+                                    <th scope="col">Driver Surname</th>
+                                    <th scope="col">Driver Licence</th>
+                                    <th scope="col">Driver Profile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for driver in drivers %}
+                                <tr>
+                                    <td>{{ driver.id }}</td>
+                                    <td>{{ driver.driver_name }}</td>
+                                    <td>{{ driver.driver_surname }}</td>
+                                    <td>{{ driver.driver_licence }}</td>
+                                    <td><a href="{% url 'driver_profiles' driver.id  %}"class="btn btn-danger">View Details</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% else %}
+                <div class="alert alert-info" role="alert">
+                    No drivers available.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</body>
 {% endblock %}
