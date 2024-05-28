@@ -1,35 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h2 class="animated-title text-center mb-3" style="font-family: 'FasterOne';">Contact Us</h2>
-            <div class="card border-0 shadow-sm">
-                <div class="card-header">
-                </div>
-                <div class="card-body">
-                    <p class="text-left mb-4" style="text-decoration: none;">You can contact us at <a href="mailto:smartdrivingsystems@smartdrivingsystems.com">smartdrivingsystems@smartdrivingsystems.com</a></p>
-                    <form action="mailto:smartdrivingsystems@smartdrivingsystems.com" method="post" enctype="text/plain">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Your Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Your Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Your Message</label>
-                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <style>
     @keyframes fadeInLeft {
         from {
@@ -69,4 +40,33 @@
         font-weight: bold;
     }
 </style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="animated-title text-center mb-3" style="font-family: 'FasterOne';">Contact Us</h2>
+            <div class="card border-0 shadow-sm">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <p class="text-left mb-4" style="text-decoration: none;">You can contact us at <a href="mailto:smartdrivingsystems@smartdrivingsystems.com">smartdrivingsystems@smartdrivingsystems.com</a></p>
+                    <form action="mailto:smartdrivingsystems@smartdrivingsystems.com" method="post" enctype="text/plain">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Your Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
