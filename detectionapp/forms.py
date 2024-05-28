@@ -44,6 +44,14 @@ class UploadFileForm(forms.ModelForm):
         if not file.name.endswith('.csv'):
             raise ValidationError("Invalid file format. Please upload a CSV file.")
         return file
+    
+    def clean_end_time(self):
+        start_time = self.cleaned_data.get('start_time')
+        end_time = self.cleaned_data.get('end_time')
+        if start_time and end_time:
+            if end_time <= start_time:
+                raise forms.ValidationError("Ending time must be after starting time.")
+        return end_time
 
     def save(self, commit=True):
         instance = super(UploadFileForm, self).save(commit=False)
