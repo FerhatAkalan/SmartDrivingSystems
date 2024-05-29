@@ -40,11 +40,9 @@
         display: flex;
         flex-direction: column;
     }
-    
     .equal-height-card .card {
         flex-grow: 1;
     }
-    
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -54,25 +52,28 @@
   <div class="row">
     <div class="col-md-4 equal-height-card animated-title">
         <div class="card border-0 shadow">
-            <div class="card-body" style="background-color:#615EFC; font-family: fasterOne, sans-serif; color: white;">
-                <h3>Toplam Rapor Sayısı</h3>
-                <h3><span id="reportCount">0</span></h3>
+            <div class="card-body" style="background-color:white; font-family: fasterOne, sans-serif; color: black;">
+                <i class="fa-regular fa-chart-bar mb-2" style="font-size:50px;color:#EE4E4E;"></i>
+                <h5 style="font-family: fasterOne, sans-serif; color:grey;">Toplam Rapor Sayısı</h5>
+                <h2><span id="reportCount">0</span></h2>
             </div>
         </div>
     </div>
     <div class="col-md-4 equal-height-card animated-title">
         <div class="card border-0 shadow">
-            <div class="card-body" style="background-color:#D10363; font-family: fasterOne, sans-serif; color: white;">
-                <h3>Toplam Sürücü Sayısı</h3>
-                <h3><span id="driverCount">0</span></h3>
+            <div class="card-body" style="background-color:white; font-family: fasterOne, sans-serif; color:black;">
+                <i class="fa-regular fa-address-card mb-2" style="font-size:50px;color:#D2DE32;"></i>
+                <h5 style="font-family: fasterOne, sans-serif; color:grey;">Toplam Sürücü Sayısı</h5>
+                <h2><span id="driverCount">0</span></h2>
             </div>
         </div>
     </div>
     <div class="col-md-4 equal-height-card animated-title">
         <div class="card border-0 shadow">
-            <div class="card-body" style="background-color:#FFBF00; font-family: fasterOne, sans-serif; color: white;">
-                <h4><p>Ortalama Sürüş Süresi</p><h4>
-                <span id="avgTripDuration">0 saat, 0 dakika, 0 saniye</span>
+            <div class="card-body" style="background-color:white; font-family: fasterOne, sans-serif; color: black;">
+                <i class="fa-solid fa-car-side mb-2" style="font-size:50px;color:#BEADFA;"></i>
+                <h5 style="font-family: fasterOne, sans-serif; color:grey;">Ortalama Sürüş Süresi<h5>
+                <h2><span id="avgTripDuration">0:0:0:</span></h2>
             </div>
         </div>
     </div>
@@ -141,11 +142,11 @@
             var hours = Math.floor(currentTripDuration / 3600);
             var minutes = Math.floor((currentTripDuration % 3600) / 60);
             var seconds = currentTripDuration % 60;
-            tripDurationElement.textContent = `${hours} saat, ${minutes} dakika, ${seconds} saniye`;
+            tripDurationElement.textContent = `${hours}:${minutes}:${seconds}`;
         }
 
         var reportCountInterval = setInterval(updateReportCount, 10);  // 10 milisaniyede bir güncelle
-        var driverCountInterval = setInterval(updateDriverCount, 10);  // 10 milisaniyede bir güncelle
+        var driverCountInterval = setInterval(updateDriverCount, 100);  // 10 milisaniyede bir güncelle
         var tripDurationInterval = setInterval(updateTripDuration, 10);  // 10 milisaniyede bir güncelle
 
         // Chart.js kullanarak pasta grafiğini oluşturma (Araç İçi Labeller)
