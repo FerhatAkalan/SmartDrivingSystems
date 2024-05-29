@@ -81,7 +81,7 @@
 </head>
 <body>
     <div class="container mb-3">
-        <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Driver Dangerous Behavior Detection System</h2>
+        <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Sürücü Tehlikeli Davranış Tespit Sistemi</h2>
         <div class="row">
             <div class="col-md-6">
                 <div class="card h-100"> 
@@ -89,12 +89,12 @@
                         <img src="{% static 'detectionapp/img/driv.jpg' %}" alt="Advertisement" class="advertisement">
                         <div class="card-body">
                             <div class="purpose-list mt-3">
-                                <h5 class="purpose-title">Smart Driving System Purposes</h5>
-                                <li class="purpose-item">Promoting safe driving habits.</li>
-                                <li class="purpose-item">To increase compliance with traffic rules.</li>
-                                <li class="purpose-item">Increase driver attention.</li>
-                                <li class="purpose-item">Reducing the risk of accidents.</li>
-                                <li class="purpose-item">Creating driver profiles.</li>
+                                <h5 class="purpose-title">Akıllı Sürüş Sisteminin Amaçları</h5>
+                                <li class="purpose-item">Güvenli sürüş alışkanlıklarını teşvik etmek.</li>
+                                <li class="purpose-item">Trafik kurallarına uyumu artırmak için.</li>
+                                <li class="purpose-item">Sürücünün dikkatini artırın.</li>
+                                <li class="purpose-item">Kaza riskini azaltmak.</li>
+                                <li class="purpose-item">Sürücü profilleri oluşturma.</li>
                             </div>  
                         </div>
                     </div>
@@ -103,55 +103,54 @@
             <div class="col-md-6 form-container">
                 <div class="card h-100">
                     <div class="card-body">
-                        <p class="mb-3">Please upload both in-car and out-car videos. Once the files are processed you will be redirected to the results page.</p>
                         <form method="post" enctype="multipart/form-data" id="uploadForm" class="needs-validation" novalidate>
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="driver" class="form-label"><strong>Select Driver</strong></label>
+                                <label for="driver" class="form-label"><strong>Sürücü Seçin</strong></label>
                                 <select class="form-control" id="driver" name="driver" required>
-                                    <option value="" selected disabled>Select a driver</option>
+                                    <option value="" selected disabled>Bir sürücü seçin</option>
                                     {% for driver in form.driver.field.queryset %}
                                         <option value="{{ driver.id }}">{{ driver.driver_name }} {{ driver.driver_surname }}</option>
                                     {% endfor %}
                                 </select>
                                 <div class="invalid-feedback">
-                                    Please select a driver.
+                                    Lütfen bir sürücü seçin.
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="mb-3">
-                                        <label for="fileInputInside" class="form-label"><strong>Upload In-Car Video</strong></label>
+                                        <label for="fileInputInside" class="form-label"><strong>Araç İçi Video Yükle</strong></label>
                                         <input type="file" class="form-control" id="fileInputInside" name="car_inside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
-                                        <div class="form-text">(Supported formats: JPG, MP4)</div>
-                                        <div class="invalid-feedback" id="fileTypeErrorInside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
+                                        <div class="form-text">(Desteklenen formatlar: JPG, MP4)</div>
+                                        <div class="invalid-feedback" id="fileTypeErrorInside" style="display:none;">Yalnızca JPG veya MP4 dosyaları yüklenebilir.</div>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="mb-3">
-                                        <label for="fileInputOutside" class="form-label"><strong>Upload Out-Car Video</strong></label>
+                                        <label for="fileInputOutside" class="form-label"><strong>Araç Dışı Video Yükle</strong></label>
                                         <input type="file" class="form-control" id="fileInputOutside" name="car_outside_file" onchange="checkFileType(this)" required accept=".jpg,.mp4">
-                                        <div class="form-text">(Supported formats: JPG, MP4)</div>
-                                        <div class="invalid-feedback" id="fileTypeErrorOutside" style="display:none;">Only JPG or MP4 files can be uploaded.</div>
+                                        <div class="form-text">(Desteklenen formatlar: JPG, MP4)</div>
+                                        <div class="invalid-feedback" id="fileTypeErrorOutside" style="display:none;">Yalnızca JPG veya MP4 dosyaları yüklenebilir.</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="fileInputCarData" class="form-label"><strong>Upload Car Data</strong></label>
+                                <label for="fileInputCarData" class="form-label"><strong>Araç Verilerini Yükle</strong></label>
                                 <input type="file" class="form-control" id="fileInputCarData" name="car_data_file" required accept=".csv">
-                                <div class="form-text">(Supported format: CSV)</div>
-                                <div class="invalid-feedback" id="fileTypeErrorCarData" style="display:none;">Only CSV files can be uploaded.</div>
+                                <div class="form-text">(Desteklenen formatlar: CSV)</div>
+                                <div class="invalid-feedback" id="fileTypeErrorCarData" style="display:none;">Yalnızca CSV dosyaları yüklenebilir.</div>
                             </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="mb-3">
-                                        <label for="start_time" class="form-label"><strong>Start Time</strong></label>
+                                        <label for="start_time" class="form-label"><strong>Sürüş Başlangıç ​​saati</strong></label>
                                         <input type="datetime-local" class="form-control" id="start_time" name="start_time" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="mb-3">
-                                        <label for="end_time" class="form-label"><strong>End Time</strong></label>
+                                        <label for="end_time" class="form-label"><strong>Sürüş Bitiş zamanı</strong></label>
                                         <input type="datetime-local" class="form-control" id="end_time" name="end_time" required>
                                     </div>
                                 </div>
@@ -160,7 +159,7 @@
                                 <div class="col">
                                     <div class="mb-3">
                                         <div class="alert alert-primary" role="alert">
-                                            You can customize model settings like confidence and video frame step.
+                                            Güven eşiği ve video kare adımı gibi model ayarlarını özelleştirebilirsiniz.
                                             <div class="row">
                                                 <div class="col-sm">
                                                     <div class="form-group d-flex align-items-center">
@@ -184,7 +183,7 @@
                                 </div>
                             </div>
                             <div class="text-center mt-3" id="uploadButtonContainer">
-                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-file-arrow-up"></i> Upload</button>
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-file-arrow-up"></i> Yükle</button>
                             </div>
                             <div class="text-center mb-3">
                                 <div class="spinner-border text-primary" role="status" id="spinner" style="display:none;">

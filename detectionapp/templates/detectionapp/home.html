@@ -12,37 +12,46 @@
 <body>
 <div class="container mb-3">
     <div class="jumbotron">
-        <h1>Welcome to Smart Driving System</h1>
-        <p class="lead">Making Roads Safer with Advanced Technology</p>
-        <a href="#features" class="btn">Get Started</a>
+        <h1>Akıllı Sürüş Analizi Raporlama Sistemi </h1>
+        <p class="lead"> Yollarda Güvenli Bir Geleceğe Adım Atın</p>
+        <a href="#features" class="btn">Hadi başlayalım</a>
     </div>
     <div class="container" id="features">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="feature">
                     <a href="{% url 'upload_file' %}" style="text-decoration:none">
                         <i class="fas fa-chart-line"></i>
                     </a>
-                    <h3>Driving Analysis</h3>
-                    <p>Analyze driving patterns and trends.</p>
+                    <h3>Sürüş Analizi</h3>
+                    <p>Sürüş kalıplarını ve eğilimleri analiz edin.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="feature">
                     <a href="{% url 'driver_list' %}" style="text-decoration:none">
                         <i class="fas fa-user"></i>
                     </a>
-                    <h3>Drivers</h3>
-                    <p>Manage driver information and profiles.</p>
+                    <h3>Sürücüler</h3>
+                    <p>Sürücü bilgilerini ve profillerini yönetin.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="feature">
                     <a href="{% url 'driver_reports' %}" style="text-decoration:none">
                         <i class="fas fa-file-alt"></i>
                     </a>
-                    <h3>Reports</h3>
-                    <p>Access detailed reports on driving behavior.</p>
+                    <h3>Raporlar</h3>
+                    <p>Sürüş davranışına ilişkin ayrıntılı raporlara erişin.</p>
+                </div><i class="fa-solid fa-square-poll-vertical"></i>
+            </div>
+            <div class="col-md-3">
+                <div class="feature">
+                    <a href="{% url 'all_statistic' %}" style="text-decoration:none">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                    </a>
+                    <h3>İstatistikler</h3>
+                    <p>Bütün raporların istatistiklerini görün.</p>
                 </div>
             </div>
         </div>
@@ -53,9 +62,9 @@
                 <div class="card">
                     <img src="{% static 'detectionapp/img/smartdriving.jpg' %}" class="card-img-top" alt="Analysis Image">
                     <div class="card-body">
-                        <h5 class="card-title">Driving Analysis</h5>
-                        <p class="card-text">Analyze driving patterns and trends.</p>
-                        <a href="{% url 'upload_file' %}" class="btn btn-primary">Start Analysis</a>
+                        <h5 class="card-title">Sürüş Analizi</h5>
+                        <p class="card-text">Sürüş kalıplarını ve eğilimleri analiz edin.</p>
+                        <a href="{% url 'upload_file' %}" class="btn btn-primary">Analizi Başlat</a>
                     </div>
                 </div>
             </div>
@@ -63,9 +72,9 @@
                 <div class="card">
                     <img src="{% static 'detectionapp/img/drivers.jpg' %}" class="card-img-top" alt="Driver Image">
                     <div class="card-body">
-                        <h5 class="card-title">Drivers</h5>
-                        <p class="card-text">Manage driver information and profiles.</p>
-                        <a href="{% url 'driver_list' %}" class="btn btn-primary">View Drivers</a>
+                        <h5 class="card-title">Sürücüler</h5>
+                        <p class="card-text">Sürücü bilgilerini ve profillerini yönetin.</p>
+                        <a href="{% url 'driver_list' %}" class="btn btn-primary">Sürücüleri Görüntüle</a>
                     </div>
                 </div>
             </div>
@@ -73,9 +82,9 @@
                 <div class="card">
                     <img src="{% static 'detectionapp/img/reports.jpg' %}" class="card-img-top" alt="Report Image">
                     <div class="card-body">
-                        <h5 class="card-title">Reports</h5>
-                        <p class="card-text">Access detailed reports on driving behavior.</p>
-                        <a href="{% url 'driver_reports' %}" class="btn btn-primary">View Reports</a>
+                        <h5 class="card-title">Raporlar</h5>
+                        <p class="card-text">Sürüş davranışına ilişkin raporlara erişin.</p>
+                        <a href="{% url 'driver_reports' %}" class="btn btn-primary">Raporları Görüntüle</a>
                     </div>
                 </div>
             </div>
@@ -86,30 +95,30 @@
             <div class="col-md-4">
                 <div class="feature">
                     <i class="fas fa-rocket"></i>
-                    <h3>Advanced AI Analysis</h3>
-                    <p>Revolutionary AI algorithms analyze driving patterns and predict behavior.</p>
+                    <h3>Gelişmiş Yapay Zeka Analizi</h3>
+                    <p>Devrim niteliğindeki yapay zeka algoritmaları, sürüş şekillerini analiz eder ve davranışları tahmin eder.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature">
                     <i class="fas fa-users"></i>
-                    <h3>Driver Profiles</h3>
-                    <p>Effortlessly manage driver information and enhance safety profiles.</p>
+                    <h3>Sürücü Profilleri</h3>
+                    <p>Sürücü bilgilerini zahmetsizce yönetin ve güvenlik profillerini geliştirin.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature">
                     <i class="fas fa-chart-line"></i>
-                    <h3>Detailed Insights</h3>
-                    <p>Gain Insights with Comprehensive Driving Reports.</p>
+                    <h3>Ayrıntılı Bilgiler</h3>
+                    <p>Kapsamlı Sürüş Raporlarıyla İçgörü Kazanın.</p>
                 </div>
             </div>
         </div>
     </div>
     <div class="jumbotron2">
-        <h1>Smart Driving System</h1>
-        <p class="lead">Step into a Safe Future on the Roads</p>
-        <a href="{% url "about" %}" class="btn">Who are we?</a>
+        <h1>Akıllı Sürüş Sistemi</h1>
+        <p class="lead">İleri Teknolojiyle Yollar Daha Güvenli Hale Geliyor</p>
+        <a href="{% url "about" %}" class="btn btn-dark">Biz Kimiz?</a>
     </div>
 </div>
 </body>

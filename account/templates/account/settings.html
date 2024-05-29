@@ -84,7 +84,7 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title" style="font-family: fasterOne, sans-serif;">Model Settings</h3>
+                        <h3 class="card-title" style="font-family: fasterOne, sans-serif;">Model Ayarları</h3>
                     </div>
                     <div class="card-body">
                         <form id="settings-form" method="POST" novalidate>
@@ -92,11 +92,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="alert alert-info" role="alert">
-                                    <p class="card-text"><strong>Confidence</strong>, refers to the probability that an object recognition model recognizes an object. A high confidence level indicates that the model is more likely to recognize an object correctly. A low confidence level means that recognition accuracy is likely low.
+                                    <p class="card-text"><strong>Confidence</strong>, bir nesne tanıma modelinin bir nesneyi tanıma olasılığını ifade eder. Yüksek güven düzeyi, modelin bir nesneyi doğru şekilde tanıma olasılığının daha yüksek olduğunu gösterir. Düşük güven düzeyi, tanıma doğruluğunun muhtemelen düşük olduğu anlamına gelir.
                                     </div></div>
                                 <div class="col-md-6">
                                     <div class="alert alert-info" role="alert">
-                                    <p class="card-text"><strong>Video Frame Stride</strong>, specifies the number of skips between frames in the video. A larger skip value means fewer frames are processed and processing time can be shortened. However, as the skip value increases, there may be loss of details in the video.</p>
+                                    <p class="card-text"><strong>Video Frame Stride</strong>, videodaki kareler arasındaki atlama sayısını belirtir. Daha büyük bir atlama değeri, daha az karenin işleneceği ve işlem süresinin kısaltılabileceği anlamına gelir. Ancak atlama değeri arttıkça videoda ayrıntı kaybı yaşanabilir. Tespit edilecek objelerde kayıplar meydana gelebilir.</p>
                                 </div></div>
                             </div>
                             <div class="row">
@@ -105,7 +105,7 @@
                                         <label for="confidence" class="form-label">Confidence Threshold:</label>
                                         <input type="number" id="confidence" name="confidence" class="form-control {% if form.errors.confidence %}is-invalid{% endif %}" min="0" max="1" step="0.01" value="{{ form.instance.confidence }}" required>
                                         <div class="invalid-feedback">Confidence değeri maximum 1 olmalı.</div>
-                                        <div class="form-text">The recommended value is 0.7. The maximum value can be set to 1.</div>
+                                        <div class="form-text">Önerilen değer 0,7'dir. Maksimum değer 1 olarak ayarlanabilir.</div>
                                         {% if form.errors.confidence %}
                                             <div class="invalid-feedback">{{ form.errors.confidence.0 }}</div>
                                         {% endif %}
@@ -116,19 +116,20 @@
                                         <label for="vid-stride" class="form-label">Video Frame Stride:</label>
                                         <input type="number" id="vid_stride" name="vid_stride" class="form-control {% if form.errors.vid_stride %}is-invalid{% endif %}" value="{{ form.instance.vid_stride }}" required>
                                         <div class="invalid-feedback">Video Frame Stride gerekli bir alandır.</div>
-                                        <div class="form-text">The recommended value is 10. </div>
+                                        <div class="form-text">Önerilen değer 10'dur.</div>
                                         {% if form.errors.vid_stride %}
                                             <div class="invalid-feedback">{{ form.errors.vid_stride.0 }}</div>
                                         {% endif %}
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" id="save-btn" class="btn btn-primary mb-3">Save</button>
+                            <button type="submit" id="save-btn" class="btn btn-primary mb-3">Kaydet</button>
                         </form>
                         <div class="alert alert-success mt-3" role="alert" id="success-alert" style="display: none;">
-                            The settings have been updated successfully, you are directed to the installation page...
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-grow mt-2" role="status">
+                            <div class="clearfix">
+                            Ayarlar başarıyla güncellendi, yükleme sayfasına yönlendiriliyorsunuz...
+
+                                <div class="spinner-grow float-end" role="status">
                                   <span class="visually-hidden">Loading...</span>
                                 </div>
                               </div>

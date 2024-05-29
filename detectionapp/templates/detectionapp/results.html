@@ -57,12 +57,12 @@
 </style>
 <body>
     <div class="container">
-        <h2 class="animated-title text-left mb-4" style="font-family: fasterOne, sans-serif;">Results Page</h2>
+        <h2 class="animated-title text-left mb-4" style="font-family: fasterOne, sans-serif;">Sonuçlar Sayfası</h2>
         <div class="row">
             <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-header" style="background-color:#1D267D; color: white;">
-                        Car Inside Detected Media
+                        Araç İçerisinde Algılanan Dosya
                     </div>
                     <div class="card-body d-flex justify-content-center align-items-center">
                         {% if report.car_inside_report_path|slice:'-4:' == '.jpg' %}
@@ -70,7 +70,7 @@
                         {% elif report.car_inside_report_path|slice:'-4:' == '.mp4' %}
                             <video width="100%" height="auto" controls>
                                 <source src="{% static report.car_inside_report_path %}" type="video/mp4">
-                                Your browser does not support the video tag.
+                                Tarayıcınız video etiketini desteklemiyor.
                             </video>
                         {% endif %}
                     </div>
@@ -79,7 +79,7 @@
             <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-header" style="background-color:#1D267D; color: white;">
-                        Car Outside Detected Media
+                        Araç Dışında Algılanan Dosya
                     </div>
                     <div class="card-body d-flex justify-content-center align-items-center">
                         {% if report.car_outside_report_path|slice:'-4:' == '.jpg' %}
@@ -87,7 +87,7 @@
                         {% elif report.car_outside_report_path|slice:'-4:' == '.mp4' %}
                             <video width="100%" height="auto" controls>
                                 <source src="{% static report.car_outside_report_path %}" type="video/mp4">
-                                Your browser does not support the video tag.
+                                Tarayıcınız video etiketini desteklemiyor.
                             </video>
                         {% endif %}
                     </div>
@@ -98,7 +98,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        Result Details Detected Inside the Vehicle
+                        Araç İçerisinde Tespit Edilen Sonuç Detayları
                     </div>
                     <div class="card-body" id="result-details-inside">
                         {% if data_inside %}
@@ -108,9 +108,9 @@
                                         <table class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Detected Boxes</th>
-                                                    <th scope="col">Class</th>
-                                                    <th scope="col">Confidence</th>
+                                                    <th scope="col">Algılanan Kare</th>
+                                                    <th scope="col">Sınıf</th>
+                                                    <th scope="col">Güven Değeri</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -126,15 +126,15 @@
                             {% endfor %}
                         {% else %}
                             <div class="alert alert-warning" role="alert">
-                                No results found inside.
+                                Araç İçinde sonuç bulunamadı.
                             </div>
                         {% endif %}
                     </div>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <div>
-                                <button id="prev-page-inside" class="btn btn-warning">Previous</button>
-                                <button id="next-page-inside" class="btn btn-warning">Next</button>
+                                <button id="prev-page-inside" class="btn btn-warning">Önceki</button>
+                                <button id="next-page-inside" class="btn btn-warning">Sonraki</button>
                             </div>
                             <p id="page-info-inside" class="mb-0 mx-3"></p>
                         </div>
@@ -144,7 +144,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        Result Details Detected Outside the Vehicle
+                        Araç Dışında Tespit Edilen Sonuç Detayları
                     </div>
                     <div class="card-body" id="result-details-outside">
                         {% if data_outside %}
@@ -154,9 +154,9 @@
                                         <table class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Detected Boxes</th>
-                                                    <th scope="col">Class</th>
-                                                    <th scope="col">Confidence</th>
+                                                    <th scope="col">Algılanan Kare</th>
+                                                    <th scope="col">Sınıf</th>
+                                                    <th scope="col">Güven değeri</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -172,15 +172,15 @@
                             {% endfor %}
                         {% else %}
                             <div class="alert alert-warning" role="alert">
-                                No results found outside.
+                                Araç Dışında sonuç bulunamadı.
                             </div>
                         {% endif %}
                     </div>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <div>
-                                <button id="prev-page-outside" class="btn btn-warning">Previous</button>
-                                <button id="next-page-outside" class="btn btn-warning">Next</button>
+                                <button id="prev-page-outside" class="btn btn-warning">Önceki</button>
+                                <button id="next-page-outside" class="btn btn-warning">Sonraki</button>
                             </div>
                             <p id="page-info-outside" class="mb-0 mx-3"></p>
                         </div>
@@ -192,13 +192,13 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header text-center alert alert-info">
-                        The files were analyzed and a driving report was created. Click the button below for report details.
+                        Dosyalar analiz edildi ve sürüş raporu oluşturuldu. Rapor ayrıntıları için aşağıdaki butona tıklayın.
                     </div>
                     <div class="card-body d-flex justify-content-center align-items-center">
                         <div class="row">
                             <div class="col-md-12 d-flex justify-content-center">
-                                <a href="{% url 'report_details' report.id  %}" class="btn btn-success mx-2"><i class="fa-solid fa-chart-line"></i> View Report Details</a>
-                                <a href="{% url 'driver_reports' %}" class="btn btn-primary mx-2"><i class="fa-solid fa-chart-simple"></i> Driver Reports Page</a>
+                                <a href="{% url 'report_details' report.id  %}" class="btn btn-success mx-2"><i class="fa-solid fa-chart-line"></i> Rapor Ayrıntılarını Görüntüle</a>
+                                <a href="{% url 'driver_reports' %}" class="btn btn-primary mx-2"><i class="fa-solid fa-chart-simple"></i> Sürücü Raporları Sayfası</a>
                             </div>
                         </div>
                     </div>

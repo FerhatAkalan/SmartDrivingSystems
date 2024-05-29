@@ -79,12 +79,12 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title text-center" style="font-family: fasterOne;">Uploaded File Preview</h5>
+                    <h5 class="card-title text-center" style="font-family: fasterOne;">Yüklenen Dosya Önizlemesi</h5>
                 </div>
                 <div class="card-body text-center">
                     <div class="uploaded-file-preview row">
                         <div class="col-md-6">
-                            <h5>Upload In-car File:</h5>
+                            <h5>Araç İçi Dosya:</h5>
                             {% if uploaded_file.car_inside_file %}
                             <!-- Araç içi dosya önizlemesi -->
                             {% if uploaded_file.car_inside_file.name|slice:'-4:' == '.mp4' %}
@@ -97,7 +97,7 @@
                             {% endif %}
                         </div>
                         <div class="col-md-6">
-                            <h5>Upload Out-car File:</h5>
+                            <h5>Araç Dışı Dosya:</h5>
                             {% if uploaded_file.car_outside_file %}
                             <!-- Araç dışı dosya önizlemesi -->
                             {% if uploaded_file.car_outside_file.name|slice:'-4:' == '.mp4' %}
@@ -112,27 +112,27 @@
                     </div>
                     <div class="mt-3">
                         <!-- Driver bilgisi -->
-                        <h5 class="mt-3"><strong>Trip Information</strong></h5>
+                        <h5 class="mt-3"><strong>Sürüş Bilgileri</strong></h5>
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <th>Driver Name:</th>
+                                    <th>Sürücü Adı:</th>
                                     <td>{{ trip.driver.driver_name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Driver Surname:</th>
+                                    <th>Sürücü Soyadı:</th>
                                     <td>{{ trip.driver.driver_surname }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Driver Licence:</th>
+                                    <th>Ehliyet Numarası:</th>
                                     <td>{{ trip.driver.driver_licence }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Starting Time:</th>
+                                    <th>Sürüş Başlangıç ​​zamanı:</th>
                                     <td>{{ trip.start_time }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Ending Time:</th>
+                                    <th>Sürüş Bitiş ​​zamanı:</th>
                                     <td>{{ trip.end_time }}</td>
                                 </tr>
                             </tbody>
@@ -144,14 +144,14 @@
                         <input type="hidden" name="file_id" value="{{ uploaded_file.id }}">
                         <input type="hidden" name="trip_id" value="{{ trip.id }}">
                         <button type="submit" class="btn btn-success btn-lg mt-3" id="detectButton">
-                             Detect
+                            Analiz Et
                         </button>
                         <div class="spinner-border text-primary mt-3 d-none" role="status" id="spinner">
-                            <div class="sr-only">Loading...</div>
+                            <div class="sr-only">Yükleniyor...</div>
                         </div>
-                        <div id="loadingText" style="font-family: fasterOne, sans-serif;" class="mt-2 text-primary d-none">Loading...</div>
+                        <div id="loadingText" style="font-family: fasterOne, sans-serif;" class="mt-2 text-primary d-none">Dosyalar Analiz ediliyor... (Analiz süresi videonun uzunluğuna göre değişir)</div>
                         <a href="{% url 'upload_file' %}" class="btn btn-danger btn-lg mt-3" id="cancelButton">
-                             Cancel
+                            İptal Et
                         </a>
                     </form>
                 </div>
