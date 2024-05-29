@@ -18,7 +18,7 @@ def user_login(request):
 
         if user is not None:
             login(request,user)
-            return redirect('home')
+            return redirect('all_statistic')
         else:
             return render(request,"account/login.html",{"error":"username ya da password yanlıs"})
     else:
