@@ -32,6 +32,7 @@
   .card:hover {
     transform: translateY(-5px);
   }
+  
 </style>
 <div class="container">
   <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Driver Reports</h2>
@@ -52,47 +53,55 @@
           </div>
         </div>
       {% endfor %}
-    <!-- Sayfalama bağlantıları -->
-    <ul class="pagination justify-content-center">
-      {% if reports.has_previous %}
-      <li class="page-item">
-        <a class="page-link" href="?page=1">First</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="?page={{ reports.previous_page_number }}"
-          >Previous</a
-        >
-      </li>
-      {% endif %}
-      {% for num in reports.paginator.page_range %}
-        {% if reports.number == num %}
-        <li class="page-item active">
-          <span class="page-link">{{ num }}</span>
+      <ul class="pagination justify-content-center">
+        {% if reports.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1">First</a>
         </li>
-        {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ reports.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        
+        {% for num in reports.paginator.page_range %}
+          {% if num > reports.number|add:'-5' and num < reports.number|add:'5' %}
+            {% if reports.number == num %}
+            <li class="page-item active">
+              <span class="page-link">{{ num }}</span>
+            </li>
+            {% else %}
             <li class="page-item">
               <a class="page-link" href="?page={{ num }}">{{ num }}</a>
             </li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        
+      
+        {% if reports.number < reports.paginator.num_pages|add:'-5' %}
+          <li class="page-item">
+            <span class="page-link">...</span>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ reports.paginator.num_pages }}">{{ reports.paginator.num_pages }}</a>
+          </li>
         {% endif %}
-      {% endfor %}
-      {% if reports.has_next %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ reports.next_page_number }}"
-          >Next</a
-        >
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="?page={{ reports.paginator.num_pages }}"
-          >Last</a
-        >
-      </li>
+        
+        {% if reports.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ reports.next_page_number }}">Next</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ reports.paginator.num_pages }}">Last</a>
+        </li>
+        {% endif %}
+      </ul>
+      {% else %}
+      <div class="col animated-title alert alert-info" role="alert">
+        No reports available.
+      </div>
       {% endif %}
-    </ul>
-    {% else %}
-    <div class="col animated-title alert alert-info" role="alert">
-      No reports available.
+      </div>
     </div>
-    {% endif %}
-  </div>
-</div>
+      
 {% endblock %}
