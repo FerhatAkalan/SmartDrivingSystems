@@ -3,6 +3,7 @@ import io
 from django.shortcuts import get_object_or_404, render, redirect
 from matplotlib import pyplot as plt
 import numpy as np
+import pandas as pd
 from scipy import stats
 from .forms import DriverForm
 from .models import Driver, ReportDetails, SpeedingViolationDetails
@@ -78,7 +79,6 @@ def report_details(request, report_id):
     speeds = [violation.detected_speed for violation in violations]
     speed_limits = [violation.speed_limit for violation in violations]
 
-
     context = {
         'report': report,
         'report_details_interior': report_details_interior,
@@ -89,6 +89,7 @@ def report_details(request, report_id):
         'times': times,
         'speeds': speeds,
         'speed_limits': speed_limits,
+  
     }
     return render(request, 'report-details.html', context)
 

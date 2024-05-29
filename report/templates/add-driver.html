@@ -162,5 +162,10 @@
             }, false);
         }, false);
     })();
+
+    var birthDateInput = document.getElementById('birth_date');
+    var today = new Date(); // Bugünün tarihini alın
+    var maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate()); // Doğum tarihi için 18 yıl önceki tarihi hesaplayın
+    birthDateInput.setAttribute('max', maxDate.toISOString().split('T')[0]); // Doğum tarihi alanının maksimum tarihini ayarlayın
 </script>
 {% endblock %}

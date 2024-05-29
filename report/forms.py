@@ -12,6 +12,7 @@ class DriverForm(forms.ModelForm):
         if user:
             self.fields['user'].initial = user  # Form oluşturulduğunda 'user' alanını otomatik olarak ayarlayın
             self.fields['user'].widget.attrs['readonly'] = True  # 'user' alanını değiştirilemez yapın
+      
             
     # def clean(self):
     #     cleaned_data = super().clean()

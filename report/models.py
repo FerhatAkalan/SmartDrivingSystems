@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import date
 
 class Driver(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -13,8 +14,11 @@ class Driver(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     contact_number = models.CharField(max_length=20, null=True, blank=True)
     driver_email = models.EmailField(null=True, blank=True)
-    def __str__(self):
-        return f"{self.driver_name} {self.driver_surname}"
+    def age(self):
+            if self.birth_date:
+                today = date.today()
+                return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
+            return None
 
 class Trips(models.Model):
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
@@ -61,9 +65,9 @@ class ReportDetails(models.Model):
 
 class SpeedingViolationDetails(models.Model):
     report = models.ForeignKey(Reports, on_delete=models.CASCADE)
-    speed_limit = models.FloatField() 
-    detected_speed = models.FloatField()
-    violation_time = models.CharField(max_length=20) 
+    speed_limit = models.FloatField() #Tabeladan okunan hız sınırı
+    detected_speed = models.FloatField() #Aracın tespit edilen hız
+    violation_time = models.CharField(max_length=20) #Tespit edilen time
 
     def __str__(self):
         return f"Speeding Violation Details for {self.report}"
