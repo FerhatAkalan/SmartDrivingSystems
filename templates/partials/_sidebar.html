@@ -3,25 +3,25 @@
     <ul class="list-group">
       <li class="list-group-item nav-item-sidebar list-group-item-action {% if request.path == '/' %}active{% endif %}">
         <a class="sidebar-link" href="{% url 'home' %}"
-          ><i class="fas fa-home"></i> Home</a
+          ><i class="fas fa-home"></i> Anasayfa</a
         >
       </li>
       <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/upload/' in request.path %}active{% endif %}">
         <a href="{% url 'upload_file' %}"
-          ><i class="fas fa-car"></i> Driving Analysis</a
+          ><i class="fas fa-car"></i> Sürüş Analizi</a
         >
       </li>
       <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/driver-reports/' in request.path %}active{% endif %}">
-        <a href="{% url 'driver_reports' %}"><i class="fas fa-id-card"></i> Driver Reports</a>
+        <a href="{% url 'driver_reports' %}"><i class="fas fa-id-card"></i> Sürücü Raporları</a>
       </li>
       <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/add-driver/' in request.path %}active{% endif %}">
         <a href="{% url 'add_driver' %}"
-          ><i class="fa-solid fa-car-side"></i> Add Driver</a
+          ><i class="fa-solid fa-car-side"></i> Sürücü Ekle</a
         >
       </li>
       <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/drivers/' in request.path %}active{% endif %}">
         <a href="{% url 'driver_list' %}"
-          ><i class="fa-solid fa-id-badge"></i> Driver Profiles</a
+          ><i class="fa-solid fa-id-badge"></i> Sürücü Profilleri</a
         >
       </li>
       
@@ -29,45 +29,35 @@
       <li
         class="list-group-item nav-item-sidebar list-group-item-action"
       >
-        <a href="/">Admin</a>
+        <a href="/"> Admin</a>
       </li>
       {% endif %}
-      <li
-        class="list-group-item nav-item-sidebar list-group-item-action"
-      >
-        <a href="/"><i class="fa-solid fa-users"></i> All Users</a>
-      </li>
+      
       {% if user.is_staff %}
       <li
         class="list-group-item nav-item-sidebar list-group-item-action"
       >
-        <a href="/"><i class="fa-solid fa-file"></i> All Reports</a>
+        <a href="/"><i class="fa-solid fa-file"></i> Tüm Raporlar</a>
       </li>
       {% endif %}
       <li
         class="list-group-item nav-item-sidebar list-group-item-action {% if '/all-statistic/' in request.path %}active{% endif %}"
       >
         <a href="{% url 'all_statistic' %}"  
-          ><i class="fa-solid fa-chart-simple"></i> All Statistics</a
+          ><i class="fa-solid fa-chart-simple"></i> Tüm İstatistikler</a
         >
       </li>
-    
-      <li
-        class="list-group-item nav-item-sidebar list-group-item-action"
-      >
-        <a href="/"><i class="fa-solid fa-user-plus"></i> Add User</a>
-      </li>
       <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/help/' in request.path %}active{% endif %}">
-        <a href="{% url 'help' %}"><i class="fa-solid fa-circle-info"></i> Help</a>
+        <a href="{% url 'help' %}"><i class="fa-solid fa-circle-info"></i> Yardım</a>
       </li>
       <li class="list-group-item nav-item-sidebar list-group-item-action {% if '/settings/' in request.path %}active{% endif %}">
-        <a href="{% url 'settings' %}"><i class="fa-solid fa-gear"></i> Settings</a>
+        <a href="{% url 'settings' %}"><i class="fa-solid fa-gear"></i> Ayarlar</a>
       </li>
       <li
         class="list-group-item nav-item-sidebar list-group-item-action"
       >
         <a href="{% url 'user_logout' %}"
-          ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
+          ><i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap</a
         >
       </li>
       {% comment %} <li

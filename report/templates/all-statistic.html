@@ -38,7 +38,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="container">
-  <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">All Statistic</h2>
+  <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Tüm İstatistikler</h2>
 
   <div class="row">
     <div class="col-md-4">
@@ -60,7 +60,8 @@
     <div class="col-md-4">
         <div class="card border-0 shadow">
             <div class="card-body" style="background-color:#FFBF00; color: white;">
-                
+                <p>Ortalama Sürüş Süresi</p>
+                <span id="avgTripDuration">0 saat, 0 dakika, 0 saniye</span>
             </div>
         </div>
     </div>
@@ -69,6 +70,7 @@
   <div class="row">
     <div class="col-md-4">
         <div class="card border-0 shadow">
+            <div class="card-header" style="background-color:white; color: black;" > Araç İçi Tüm Etiketler </div>
             <div class="card-body" >
                 <canvas id="myPieChart"></canvas>
             </div>
@@ -76,6 +78,7 @@
     </div>
     <div class="col-md-8">
         <div class="card border-0 shadow">
+            <div class="card-header" style="background-color:white; color: black;" > Araç Dışı Tüm Etiketler </div>
             <div class="card-body" >
                 <canvas id="myBarChart"></canvas>
             </div>
@@ -88,20 +91,51 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var totalReports = {{ report_count }};  // Django'dan gelen toplam rapor sayısı
-        var currentCount = 0;
-        var increment = Math.ceil(totalReports / 50);  // Artış miktarını belirle
+        var totalDrivers = {{ unique_drivers_count }};  // Django'dan gelen toplam sürücü sayısı
+        var avgTripDurationSeconds = {{ avg_trip_duration_seconds }};  // Django'dan gelen ortalama sürüş süresi saniye olarak
+        var currentReportCount = 0;
+        var currentDriverCount = 0;
+        var currentTripDuration = 0;
+        var incrementReport = Math.ceil(totalReports / 50);  // Artış miktarını belirle
+        var incrementDriver = Math.ceil(totalDrivers / 50);  // Artış miktarını belirle
+        var incrementTripDuration = Math.ceil(avgTripDurationSeconds / 50);  // Artış miktarını belirle
         var reportCountElement = document.getElementById("reportCount");
+        var driverCountElement = document.getElementById("driverCount");
+        var tripDurationElement = document.getElementById("avgTripDuration");
 
-        function updateCount() {
-            currentCount += increment;
-            if (currentCount >= totalReports) {
-                currentCount = totalReports;
-                clearInterval(countInterval);
+        function updateReportCount() {
+            currentReportCount += incrementReport;
+            if (currentReportCount >= totalReports) {
+                currentReportCount = totalReports;
+                clearInterval(reportCountInterval);
             }
-            reportCountElement.textContent = currentCount;
+            reportCountElement.textContent = currentReportCount;
         }
 
-        var countInterval = setInterval(updateCount, 10);  // 10 milisaniyede bir güncelle
+        function updateDriverCount() {
+            currentDriverCount += incrementDriver;
+            if (currentDriverCount >= totalDrivers) {
+                currentDriverCount = totalDrivers;
+                clearInterval(driverCountInterval);
+            }
+            driverCountElement.textContent = currentDriverCount;
+        }
+
+        function updateTripDuration() {
+            currentTripDuration += incrementTripDuration;
+            if (currentTripDuration >= avgTripDurationSeconds) {
+                currentTripDuration = avgTripDurationSeconds;
+                clearInterval(tripDurationInterval);
+            }
+            var hours = Math.floor(currentTripDuration / 3600);
+            var minutes = Math.floor((currentTripDuration % 3600) / 60);
+            var seconds = currentTripDuration % 60;
+            tripDurationElement.textContent = `${hours} saat, ${minutes} dakika, ${seconds} saniye`;
+        }
+
+        var reportCountInterval = setInterval(updateReportCount, 10);  // 10 milisaniyede bir güncelle
+        var driverCountInterval = setInterval(updateDriverCount, 10);  // 10 milisaniyede bir güncelle
+        var tripDurationInterval = setInterval(updateTripDuration, 10);  // 10 milisaniyede bir güncelle
 
         // Chart.js kullanarak pasta grafiğini oluşturma (Araç İçi Labeller)
         var ctxPie = document.getElementById('myPieChart').getContext('2d');
@@ -134,7 +168,6 @@
                 }
             }
         });
-
         // Chart.js kullanarak sütun grafiğini oluşturma (Araç Dışı Labeller)
         var ctxBar = document.getElementById('myBarChart').getContext('2d');
         var labelsBar = {{ exterior_labels|safe }};  // Django'dan gelen etiketler (araç dışı)
@@ -176,42 +209,6 @@
             }
             return colors;
         }
-    });
-
-    //Toplam Rapor Sayısı
-    document.addEventListener("DOMContentLoaded", function() {
-        var totalReports = {{ report_count }};  // Django'dan gelen toplam rapor sayısı
-        var currentCount = 0;
-        var increment = Math.ceil(totalReports / 50);  // Artış miktarını belirle
-        var reportCountElement = document.getElementById("reportCount");
-
-        function updateCount() {
-            currentCount += increment;
-            if (currentCount >= totalReports) {
-                currentCount = totalReports;
-                clearInterval(countInterval);
-            }
-            reportCountElement.textContent = currentCount;
-        }
-
-        var countInterval = setInterval(updateCount, 10);  // 10 milisaniyede bir güncelle
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        var totalReports = {{ report_count }};  // Django'dan gelen toplam rapor sayısı
-        var currentCount = 0;
-        var reportCountElement = document.getElementById("reportCount");
-
-        function updateCount() {
-            if (currentCount < totalReports) {
-                currentCount++;
-                reportCountElement.textContent = currentCount;
-            } else {
-                clearInterval(countInterval);
-            }
-        }
-
-        var countInterval = setInterval(updateCount, 10);  // 50 milisaniyede bir güncelle
     });
 </script>
       

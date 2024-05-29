@@ -16,38 +16,38 @@
       <ul class="navbar-nav ms-auto">
         
         <li class="nav-item">
-          <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+          <a class="nav-link" href="/"><i class="fas fa-home"></i> Anasayfa</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'about' %}"
-            ><i class="fas fa-address-card"></i> About</a
+            ><i class="fas fa-address-card"></i> Hakkımızda</a
           >
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{%url 'contact'%}"
-            ><i class="fas fa-address-book"></i> Contact</a
+            ><i class="fas fa-address-book"></i> İletişim</a
           >
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'user_profile' %}"
-            ><i class="fa-solid fa-user"></i> Welcome, {{ user.username }}</a
+            ><i class="fa-solid fa-user"></i> Hoşgeldin, {{ user.username }}</a
           >
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'user_logout' %}"
-            ><i class="fas fa-sign-in-alt"></i> Logout</a
+            ><i class="fas fa-sign-in-alt"></i> Çıkış Yap</a
           >
         </li>
         {% else %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'user_login' %}"
-            ><i class="fas fa-sign-in-alt"></i> Login</a
+            ><i class="fas fa-sign-in-alt"></i> Giriş Yap</a
           >
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'user_register' %}"
-            ><i class="fas fa-user-plus"></i> Register</a
+            ><i class="fas fa-user-plus"></i> Üye Ol</a
           >
         </li>
         {% endif %}

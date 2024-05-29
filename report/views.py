@@ -1,19 +1,16 @@
-import base64
-import io
+from datetime import timedelta
+from django.forms import DurationField
 from django.shortcuts import get_object_or_404, render, redirect
-from matplotlib import pyplot as plt
-import numpy as np
-import pandas as pd
-from scipy import stats
 from .forms import DriverForm
-from .models import Driver, ReportDetails, SpeedingViolationDetails
+from .models import Driver, ReportDetails, SpeedingViolationDetails, Trips
 from .models import Reports
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-import matplotlib
-matplotlib.use('Agg')
+from django.db.models import Avg, F, ExpressionWrapper, DurationField
+from datetime import timedelta
+
 
 
 @login_required
@@ -111,11 +108,9 @@ def driver_profiles(request, driver_id):
 
 @login_required
 def all_statistic(request):
-
     reports = Reports.objects.filter(user=request.user)
     report_count = reports.count() 
     unique_drivers_count = Driver.objects.filter(user=request.user).count()
-
     
     # Kullanıcının tüm raporlarındaki araç içi ve araç dışı etiketleri topla
     interior_labels = ReportDetails.objects.filter(report__in=reports, is_car_interior=True).values_list('label', flat=True)
@@ -140,6 +135,24 @@ def all_statistic(request):
     interior_counts = list(interior_label_counts.values())
     exterior_labels = list(exterior_label_counts.keys())
     exterior_counts = list(exterior_label_counts.values())
+
+        
+    # Ortalama sürüş süresini hesapla
+    trips = Trips.objects.filter(driver__user=request.user)
+    trips_with_duration = trips.annotate(duration=ExpressionWrapper(F('end_time') - F('start_time'), output_field=DurationField()))
+    avg_trip_duration = trips_with_duration.aggregate(Avg('duration'))['duration__avg']
+
+    # Ortalamayı saat, dakika ve saniye olarak formatla
+    if avg_trip_duration:
+        avg_seconds = int(avg_trip_duration.total_seconds())
+        avg_minutes, avg_seconds = divmod(avg_seconds, 60)
+        avg_hours, avg_minutes = divmod(avg_minutes, 60)
+        avg_trip_duration_seconds = int(avg_trip_duration.total_seconds())
+        avg_trip_duration_formatted = f"{avg_hours} saat, {avg_minutes} dakika, {avg_seconds} saniye"
+    else:
+        avg_trip_duration_seconds = 0
+        avg_trip_duration_formatted = "N/A"
+    
     
     context={
         'report':reports,
@@ -149,6 +162,8 @@ def all_statistic(request):
         'interior_counts': interior_counts,
         'exterior_labels': exterior_labels,
         'exterior_counts': exterior_counts,
+        'avg_trip_duration': avg_trip_duration_formatted,
+        'avg_trip_duration_seconds': avg_trip_duration_seconds
     }
     
     return render(request, 'all-statistic.html',context)
