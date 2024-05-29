@@ -1,49 +1,56 @@
 {% extends 'layout.html' %} {% block content %} {% load static %}
+
 <style>
-  @keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 16px;
+        width: 200px;
+        text-align: center;
+        font-size: 24px;
+        margin: 20px auto;
     }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-  }
-  .animated-title {
-      animation: fadeInLeft 0.5s ease both;
-  }
-  .col-md-4{
-    animation: fadeInLeft 0.5s ease both;
-  }
-  .card{
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-    overflow: hidden;
-    margin-bottom: 2rem;
-  }
-  .card-title {
-    font-weight: bold; 
-  }
-  .card {
-    transition: transform 0.3s;
-  }
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  
 </style>
+
 <div class="container">
   <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">All Statistic</h2>
 
-  <div class="col-md-4">
-    <div class="card">
-        <div class="card-body">
+  <div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <span id="reportCount">0</span>
+                <p>Toplam Rapor Sayısı</p>
+            </div>
+        </div>
+    
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+            </div>
         </div>
     </div>
   </div>
 
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var totalReports = {{ report_count }};  // Django'dan gelen toplam rapor sayısı
+        var currentCount = 0;
+        var reportCountElement = document.getElementById("reportCount");
+
+        function updateCount() {
+            if (currentCount < totalReports) {
+                currentCount++;
+                reportCountElement.textContent = currentCount;
+            } else {
+                clearInterval(countInterval);
+            }
+        }
+
+        var countInterval = setInterval(updateCount, 10);  // 50 milisaniyede bir güncelle
+    });
+</script>
       
 {% endblock %}

@@ -111,7 +111,15 @@ def driver_profiles(request, driver_id):
 
 @login_required
 def all_statistic(request):
+
+    report = Reports.objects.filter(user=request.user) 
+    report_count = report.count() 
+
+    context={
+        'report':report,
+        'report_count': report_count 
+    }
     
-    return render(request, 'all-statistic.html')
+    return render(request, 'all-statistic.html',context)
 
 
