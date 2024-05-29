@@ -14,9 +14,6 @@
       .animated-title {
           animation: fadeInLeft 0.5s ease both;
       }
-      .col-md-4{
-        animation: fadeInLeft 0.5s ease both;
-      }
       .card{
         border-radius: 15px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -39,6 +36,15 @@
       .card:hover {
         transform: translateY(-5px);
       }
+      .equal-height-card {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .equal-height-card .card {
+        flex-grow: 1;
+    }
+    
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -46,26 +52,26 @@
   <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Tüm İstatistikler</h2>
 
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 equal-height-card animated-title">
         <div class="card border-0 shadow">
             <div class="card-body" style="background-color:#615EFC; font-family: fasterOne, sans-serif; color: white;">
-                <p>Toplam Rapor Sayısı</p>
-                <span id="reportCount">0</span>
+                <h3>Toplam Rapor Sayısı</h3>
+                <h3><span id="reportCount">0</span></h3>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 equal-height-card animated-title">
         <div class="card border-0 shadow">
             <div class="card-body" style="background-color:#D10363; font-family: fasterOne, sans-serif; color: white;">
-                <p>Toplam Sürücü Sayısı</p>
-                <span id="driverCount">{{ unique_drivers_count }}</span>
+                <h3>Toplam Sürücü Sayısı</h3>
+                <h3><span id="driverCount">0</span></h3>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 equal-height-card animated-title">
         <div class="card border-0 shadow">
             <div class="card-body" style="background-color:#FFBF00; font-family: fasterOne, sans-serif; color: white;">
-                <p>Ortalama Sürüş Süresi</p>
+                <h4><p>Ortalama Sürüş Süresi</p><h4>
                 <span id="avgTripDuration">0 saat, 0 dakika, 0 saniye</span>
             </div>
         </div>
@@ -74,7 +80,7 @@
 
   <div class="row">
     <div class="col-md-4">
-        <div class="card border-0 shadow">
+        <div class="card border-0 shadow animated-title">
             <div class="card-header" style="background-color:white; color: black;" > Araç İçi Tüm Etiketler </div>
             <div class="card-body" >
                 <canvas id="myPieChart"></canvas>
@@ -82,7 +88,7 @@
         </div>
     </div>
     <div class="col-md-8">
-        <div class="card border-0 shadow">
+        <div class="card border-0 shadow animated-title">
             <div class="card-header" style="background-color:white; color: black;" > Araç Dışı Tüm Etiketler </div>
             <div class="card-body" >
                 <canvas id="myBarChart"></canvas>
