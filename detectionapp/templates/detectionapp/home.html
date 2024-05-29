@@ -20,21 +20,27 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="feature">
-                    <i class="fas fa-chart-line"></i>
+                    <a href="{% url 'upload_file' %}" style="text-decoration:none">
+                        <i class="fas fa-chart-line"></i>
+                    </a>
                     <h3>Driving Analysis</h3>
                     <p>Analyze driving patterns and trends.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature">
-                    <i class="fas fa-user"></i>
+                    <a href="{% url 'driver_list' %}" style="text-decoration:none">
+                        <i class="fas fa-user"></i>
+                    </a>
                     <h3>Drivers</h3>
                     <p>Manage driver information and profiles.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature">
-                    <i class="fas fa-file-alt"></i>
+                    <a href="{% url 'driver_reports' %}" style="text-decoration:none">
+                        <i class="fas fa-file-alt"></i>
+                    </a>
                     <h3>Reports</h3>
                     <p>Access detailed reports on driving behavior.</p>
                 </div>

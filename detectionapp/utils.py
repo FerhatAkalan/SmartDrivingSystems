@@ -62,6 +62,10 @@ def get_latest_prediction():
 def process_results(results, car_data_file_path, is_car_interior):
     data = []
     total_frames = len(results)
+    # CSV dosyasını bir kere oku
+    with open(car_data_file_path, 'r', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        car_data = list(reader)
     for i, result in enumerate(results):
         current_info= i+1
         frame_info = f"{i+1}/{total_frames}"
@@ -74,66 +78,76 @@ def process_results(results, car_data_file_path, is_car_interior):
             width, height = float(result.boxes.xywh[0][2]), float(result.boxes.xywh[0][3])
             current_frame = int(frame_info.split('/')[0])
             time_of_detection = (current_frame / 30)
-            if is_car_interior == False:
-                if label in speed_labels:
-                    speed_limit = speed_labels.get(label)
-                    with open(car_data_file_path, 'r', newline='') as csv_file:
-                        reader = csv.DictReader(csv_file)
-                        closest_time = None
-                        closest_speed = None
-                        min_time_diff = float('inf')
-                        # CSV dosyasındaki her bir satırı kontrol et
-                        for row in reader:
-                            csv_time = datetime.strptime(row['Time'], '%H:%M:%S')
-                            time_detection = datetime.fromtimestamp(time_of_detection)
-                            time_diff = abs((time_detection - csv_time).total_seconds())
-                            if time_diff < min_time_diff:
-                                min_time_diff = time_diff
-                                closest_time = csv_time
-                                closest_speed = float(row['Arac Hizi (km/h)'])
-                        # Algılanan zaman ile en yakın zamana sahip hızı bul
-                        # print("Closest time in CSV:", closest_time)
-                        # print("Speed at closest time:", closest_speed)
-                        # Hızları karşılaştır
-                        if closest_speed > speed_limit:
-                            # print("Hız sınırı ihlali! Algılanan hız: ", closest_speed, " Hız sınırı: ", speed_limit)
-                            # print("Tabela: ", label)
-                            # Hız sınırı ihlali varsa, bu bilgileri data listesine ekle
-                            data.append({
-                                'label': label,
-                                'confidence': confidence,
-                                'x_min': x_min,
-                                'y_min': y_min,
-                                'x_max': x_max,
-                                'y_max': y_max,
-                                'x_center': x_center,
-                                'y_center': y_center,
-                                'width': width,
-                                'height': height,
-                                'frame_info': frame_info,
-                                'current_info' : current_info,
-                                'is_car_interior': is_car_interior,
-                                'time_of_detection': time_of_detection,
-                                'detected_speed': closest_speed,
-                                'speed_limit': speed_limit,
-                                'violation_time': closest_time,
-                            })
-            data.append({
-                'label': label,
-                'confidence': confidence,
-                'x_min': x_min,
-                'y_min': y_min,
-                'x_max': x_max,
-                'y_max': y_max,
-                'x_center': x_center,
-                'y_center': y_center,
-                'width': width,
-                'height': height,
-                'frame_info': frame_info,
-                'current_info' : current_info,
-                'is_car_interior': is_car_interior,
-                'time_of_detection': time_of_detection
-            })
+            if is_car_interior == False and label in speed_labels:
+                speed_limit = speed_labels.get(label)
+                closest_time = None
+                closest_speed = None
+                min_time_diff = float('inf')
+                # Önceden okunan CSV verilerini kullan
+                for row in car_data:
+                    csv_time = datetime.strptime(row['Time'], '%H:%M:%S')
+                    csv_seconds = (csv_time.hour * 3600) + (csv_time.minute * 60) + csv_time.second
+                    time_diff = abs(float(time_of_detection) - csv_seconds)
+                    if time_diff < min_time_diff:
+                        min_time_diff = time_diff
+                        closest_time = csv_time
+                        closest_speed = float(row['Arac Hizi (km/h)'])
+                
+                if closest_speed > speed_limit:
+                    data.append({
+                        'label': label,
+                        'confidence': confidence,
+                        'x_min': x_min,
+                        'y_min': y_min,
+                        'x_max': x_max,
+                        'y_max': y_max,
+                        'x_center': x_center,
+                        'y_center': y_center,
+                        'width': width,
+                        'height': height,
+                        'frame_info': frame_info,
+                        'current_info': current_info,
+                        'is_car_interior': is_car_interior,
+                        'time_of_detection': time_of_detection,
+                        'speed_limit': speed_limit,
+                        'detected_speed': closest_speed,
+                        'violation_time': closest_time,
+                    })
+                    print("İf Speed Limit: ", speed_limit, " CSV File Speed: ", closest_speed, " Closest Time from CSV: ", closest_time, " Detected Time: ", time_of_detection)
+                else:
+                    data.append({
+                        'label': label,
+                        'confidence': confidence,
+                        'x_min': x_min,
+                        'y_min': y_min,
+                        'x_max': x_max,
+                        'y_max': y_max,
+                        'x_center': x_center,
+                        'y_center': y_center,
+                        'width': width,
+                        'height': height,
+                        'frame_info': frame_info,
+                        'current_info': current_info,
+                        'is_car_interior': is_car_interior,
+                        'time_of_detection': time_of_detection,
+                    })
+            else:
+                data.append({
+                    'label': label,
+                    'confidence': confidence,
+                    'x_min': x_min,
+                    'y_min': y_min,
+                    'x_max': x_max,
+                    'y_max': y_max,
+                    'x_center': x_center,
+                    'y_center': y_center,
+                    'width': width,
+                    'height': height,
+                    'frame_info': frame_info,
+                    'current_info' : current_info,
+                    'is_car_interior': is_car_interior,
+                    'time_of_detection': time_of_detection
+                })
     return data
 
 def create_report(user, trip, inside_results, car_inside_latest_file, outside_results, car_outside_latest_file, total_frames_inside, total_frames_outside, car_data_file_path):

@@ -2,6 +2,16 @@
 {% load static %}
 {% block content %}
 <style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
     body {
         font-family: Arial, sans-serif;
         line-height: 1.6;
@@ -27,44 +37,39 @@
     .uploaded-file-preview {
         margin-bottom: 2rem;
     }
-    
     .img-thumbnail {
         border: none;
         max-width: 100%;
         max-height: 100%;
     }
-    
     .uploaded-file-preview video,
     .uploaded-file-preview img {
         width: 100%;
         height: auto;
     }
-    /* Kart animasyonu */
     .card {
+        animation: fadeInUp 0.5s ease both;
         background-color: #fff;
         border: 1px solid #ddd;
         border-radius: 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
-        animation: fadeInUp 0.5s ease both;
+        transition: box-shadow 0.3s ease, transform 0.3s;
+        overflow: hidden;
     }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .card-header {
+        font-weight: bold;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 10px 10px 0 0;
     }
-
-    /* Buton animasyonu */
+    .card:hover {
+      transform: translateY(-5px);
+      transform: scale(1.05);
+    }
     .btn {
         transition: all 0.3s ease;
     }
-
     .btn:hover {
         transform: scale(1.05);
     }
@@ -74,7 +79,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Uploaded File Preview</h5>
+                    <h5 class="card-title text-center" style="font-family: fasterOne;">Uploaded File Preview</h5>
                 </div>
                 <div class="card-body text-center">
                     <div class="uploaded-file-preview row">
@@ -107,7 +112,7 @@
                     </div>
                     <div class="mt-3">
                         <!-- Driver bilgisi -->
-                        <h5 class="mt-3">Trip Information</h5>
+                        <h5 class="mt-3"><strong>Trip Information</strong></h5>
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
@@ -204,33 +209,4 @@
         });
     });
 </script>
-<style>
-    @keyframes fadeInLeft {
-      from {
-          opacity: 0;
-          transform: translateY(20px);
-      }
-      to {
-          opacity: 1;
-          transform: translateX(0);
-      }
-    }
-    .card{
-      animation: fadeInLeft 0.5s ease both;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      transition: box-shadow 0.3s ease, transform 0.3s;
-      overflow: hidden;
-    }
-    .card-header {
-        font-weight: bold;
-        background-color: #007bff;
-        color: #fff;
-        border-radius: 10px 10px 0 0;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      transform: scale(1.05);
-    }
-  </style>
 {% endblock %}
