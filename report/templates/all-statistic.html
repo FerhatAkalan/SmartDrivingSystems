@@ -1,40 +1,171 @@
 {% extends 'layout.html' %} {% block content %} {% load static %}
 
 <style>
-    .card {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 16px;
-        width: 200px;
-        text-align: center;
-        font-size: 24px;
-        margin: 20px auto;
-    }
+    @keyframes fadeInLeft {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+      }
+      .animated-title {
+          animation: fadeInLeft 0.5s ease both;
+      }
+      .col-md-4{
+        animation: fadeInLeft 0.5s ease both;
+      }
+      .card{
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        overflow: hidden;
+        margin-bottom: 2rem;
+      }
+      .card-title {
+        font-weight: bold; 
+      }
+      .card {
+        transition: transform 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="container">
   <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">All Statistic</h2>
 
   <div class="row">
     <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
+        <div class="card border-0 shadow">
+            <div class="card-body" style="background-color:#615EFC; color: white;">
                 <span id="reportCount">0</span>
                 <p>Toplam Rapor Sayısı</p>
             </div>
         </div>
-    
     </div>
     <div class="col-md-6">
-        <div class="card">
-            <div class="card-body">
+        <div class="card border-0 shadow">
+            <div class="card-body" style="background-color:#615EFC; color: white;">
+                <span id="driverCount">{{ unique_drivers_count }}</span>
+                <p>Toplam Sürücü Sayısı</p>
             </div>
         </div>
     </div>
   </div>
 
+
+  <div class="row">
+    <div class="col-md-6">
+        <div class="card border-0 shadow">
+            <div class="card-body" >
+                <canvas id="myPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow">
+            <div class="card-body" style="background-color:#615EFC; color: white;">
+                <span id="driverCount">{{ unique_drivers_count }}</span>
+                <p>Toplam Sürücü Sayısı</p>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+
+
 </div>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var totalReports = {{ report_count }};  // Django'dan gelen toplam rapor sayısı
+        var currentCount = 0;
+        var increment = Math.ceil(totalReports / 50);  // Artış miktarını belirle
+        var reportCountElement = document.getElementById("reportCount");
+
+        function updateCount() {
+            currentCount += increment;
+            if (currentCount >= totalReports) {
+                currentCount = totalReports;
+                clearInterval(countInterval);
+            }
+            reportCountElement.textContent = currentCount;
+        }
+
+        var countInterval = setInterval(updateCount, 10);  // 10 milisaniyede bir güncelle
+
+        // Chart.js kullanarak pasta grafiğini oluşturma
+        var ctx = document.getElementById('myPieChart').getContext('2d');
+        var labels = {{ labels|safe }};  // Django'dan gelen etiketler
+        var counts = {{ counts|safe }};  // Django'dan gelen sayılar
+
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: counts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        var totalReports = {{ report_count }};  // Django'dan gelen toplam rapor sayısı
+        var currentCount = 0;
+        var increment = Math.ceil(totalReports / 50);  // Artış miktarını belirle
+        var reportCountElement = document.getElementById("reportCount");
+
+        function updateCount() {
+            currentCount += increment;
+            if (currentCount >= totalReports) {
+                currentCount = totalReports;
+                clearInterval(countInterval);
+            }
+            reportCountElement.textContent = currentCount;
+        }
+
+        var countInterval = setInterval(updateCount, 10);  // 10 milisaniyede bir güncelle
+    });
+
     document.addEventListener("DOMContentLoaded", function() {
         var totalReports = {{ report_count }};  // Django'dan gelen toplam rapor sayısı
         var currentCount = 0;

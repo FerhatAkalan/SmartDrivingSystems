@@ -112,12 +112,31 @@ def driver_profiles(request, driver_id):
 @login_required
 def all_statistic(request):
 
-    report = Reports.objects.filter(user=request.user) 
-    report_count = report.count() 
+    reports = Reports.objects.filter(user=request.user)
+    report_count = reports.count() 
+    unique_drivers_count = Driver.objects.filter(user=request.user).count()
+
+    # Kullanıcının tüm raporlarındaki etiketleri topla
+    labels = ReportDetails.objects.filter(report__in=reports, is_car_interior=True).values_list('label', flat=True)
+    
+    # Etiketlerin sayısını hesapla
+    label_counts = {}
+    for label in labels:
+        if label in label_counts:
+            label_counts[label] += 1
+        else:
+            label_counts[label] = 1
+    
+    # Etiketleri ve sayımlarını JSON olarak döndür
+    labels = list(label_counts.keys())
+    counts = list(label_counts.values())
 
     context={
-        'report':report,
-        'report_count': report_count 
+        'report':reports,
+        'report_count': report_count,
+        'unique_drivers_count': unique_drivers_count,
+        'labels': labels,
+        'counts': counts,
     }
     
     return render(request, 'all-statistic.html',context)
