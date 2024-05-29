@@ -45,7 +45,7 @@
       </li>
       {% endif %}
       <li
-        class="list-group-item nav-item-sidebar list-group-item-action"
+        class="list-group-item nav-item-sidebar list-group-item-action {% if '/all-statistic/' in request.path %}active{% endif %}"
       >
         <a href="{% url 'all_statistic' %}"  
           ><i class="fa-solid fa-chart-simple"></i> All Statistics</a
