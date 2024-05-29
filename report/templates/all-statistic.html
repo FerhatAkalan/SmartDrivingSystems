@@ -25,6 +25,11 @@
         margin-bottom: 2rem;
         font-size: 18px;
       }
+      .card-body {
+        display: grid;
+        place-items: center; /* Hem yatay hem de dikey olarak hizalamak için */
+        height: 100%; /* Yüksekliği doldurması için */
+    }
       .card-title {
         font-weight: bold; 
       }
@@ -43,7 +48,7 @@
   <div class="row">
     <div class="col-md-4">
         <div class="card border-0 shadow">
-            <div class="card-body" style="background-color:#615EFC; color: white;">
+            <div class="card-body" style="background-color:#615EFC; font-family: fasterOne, sans-serif; color: white;">
                 <p>Toplam Rapor Sayısı</p>
                 <span id="reportCount">0</span>
             </div>
@@ -51,7 +56,7 @@
     </div>
     <div class="col-md-4">
         <div class="card border-0 shadow">
-            <div class="card-body" style="background-color:#D10363; color: white;">
+            <div class="card-body" style="background-color:#D10363; font-family: fasterOne, sans-serif; color: white;">
                 <p>Toplam Sürücü Sayısı</p>
                 <span id="driverCount">{{ unique_drivers_count }}</span>
             </div>
@@ -59,7 +64,7 @@
     </div>
     <div class="col-md-4">
         <div class="card border-0 shadow">
-            <div class="card-body" style="background-color:#FFBF00; color: white;">
+            <div class="card-body" style="background-color:#FFBF00; font-family: fasterOne, sans-serif; color: white;">
                 <p>Ortalama Sürüş Süresi</p>
                 <span id="avgTripDuration">0 saat, 0 dakika, 0 saniye</span>
             </div>
