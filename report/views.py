@@ -116,27 +116,39 @@ def all_statistic(request):
     report_count = reports.count() 
     unique_drivers_count = Driver.objects.filter(user=request.user).count()
 
-    # Kullanıcının tüm raporlarındaki etiketleri topla
-    labels = ReportDetails.objects.filter(report__in=reports, is_car_interior=True).values_list('label', flat=True)
+    
+    # Kullanıcının tüm raporlarındaki araç içi ve araç dışı etiketleri topla
+    interior_labels = ReportDetails.objects.filter(report__in=reports, is_car_interior=True).values_list('label', flat=True)
+    exterior_labels = ReportDetails.objects.filter(report__in=reports, is_car_interior=False).values_list('label', flat=True)
     
     # Etiketlerin sayısını hesapla
-    label_counts = {}
-    for label in labels:
-        if label in label_counts:
-            label_counts[label] += 1
+    interior_label_counts = {}
+    exterior_label_counts = {}
+    for label in interior_labels:
+        if label in interior_label_counts:
+            interior_label_counts[label] += 1
         else:
-            label_counts[label] = 1
+            interior_label_counts[label] = 1
+    for label in exterior_labels:
+        if label in exterior_label_counts:
+            exterior_label_counts[label] += 1
+        else:
+            exterior_label_counts[label] = 1
     
     # Etiketleri ve sayımlarını JSON olarak döndür
-    labels = list(label_counts.keys())
-    counts = list(label_counts.values())
-
+    interior_labels = list(interior_label_counts.keys())
+    interior_counts = list(interior_label_counts.values())
+    exterior_labels = list(exterior_label_counts.keys())
+    exterior_counts = list(exterior_label_counts.values())
+    
     context={
         'report':reports,
         'report_count': report_count,
         'unique_drivers_count': unique_drivers_count,
-        'labels': labels,
-        'counts': counts,
+        'interior_labels': interior_labels,
+        'interior_counts': interior_counts,
+        'exterior_labels': exterior_labels,
+        'exterior_counts': exterior_counts,
     }
     
     return render(request, 'all-statistic.html',context)

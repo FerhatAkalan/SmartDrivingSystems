@@ -23,6 +23,7 @@
         transition: box-shadow 0.3s ease;
         overflow: hidden;
         margin-bottom: 2rem;
+        font-size: 18px;
       }
       .card-title {
         font-weight: bold; 
@@ -40,46 +41,47 @@
   <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">All Statistic</h2>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="card border-0 shadow">
             <div class="card-body" style="background-color:#615EFC; color: white;">
-                <span id="reportCount">0</span>
                 <p>Toplam Rapor Sayısı</p>
+                <span id="reportCount">0</span>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="card border-0 shadow">
-            <div class="card-body" style="background-color:#615EFC; color: white;">
-                <span id="driverCount">{{ unique_drivers_count }}</span>
+            <div class="card-body" style="background-color:#D10363; color: white;">
                 <p>Toplam Sürücü Sayısı</p>
+                <span id="driverCount">{{ unique_drivers_count }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow">
+            <div class="card-body" style="background-color:#FFBF00; color: white;">
+                
             </div>
         </div>
     </div>
   </div>
 
-
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="card border-0 shadow">
             <div class="card-body" >
                 <canvas id="myPieChart"></canvas>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="card border-0 shadow">
-            <div class="card-body" style="background-color:#615EFC; color: white;">
-                <span id="driverCount">{{ unique_drivers_count }}</span>
-                <p>Toplam Sürücü Sayısı</p>
+            <div class="card-body" >
+                <canvas id="myBarChart"></canvas>
             </div>
         </div>
     </div>
   </div>
-
-
-
-
 
 
 </div>
@@ -101,33 +103,18 @@
 
         var countInterval = setInterval(updateCount, 10);  // 10 milisaniyede bir güncelle
 
-        // Chart.js kullanarak pasta grafiğini oluşturma
-        var ctx = document.getElementById('myPieChart').getContext('2d');
-        var labels = {{ labels|safe }};  // Django'dan gelen etiketler
-        var counts = {{ counts|safe }};  // Django'dan gelen sayılar
+        // Chart.js kullanarak pasta grafiğini oluşturma (Araç İçi Labeller)
+        var ctxPie = document.getElementById('myPieChart').getContext('2d');
+        var labelsPie = {{ interior_labels|safe }};  // Django'dan gelen etiketler (araç içi)
+        var countsPie = {{ interior_counts|safe }};  // Django'dan gelen sayılar (araç içi)
 
-        var myPieChart = new Chart(ctx, {
+        var myPieChart = new Chart(ctxPie, {
             type: 'pie',
             data: {
-                labels: labels,
+                labels: labelsPie,
                 datasets: [{
-                    data: counts,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
+                    data: countsPie,
+                    backgroundColor: generateRandomColors(countsPie.length),  // Rastgele renkler
                     borderWidth: 1
                 }]
             },
@@ -147,7 +134,51 @@
                 }
             }
         });
+
+        // Chart.js kullanarak sütun grafiğini oluşturma (Araç Dışı Labeller)
+        var ctxBar = document.getElementById('myBarChart').getContext('2d');
+        var labelsBar = {{ exterior_labels|safe }};  // Django'dan gelen etiketler (araç dışı)
+        var countsBar = {{ exterior_counts|safe }};  // Django'dan gelen sayılar (araç dışı)
+
+        var myBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: labelsBar,
+                datasets: [{
+                    data: countsBar,
+                    backgroundColor: generateRandomColors(countsBar.length),  // Rastgele renkler
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Rastgele renkler oluşturma fonksiyonu
+        function generateRandomColors(numColors) {
+            var colors = [];
+            for (var i = 0; i < numColors; i++) {
+                var color = '#' + Math.floor(Math.random()*16777215).toString(16);  // Rastgele renk oluştur
+                colors.push(color);
+            }
+            return colors;
+        }
     });
+
+    //Toplam Rapor Sayısı
     document.addEventListener("DOMContentLoaded", function() {
         var totalReports = {{ report_count }};  // Django'dan gelen toplam rapor sayısı
         var currentCount = 0;
