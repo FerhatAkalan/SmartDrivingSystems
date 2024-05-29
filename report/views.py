@@ -107,3 +107,11 @@ def driver_profiles(request, driver_id):
     }
     return render(request, 'driver-profiles.html', context)
 
+
+
+@login_required
+def all_statistic(request):
+    
+    return render(request, 'all-statistic.html')
+
+

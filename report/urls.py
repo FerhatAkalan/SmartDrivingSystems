@@ -13,5 +13,6 @@ urlpatterns = [
     path('report-details/<int:report_id>/', views.report_details, name='report_details'),
     path('driver-profiles/<int:driver_id>/', views.driver_profiles, name='driver_profiles'),
     path('driverid-reports/<int:driver_id>/', views.driver_reports, name='driver_reports_driver_id'),
+    path('all-statistic/', views.all_statistic, name='all_statistic'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

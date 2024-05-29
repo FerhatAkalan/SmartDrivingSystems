@@ -61,8 +61,7 @@
         <li class="page-item">
           <a class="page-link" href="?page={{ reports.previous_page_number }}">Previous</a>
         </li>
-        {% endif %}
-        
+        {% endif %} 
         {% for num in reports.paginator.page_range %}
           {% if num > reports.number|add:'-5' and num < reports.number|add:'5' %}
             {% if reports.number == num %}
@@ -76,8 +75,6 @@
             {% endif %}
           {% endif %}
         {% endfor %}
-        
-      
         {% if reports.number < reports.paginator.num_pages|add:'-5' %}
           <li class="page-item">
             <span class="page-link">...</span>
@@ -86,7 +83,6 @@
             <a class="page-link" href="?page={{ reports.paginator.num_pages }}">{{ reports.paginator.num_pages }}</a>
           </li>
         {% endif %}
-        
         {% if reports.has_next %}
         <li class="page-item">
           <a class="page-link" href="?page={{ reports.next_page_number }}">Next</a>
