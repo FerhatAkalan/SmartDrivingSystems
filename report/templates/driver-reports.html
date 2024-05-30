@@ -35,20 +35,19 @@
   
 </style>
 <div class="container">
-  <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Driver Reports</h2>
+  <h2 class="animated-title text-center mb-4" style="font-family: fasterOne, sans-serif;">Sürüş Raporları</h2>
   <div class="row">
     {% if reports %}
       {% for report in reports %}
         <div class="col-md-4">
           <div class="card mb-4">
-            <div class="card-header">Report ID: {{ report.id }}</div>
+            <div class="card-header" style="background-color:#007bff; font-family: fasterOne, sans-serif; color: white;">Rapor Numarası: {{ report.id }}</div>
             <div class="card-body">
-              <p class="card-text"><strong>Report Text: </strong>{{ report.report_text }}</p>
-              <p class="card-text"><strong>Trip ID: </strong> {{ report.trip.id }}</p>
-              <p class="card-text"><strong>Driver ID: </strong> {{ report.driver.id }}</p>
-              <p class="card-text"><strong>Driver Name: </strong> {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
-              <p class="card-text"><strong>Created At: </strong> {{ report.created_at }}</p>
-              <a href="{% url 'report_details' report.id  %}" class="btn btn-danger">View Details</a>
+              <p class="card-text"><strong>Sürüş Numarası: </strong> {{ report.trip.id }}</p>
+              <p class="card-text"><strong>Sürücü Adı: </strong> {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
+              <p class="card-text"><strong>Tarih: </strong> {{ report.created_at }}</p>
+              <a href="{% url 'report_details' report.id  %}" class="btn btn-primary">Göster</a>
+              <a href="{% url 'delete_report' report.id %}" class="btn btn-danger">Sil</a> <!-- Silme butonu -->
             </div>
           </div>
         </div>
@@ -56,10 +55,7 @@
       <ul class="pagination justify-content-center">
         {% if reports.has_previous %}
         <li class="page-item">
-          <a class="page-link" href="?page=1">First</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="?page={{ reports.previous_page_number }}">Previous</a>
+          <a class="page-link" href="?page=1">İlk</a>
         </li>
         {% endif %} 
         {% for num in reports.paginator.page_range %}
@@ -85,10 +81,7 @@
         {% endif %}
         {% if reports.has_next %}
         <li class="page-item">
-          <a class="page-link" href="?page={{ reports.next_page_number }}">Next</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="?page={{ reports.paginator.num_pages }}">Last</a>
+          <a class="page-link" href="?page={{ reports.paginator.num_pages }}">Son</a>
         </li>
         {% endif %}
       </ul>

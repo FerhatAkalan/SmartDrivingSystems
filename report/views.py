@@ -1,15 +1,16 @@
-from datetime import timedelta
+
 from django.forms import DurationField
 from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
 from .forms import DriverForm
 from .models import Driver, ReportDetails, SpeedingViolationDetails, Trips
 from .models import Reports
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.db.models import Avg, F, ExpressionWrapper, DurationField
-from datetime import timedelta
+
 
 
 
@@ -168,4 +169,28 @@ def all_statistic(request):
     
     return render(request, 'all-statistic.html',context)
 
+import os
+@login_required
+def delete_report(request, report_id):
+    # Raporu bul
+    report = get_object_or_404(Reports, pk=report_id)
+    file_paths = [
+        report.car_data_report_path,
+        report.car_inside_report_path,
+        report.car_outside_report_path
+    ]
+    for file_path in file_paths:
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+                print(f"{file_path} başarıyla silindi.")
+            except Exception as e:
+                print(f"{file_path} silinirken hata oluştu: {e}")
+        else:
+            print(f"{file_path} bulunamadı.")
 
+    # Raporu sil
+    report.delete()
+
+    # Kullanıcıyı rapor listesine yönlendir
+    return HttpResponseRedirect(reverse('driver_reports'))

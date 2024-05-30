@@ -23,6 +23,7 @@
 
 .card-title {
     font-weight: bold; 
+    font-family: fasterOne;
 }
 
 .card, .card-header, .card-footer {

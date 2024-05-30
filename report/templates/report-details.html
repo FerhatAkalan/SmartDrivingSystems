@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
+
 {% block content %}
 <link rel="stylesheet" href="{% static 'report/css/report-details.css' %}">
 <div class="container">
@@ -10,27 +11,27 @@
     <div class="row animated-title">
         <div class="col-md-4">
             <div class="card border-0 shadow">
-                <div class="card-body" style="background-color:#FFC93C; color: white;">
-                <h4 class="card-title">Report Information</h4>
-                <p class="card-text ">{{ report.report_text }}</p>
+                <div class="card-body" style="background-color:#3E00FF; color: white;">
+                <h4 class="card-title" style="font-family: fasterOne, sans-serif; color: white;">Report Information</h4>
+                <p class="card-text mt-2 ">{{ report.report_text }}</p>
                 <p class="card-text ">This report created at {{ report.created_at }}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card border-0 shadow">
-                <div class="card-body" style="background-color:#FF9A3C; color: white;">
-                    <h4 class="card-title ">Driver Information</h4>
-                    <p class="card-text ">Driver: {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
+                <div class="card-body" style="background-color:#AE00FB; color: white;">
+                    <h4 class="card-title" style="font-family: fasterOne, sans-serif; color: white;">Driver Information</h4>
+                    <p class="card-text mt-2 ">Driver: {{ report.driver.driver_name }} {{ report.driver.driver_surname }}</p>
                     <p class="card-text ">Driver Licence: {{ report.driver.driver_licence }}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-        <div class="card border-0 shadow">
-        <div class="card-body " style="background-color:#FF6F3C; color: white;">
-        <h4 class="card-title ">Trip Information</h4>
-        <p class="card-text ">Trip Start Time: {{ report.trip.start_time }}</p>
+        <div class="card border-0 shadow">    
+        <div class="card-body " style="background-color:#15F5BA; color: white;">
+        <h4 class="card-title " style="font-family: fasterOne, sans-serif; color: white;">Trip Information</h4>
+        <p class="card-text mt-2">Trip Start Time: {{ report.trip.start_time }}</p>
         <p class="card-text ">Trip End Time: {{ report.trip.end_time }}</p>
         </div>
         </div>
@@ -41,7 +42,7 @@
     <div class="row animated-title">
         <div class="col-md-6">
             <div class="card border-0 shadow">
-                <div class="card-header text-center" style="background-color:#1D267D; color: white;">in-vehicle video</div>
+                <div class="card-header text-center" style="font-family: fasterOne, sans-serif;background-color:white; color: black;">In-vehicle video</div>
                 <div class="card-body">
                     {% if report.car_inside_report_path|slice:'-4:' == '.jpg' %}
                     <img src="{% static report.car_inside_report_path %}" alt="Detected Image" class="img-fluid">
@@ -56,7 +57,7 @@
         </div>
         <div class="col-md-6">
             <div class="card border-0 shadow"> 
-                <div class="card-header text-center" style="background-color:#1D267D; color: white;"> off-vehicle video </div>
+                <div class="card-header text-center" style="font-family: fasterOne, sans-serif;background-color:white; color: black;"> Off-vehicle video </div>
                 <div class="card-body">
                     {% if report.car_outside_report_path|slice:'-4:' == '.jpg' %}
                     <img src="{% static report.car_outside_report_path %}" alt="Detected Image" class="img-fluid">
@@ -75,7 +76,7 @@
     <div class="row animated-title">
         <div class="col-md-6">
             <div class="card h-100 border-0 shadow">
-                <div class="card-header" style="background-color:#EEEEEE; color: black;">Result Details Detected Inside the Vehicle</div>
+                <div class="card-header" style="font-family: fasterOne, sans-serif;background-color:white; color: black;">Araç içi tespit edilen verilerin detayları</div>
                 <div class="card-body" id="result-details-inside">
                     {% if report_details_interior %}
                         {% for item in report_details_interior %}
@@ -115,7 +116,7 @@
         </div>
         <div class="col-md-6">
             <div class="card h-100 border-0 shadow">
-                <div class="card-header" style="background-color:#EEEEEE; color:black;">Result Details Detected Outside the Vehicle</div>
+                <div class="card-header" style="font-family: fasterOne, sans-serif;background-color:white; color: black;">Araç dışı tespit edilen verilerin detayları</div>
                 <div class="card-body" id="result-details-outside">
                     {% if  report_details_exterior %}
                         {% for item in report_details_exterior %}
@@ -158,7 +159,7 @@
     <div class="row mt-4 animated-title">
         <div class="col-md-6">
             <div class="card border-0 shadow">
-                <div class="card-header text-center" style="background-color:#00ADB5; color: white;"> in-vehicle labels </div>
+                <div class="card-header text-center" style="font-family: fasterOne, sans-serif;background-color:white; color: black;"> in-vehicle labels </div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
@@ -181,7 +182,7 @@
         </div>
         <div class="col-md-6">
             <div class="card border-0 shadow">
-                <div class="card-header text-center" style="background-color:#00ADB5; color: white;"> off-vehicle labels </div>
+                <div class="card-header text-center" style="font-family: fasterOne, sans-serif;background-color:white; color: black;"> off-vehicle labels </div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
@@ -208,6 +209,7 @@
     <div class="row animated-title">
         <div class="col-md-6">
             <div class="card border-0 shadow">
+                <div class="card-header text-center" style="font-family: fasterOne, sans-serif;background-color:white; color: black;">Araç içi etiketlerin pasta grafiği</div>
                 <div class="card-body">
                     <canvas id="labelChart" width="400" height="400"></canvas>
                 </div>
@@ -215,6 +217,7 @@
         </div>  
         <div class="col-md-6">
             <div class="card border-0 shadow">
+                <div class="card-header text-center" style="font-family: fasterOne, sans-serif;background-color:white; color: black;">Araç dışı etiketlerin pasta grafiği</div>
                 <div class="card-body">
                     <canvas id="labelChart2" width="400" height="400"></canvas>
                 </div>
@@ -226,6 +229,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card border-0 shadow mt-4">
+                <div class="card-header text-center" style="font-family: fasterOne, sans-serif;background-color:white; color: black;">Araç içi etiketlerin bar grafiği</div>
                 <div class="card-body">
                     <canvas id="barChart" width="400" height="400"></canvas>
                 </div>
@@ -233,6 +237,7 @@
         </div>
         <div class="col-md-6">
             <div class="card border-0 shadow mt-4">
+                <div class="card-header text-center" style="font-family: fasterOne, sans-serif;background-color:white; color: black;">Araç içi etiketlerin bar grafiği</div>
                 <div class="card-body">
                     <canvas id="barChart2" width="400" height="400"></canvas>
                 </div>
@@ -247,7 +252,7 @@
     <div class="row">
         <div class="col">
             <div class="card h-100 border-0 shadow">
-                <div class="card-header" style="background-color:#EEEEEE; color: black;">Speed vs Time Graph</div>
+                <div class="card-header text-center" style="font-family: fasterOne, sans-serif;background-color:white; color: black;">Zaman Grafiği</div>
                 <div class="card-body">
                     <div id="graph"></div>
                     <div id="graph"></div>
@@ -300,6 +305,7 @@
 
         Plotly.newPlot('graph', [speedTrace, limitTrace], layout);
     });
+
     //Label Chart
     var ctx = document.getElementById('labelChart').getContext('2d');
     var labels = [
@@ -332,11 +338,8 @@
         data: {
             labels: labels,
             datasets: [{
-                label: 'Tespit Edilen Davranışlar',
                 data: counts,
-                backgroundColor: [
-                    "#f15a5a", "#b47cc7", "#6d6e71", "#ffd700","#86c5da", "#f39237", "#7ac943"
-                ],
+                backgroundColor:generateRandomColors(counts.length),
             }]
         },
         options: {
@@ -373,11 +376,8 @@
         data: {
             labels: labels2,
             datasets: [{
-                label: 'Tespit Edilen Davranışlar',
                 data: counts2,
-                backgroundColor: [
-                    "#f15a5a", "#b47cc7", "#6d6e71", "#ffd700","#86c5da", "#f39237", "#7ac943"
-                ],
+                backgroundColor:generateRandomColors(counts2.length),
             }]
         },
         options: {plugins: {tooltip: {callbacks: {label: function(tooltipItem) {
@@ -392,36 +392,54 @@
         }
     });
 
-    var barCtx = document.getElementById('barChart').getContext('2d');
-    var barChart = new Chart(barCtx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Frequency of Driving Behaviors',
-                data: counts,
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]},
-        options: {scales: {y: {beginAtZero: true}}}
-    });
+    function generateRandomColors(numColors) {
+        var colors = [];
+        for (var i = 0; i < numColors; i++) {
+            var color = '#' + Math.floor(Math.random()*16777215).toString(16);  // Rastgele renk oluştur
+            colors.push(color);
+        }
+        return colors;
+    }
 
-    var barCtx2 = document.getElementById('barChart2').getContext('2d');
-    var barChart2 = new Chart(barCtx2, {
-        type: 'bar',
-        data: {
-            labels: labels2,
-            datasets: [{
-                label: 'Frequency of Driving Behaviors',
-                data: counts,
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {scales: {y: {beginAtZero: true}}}
-    });
+        var barCtx = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: counts,
+                    backgroundColor: generateRandomColors(counts.length),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var barCtx2 = document.getElementById('barChart2').getContext('2d');
+        var barChart2 = new Chart(barCtx2, {
+            type: 'bar',
+            data: {
+                labels: labels2,
+                datasets: [{
+                    data: counts2,
+                    backgroundColor: generateRandomColors(counts2.length),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 </script>
 
 {% endblock %}
